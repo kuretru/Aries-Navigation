@@ -3,11 +3,14 @@ package com.kuretru.web.navigation;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+/**
+ * @author kuretru
+ */
 @SpringBootApplication
-public class AriesNavigationApiApplication {
+public class Application {
 
     public static void main(String[] args) {
-        SpringApplication.run(AriesNavigationApiApplication.class, args);
+        SpringApplication.run(Application.class, args);
     }
 
 }
