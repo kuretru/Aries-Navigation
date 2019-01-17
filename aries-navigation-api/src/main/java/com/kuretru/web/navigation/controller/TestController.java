@@ -1,6 +1,6 @@
 package com.kuretru.web.navigation.controller;
 
-import com.kuretru.api.common.controller.BaseController;
+import com.kuretru.api.common.controller.BaseRestController;
 import com.kuretru.api.common.entity.ApiResponse;
 import com.kuretru.api.common.util.InstantUtils;
 import org.springframework.http.MediaType;
@@ -15,7 +15,7 @@ import java.time.Instant;
  */
 @RestController
 @RequestMapping(value = "/api", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-public class TestController extends BaseController {
+public class BaseRestController extends BaseRestController {
 
     @GetMapping("/ping")
     public ApiResponse ping() {

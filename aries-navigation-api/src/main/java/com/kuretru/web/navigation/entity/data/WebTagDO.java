@@ -9,7 +9,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class TagDO extends BaseDO {
+public class WebTag extends BaseDO {
 
     private String name;
 

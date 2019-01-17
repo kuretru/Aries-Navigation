@@ -1,6 +1,6 @@
 package com.kuretru.web.navigation.entity.view;
 
-import com.kuretru.web.navigation.entity.data.TagDO;
+import com.kuretru.web.navigation.entity.data.WebTagDO;
 import lombok.Data;
 
 import java.util.List;
@@ -21,7 +21,7 @@ public class TagVO {
         super();
     }
 
-    public TagVO(TagDO record) {
+    public TagVO(WebTagDO record) {
         this.id = record.getId();
         this.name = record.getName();
     }
