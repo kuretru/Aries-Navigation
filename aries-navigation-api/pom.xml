@@ -19,6 +19,13 @@
     </properties>
 
     <dependencies>
+        <!-- 项目模块 -->
+        <dependency>
+            <groupId>com.kuretru.common</groupId>
+            <artifactId>api-common-utils</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
         <!-- Spring Web -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -46,6 +53,14 @@
             <optional>true</optional>
         </dependency>
 
+        <!-- Dozer  -->
+        <dependency>
+            <groupId>com.github.dozermapper</groupId>
+            <artifactId>dozer-spring-boot-starter</artifactId>
+            <version>LATEST</version>
+        </dependency>
+
+        <!-- JUnit -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
