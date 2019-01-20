@@ -15,7 +15,7 @@ import java.time.Instant;
  */
 @RestController
 @RequestMapping(value = "/api", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-public class BaseRestController extends BaseRestController {
+public class TestController extends BaseRestController {
 
     @GetMapping("/ping")
     public ApiResponse ping() {

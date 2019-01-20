@@ -9,7 +9,7 @@ import java.util.List;
  * @author 呉真 Kuretru < kuretru@gmail.com >
  */
 @Data
-public class TagVO {
+public class WebTagVO {
 
     private Long id;
 
@@ -17,11 +17,11 @@ public class TagVO {
 
     private List<SiteVO> sites;
 
-    public TagVO() {
+    public WebTagVO() {
         super();
     }
 
-    public TagVO(WebTagDO record) {
+    public WebTagVO(WebTagDO record) {
         this.id = record.getId();
         this.name = record.getName();
     }
