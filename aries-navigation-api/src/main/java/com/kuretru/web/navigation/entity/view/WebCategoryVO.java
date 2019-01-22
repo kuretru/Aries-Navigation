@@ -1,6 +1,6 @@
 package com.kuretru.web.navigation.entity.view;
 
-import com.kuretru.web.navigation.entity.data.CategoryDO;
+import com.kuretru.web.navigation.entity.data.WebCategoryDO;
 import lombok.Data;
 
 /**
@@ -17,7 +17,7 @@ public class CategoryVO {
         super();
     }
 
-    public CategoryVO(CategoryDO record) {
+    public CategoryVO(WebCategoryDO record) {
         this.id = record.getId();
         this.name = record.getName();
     }

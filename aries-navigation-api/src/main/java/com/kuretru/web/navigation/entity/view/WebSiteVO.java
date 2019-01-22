@@ -1,6 +1,6 @@
 package com.kuretru.web.navigation.entity.view;
 
-import com.kuretru.web.navigation.entity.data.SiteDO;
+import com.kuretru.web.navigation.entity.data.WebSiteDO;
 import lombok.Data;
 
 /**
@@ -21,7 +21,7 @@ public class SiteVO {
         super();
     }
 
-    public SiteVO(SiteDO record) {
+    public SiteVO(WebSiteDO record) {
         this.id = record.getId();
         this.name = record.getName();
         this.imageUrl = record.getImageUrl();
