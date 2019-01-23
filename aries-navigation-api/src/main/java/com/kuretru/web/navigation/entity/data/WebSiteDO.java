@@ -11,7 +11,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @TableName("web_site")
-public class SiteDO extends BaseDO {
+public class WebSiteDO extends BaseDO {
 
     private Integer categoryId;
 
