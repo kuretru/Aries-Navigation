@@ -10,7 +10,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@TableName("web_cateogry")
+@TableName("web_category")
 public class WebCategoryDO extends BaseDO {
 
     private Integer tagId;
