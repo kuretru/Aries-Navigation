@@ -6,9 +6,11 @@ import lombok.Data;
  * @author 呉真 Kuretru < kuretru@gmail.com >
  */
 @Data
-public class WebTagDTO {
+public class WebCategoryDTO {
 
     private Long id;
+
+    private Integer tagId;
 
     private String name;
 
