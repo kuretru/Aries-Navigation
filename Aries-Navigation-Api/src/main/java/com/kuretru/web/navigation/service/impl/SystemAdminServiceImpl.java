@@ -68,6 +68,11 @@ public class SystemAdminServiceImpl extends BaseServiceImpl<SystemAdminMapper, S
     }
 
     @Override
+    public void logout(String incomingToken) {
+        tokenManager.removeToken(incomingToken);
+    }
+
+    @Override
     public void updateLastLogin(long id) {
         SystemAdminDO record = new SystemAdminDO();
         record.setId(id);
@@ -89,6 +94,13 @@ public class SystemAdminServiceImpl extends BaseServiceImpl<SystemAdminMapper, S
         return result;
     }
 
+    /**
+     * 将密码与盐混合
+     *
+     * @param password 原始密码
+     * @param salt     盐
+     * @return 混淆后的密码
+     */
     private String encrypt(String password, String salt) {
         String left = salt.substring(0, 16).toLowerCase();
         String right = salt.substring(16).toUpperCase();

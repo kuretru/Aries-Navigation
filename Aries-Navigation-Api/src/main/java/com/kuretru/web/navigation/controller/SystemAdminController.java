@@ -33,6 +33,12 @@ public class SystemAdminController extends BaseRestController<SystemAdminService
         return ApiResponse.success(result);
     }
 
+    @PostMapping("/logout")
+    public ApiResponse logout(String accessToken) {
+        service.logout(accessToken);
+        return ApiResponse.success("退出成功");
+    }
+
     @GetMapping("/kaptcha")
     public ApiResponse kaptcha() {
         String code = kaptcha.render();
