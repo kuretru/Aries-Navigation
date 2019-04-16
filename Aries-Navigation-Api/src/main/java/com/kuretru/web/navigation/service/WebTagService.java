@@ -10,4 +10,11 @@ import com.kuretru.web.navigation.mapper.WebTagMapper;
  */
 public interface WebTagService extends BaseService<WebTagMapper, WebTagDO, WebTagDTO> {
 
+    /**
+     * 查询数据库中当前最大的排序号
+     *
+     * @return 最大的排序号
+     */
+    int getMaxSequence();
+
 }

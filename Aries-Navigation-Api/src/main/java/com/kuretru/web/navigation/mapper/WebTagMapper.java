@@ -12,4 +12,11 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface WebTagMapper extends BaseMapper<WebTagDO> {
 
+    /**
+     * 查询数据库中当前最大的排序号
+     *
+     * @return 最大的排序号
+     */
+    Integer getMaxSequence();
+
 }
