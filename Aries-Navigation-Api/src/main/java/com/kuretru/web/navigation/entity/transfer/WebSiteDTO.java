@@ -9,7 +9,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class WebStieDTO extends BaseDTO {
+public class WebSiteDTO extends BaseDTO {
 
     private Long categoryId;
 
