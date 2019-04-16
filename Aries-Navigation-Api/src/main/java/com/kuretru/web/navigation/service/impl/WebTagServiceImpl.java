@@ -19,4 +19,19 @@ public class WebTagServiceImpl extends BaseServiceImpl<WebTagMapper, WebTagDO, W
         super(mapper, WebTagDO.class, WebTagDTO.class);
     }
 
+    @Override
+    public WebTagDTO save(WebTagDTO record) {
+        WebTagDO data = dtoToDO(record);
+        data.addCrateTime();
+        data.setSequence(getMaxSequence() + 1);
+        mapper.insert(data);
+        return get(data.getId());
+    }
+
+    @Override
+    public int getMaxSequence() {
+        Integer result = mapper.getMaxSequence();
+        return result == null ? 0 : result;
+    }
+
 }
