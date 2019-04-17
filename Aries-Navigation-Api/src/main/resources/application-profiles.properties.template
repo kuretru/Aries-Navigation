@@ -1,7 +1,7 @@
 ####################     环境配置        ####################
 # 可以将此文件复制多份，以适配不同环境
 # application-development.properties   ->   开发环境
-# application-testing.properties       ->   测试环境
+# application-stage.properties         ->   测试环境
 # application-production.properties    ->   生产环境
 ####################     环境配置        ####################
 spring.redis.host=127.0.0.1
