@@ -8,10 +8,7 @@ import com.kuretru.web.navigation.entity.view.WebTagVO;
 import com.kuretru.web.navigation.service.WebService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -36,6 +33,12 @@ public class WebController extends BaseController {
             throw new NotFoundException("没有数据！");
         }
         return ApiResponse.success(result);
+    }
+
+    @DeleteMapping("/cache")
+    public ApiResponse removeCache() {
+        service.removeCache();
+        return ApiResponse.removed();
     }
 
 }
