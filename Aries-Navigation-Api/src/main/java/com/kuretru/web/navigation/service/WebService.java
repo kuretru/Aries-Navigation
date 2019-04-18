@@ -12,9 +12,10 @@ public interface WebService {
     /**
      * 列出首页收藏的站点信息
      *
+     * @param useCache 是否使用缓存
      * @return 所有站点信息
      */
-    List<WebTagVO> list();
+    List<WebTagVO> list(boolean useCache);
 
     /**
      * 强制更新缓存

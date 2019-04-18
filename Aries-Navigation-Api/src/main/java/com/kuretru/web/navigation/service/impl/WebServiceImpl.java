@@ -27,16 +27,16 @@ public class WebServiceImpl implements WebService {
         this.mapper = mapper;
     }
 
-    @Cacheable(value = CACHE_KEY)
+    @Cacheable(value = CACHE_KEY, condition = "#useCache != false")
     @Override
-    public List<WebTagVO> list() {
+    public List<WebTagVO> list(boolean useCache) {
         return mapper.listTags();
     }
 
     @CachePut(value = CACHE_KEY)
     @Override
     public List<WebTagVO> updateCache() {
-        return list();
+        return list(false);
     }
 
     @CacheEvict(CACHE_KEY)
