@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -29,8 +30,8 @@ public class WebController extends BaseController {
     }
 
     @GetMapping
-    public ApiResponse list() throws ApiException {
-        List<WebTagVO> result = service.list();
+    public ApiResponse list(@RequestParam(value = "use_cache", defaultValue = "true") boolean useCache) throws ApiException {
+        List<WebTagVO> result = service.list(useCache);
         if (result.isEmpty()) {
             throw new NotFoundException("没有数据！");
         }
