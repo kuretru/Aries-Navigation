@@ -10,9 +10,8 @@
         <relativePath/>
     </parent>
 
-    <groupId>com.kuretru.web</groupId>
     <artifactId>aries-navigation-api</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
     <name>Aries-Navigation-Api</name>
     <description>白羊座导航站-后端API</description>
 
@@ -26,7 +25,7 @@
         <dependency>
             <groupId>com.kuretru.common</groupId>
             <artifactId>api-common-utils</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>0.0.1</version>
         </dependency>
 
         <!-- Spring Boot -->
