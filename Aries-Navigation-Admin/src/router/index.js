@@ -44,6 +44,31 @@ export const constantRoutes = [
   },
 
   {
+    path: '白羊导航',
+    component: Layout,
+    children: [
+      {
+        path: 'https://kuretru.com/',
+        meta: { title: '白羊导航', icon: 'link' }
+      }
+    ]
+  },
+
+  {
+    path: '/tag',
+    component: Layout,
+    redirect: '/tags',
+    children: [
+      {
+        path: 'tag',
+        name: 'Tag',
+        component: () => import('@/views/tag/index'),
+        meta: { title: 'Table', icon: 'table' }
+      }
+    ]
+  },
+
+  {
     path: '/',
     component: Layout,
     redirect: '/dashboard',
@@ -144,17 +169,6 @@ export const constantRoutes = [
         path: 'menu2',
         component: () => import('@/views/nested/menu2/index'),
         meta: { title: 'menu2' }
-      }
-    ]
-  },
-
-  {
-    path: 'external-link',
-    component: Layout,
-    children: [
-      {
-        path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
-        meta: { title: 'External Link', icon: 'link' }
       }
     ]
   },
