@@ -30,3 +30,10 @@ export function remove(id) {
     method: 'delete'
   })
 }
+
+export function reorder(ids) {
+  return request({
+    url: '/tags/',
+    method: 'delete'
+  })
+}
