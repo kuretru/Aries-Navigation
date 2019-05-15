@@ -67,7 +67,7 @@ service.interceptors.response.use(
       duration: 5 * 1000
     })
 
-    if (res.code === 4010) {
+    if (res.code === 4011) {
       // to re-login
       MessageBox.confirm('You have been logged out, you can cancel to stay on this page, or log in again', 'Confirm logout', {
         confirmButtonText: 'Re-Login',
