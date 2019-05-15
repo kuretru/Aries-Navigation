@@ -61,7 +61,7 @@ export const constantRoutes = [
     children: [
       {
         path: 'tag',
-        name: 'Tag',
+        name: '标签管理',
         component: () => import('@/views/tag/index'),
         meta: { title: 'Table', icon: 'table' }
       }
@@ -87,12 +87,6 @@ export const constantRoutes = [
     name: 'Example',
     meta: { title: 'Example', icon: 'example' },
     children: [
-      {
-        path: 'table',
-        name: 'Table',
-        component: () => import('@/views/table/index'),
-        meta: { title: 'Table', icon: 'table' }
-      },
       {
         path: 'tree',
         name: 'Tree',
