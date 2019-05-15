@@ -11,6 +11,7 @@
     </div>
 
     <el-table
+      ref="dragTable"
       v-loading="listLoading"
       :data="list"
       element-loading-text="Loading"
@@ -21,9 +22,11 @@
       <el-table-column label="ID" align="center" width="95">
         <template slot-scope="scope">{{ scope.row.id }}</template>
       </el-table-column>
+
       <el-table-column label="标签名称" align="center" width="100">
         <template slot-scope="scope">{{ scope.row.name }}</template>
       </el-table-column>
+
       <el-table-column label="操作" align="center" width="230" class-name="small-padding fixed-width">
         <template slot-scope="{row}">
           <el-button type="primary" size="mini" @click="handleUpdate(row)">
@@ -32,6 +35,12 @@
           <el-button type="danger" size="mini" @click="handleDelete(row)">
             删除
           </el-button>
+        </template>
+      </el-table-column>
+
+      <el-table-column align="center" label="拖动排序" width="100">
+        <template slot-scope="{}">
+          <svg-icon class="drag-handler" icon-class="drag" />
         </template>
       </el-table-column>
     </el-table>
@@ -57,12 +66,15 @@
 
 <script>
 import { list, create, update, remove } from '@/api/tag'
+import Sortable from 'sortablejs'
 
 export default {
   data() {
     return {
       list: null,
+      idList: [],
       listLoading: true,
+      sortable: null,
       temp: {
         name: ''
       },
@@ -87,6 +99,10 @@ export default {
         console.log(response)
         this.list = response.data
         this.listLoading = false
+        this.idList = this.list.map(v => v.id)
+        this.$nextTick(() => {
+          this.setSort()
+        })
       })
     },
     resetTemp() {
@@ -163,7 +179,36 @@ export default {
           })
         }
       })
+    },
+    setSort() {
+      const el = this.$refs.dragTable.$el.querySelectorAll('.el-table__body-wrapper > table > tbody')[0]
+      this.sortable = Sortable.create(el, {
+        ghostClass: 'sortable-ghost',
+        setData: function(dataTransfer) {
+          dataTransfer.setData('Text', '')
+        },
+        onEnd: evt => {
+          const tempIndex = this.idList.splice(evt.oldIndex, 1)[0]
+          this.idList.splice(evt.newIndex, 0, tempIndex)
+        }
+      })
     }
   }
 }
 </script>
+
+<style>
+.sortable-ghost{
+  opacity: .8;
+  color: #fff!important;
+  background: #42b983!important;
+}
+</style>
+
+<style scoped>
+.drag-handler{
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+</style>
