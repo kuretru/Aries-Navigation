@@ -5,6 +5,8 @@ import com.kuretru.web.navigation.entity.data.WebTagDO;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * @author 呉真 Kuretru < kuretru@gmail.com >
  */
@@ -18,5 +20,13 @@ public interface WebTagMapper extends BaseMapper<WebTagDO> {
      * @return 最大的排序号
      */
     Integer getMaxSequence();
+
+    /**
+     * 根据ID批量更新数据
+     *
+     * @param records 要更新的数据
+     * @return 受影响的行数
+     */
+    Integer updateBatchByIds(List<WebTagDO> records);
 
 }

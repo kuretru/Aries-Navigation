@@ -8,4 +8,28 @@
         from web_tag
     </select>
 
+    <update id="updateBatchByIds" parameterType="java.util.List">
+        update web_tag
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="name = CASE" suffix="END">
+                <foreach collection="list" item="item">
+                    <if test="item.name != null">
+                        when id = #{item.id} then #{item.name}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="sequence = CASE" suffix="END">
+                <foreach collection="list" item="item">
+                    <if test="item.sequence != null">
+                        when id = #{item.id} then #{item.sequence}
+                    </if>
+                </foreach>
+            </trim>
+        </trim>
+        where id in
+        <foreach collection="list" item="item" open="(" separator="," close=")">
+            ${item.id}
+        </foreach>
+    </update>
+
 </mapper>
