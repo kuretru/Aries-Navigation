@@ -33,7 +33,10 @@ export function remove(id) {
 
 export function reorder(ids) {
   return request({
-    url: '/tags/',
-    method: 'delete'
+    url: '/tags/reorder',
+    method: 'put',
+    data: {
+      idList: ids
+    }
   })
 }

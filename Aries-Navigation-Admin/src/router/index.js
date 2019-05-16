@@ -67,12 +67,12 @@ export const constantRoutes = [
   },
 
   {
-    path: '/tag',
+    path: '/tags',
     component: Layout,
     redirect: '/tags',
     children: [
       {
-        path: 'tag',
+        path: 'index',
         name: '标签管理',
         component: () => import('@/views/tag/index'),
         meta: { title: '标签管理', icon: 'table' }
