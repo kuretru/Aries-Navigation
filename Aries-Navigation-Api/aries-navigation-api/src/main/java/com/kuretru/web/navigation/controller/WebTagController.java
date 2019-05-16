@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 /**
  * @author 呉真 Kuretru < kuretru@gmail.com >
  */
@@ -30,9 +32,8 @@ public class WebTagController extends BaseRestController<WebTagService, WebTagDT
     @PutMapping("/reorder")
     public ApiResponse reorder(@RequestBody ReorderDTO record) throws ApiException {
         service.reorder(record.getIdList());
-        ApiResponse result = list();
-        result.setCode(ApiResponse.UPDATED);
-        return result;
+        List<WebTagDTO> result = service.list();
+        return ApiResponse.updated(result);
     }
 
 }

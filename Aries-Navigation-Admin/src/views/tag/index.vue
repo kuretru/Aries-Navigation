@@ -5,7 +5,7 @@
       <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
         新增
       </el-button>
-      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-sort" @click="handleCreate">
+      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-sort" @click="handlerReorder">
         保存新顺序
       </el-button>
     </div>
@@ -65,7 +65,7 @@
 </template>
 
 <script>
-import { list, create, update, remove } from '@/api/tag'
+import { list, create, update, remove, reorder } from '@/api/tag'
 import Sortable from 'sortablejs'
 
 export default {
@@ -143,6 +143,26 @@ export default {
         this.$message({
           type: 'info',
           message: '已取消删除'
+        })
+      })
+    },
+    handlerReorder() {
+      this.$confirm('是否保存新顺序？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        reorder(this.idList).then(response => {
+          // TODO 这里待解决更新数据后重置顺序的问题
+          this.$message({
+            type: 'success',
+            message: '新顺序保存成功!'
+          })
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消'
         })
       })
     },
