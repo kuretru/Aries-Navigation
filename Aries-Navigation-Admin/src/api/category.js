@@ -1,8 +1,8 @@
 import request from '@/utils/request'
 
-export function list(params) {
+export function listByTagId(tagId, params) {
   return request({
-    url: '/tags/',
+    url: '/tags/' + tagId + '/categories',
     method: 'get',
     params
   })

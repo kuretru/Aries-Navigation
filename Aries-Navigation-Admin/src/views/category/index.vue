@@ -26,7 +26,7 @@
         <template slot-scope="scope">{{ scope.row.id }}</template>
       </el-table-column>
 
-      <el-table-column label="标签名称" align="center" width="100">
+      <el-table-column label="分类名称" align="center" width="100">
         <template slot-scope="scope">{{ scope.row.name }}</template>
       </el-table-column>
 
@@ -68,7 +68,8 @@
 </template>
 
 <script>
-import { list, create, update, remove, reorder } from '@/api/tag'
+import { list } from '@/api/tag'
+import { listByTagId } from '@/api/category'
 import Sortable from 'sortablejs'
 
 export default {
@@ -103,14 +104,15 @@ export default {
       list().then(response => {
         this.tagList = response.data
         this.tagId = this.tagList[0].id
+        this.fetchData()
       })
     },
     onTagChange() {
-
+      this.fetchData()
     },
     fetchData() {
       this.listLoading = true
-      list().then(response => {
+      listByTagId(this.tagId).then(response => {
         console.log(response)
         this.list = response.data
         this.listLoading = false
