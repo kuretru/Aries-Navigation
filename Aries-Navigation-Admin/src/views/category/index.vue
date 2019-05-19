@@ -158,7 +158,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        remove(row.id).then(() => {
+        remove(this.tagId, row.id).then(() => {
           this.fetchData()
           this.$message({
             type: 'success',
