@@ -3,6 +3,7 @@ package com.kuretru.web.navigation.controller;
 import com.kuretru.api.common.annotation.RequestAuthorization;
 import com.kuretru.api.common.controller.BaseCrudController;
 import com.kuretru.api.common.entity.ApiResponse;
+import com.kuretru.api.common.entity.transfer.ReorderDTO;
 import com.kuretru.api.common.exception.ApiException;
 import com.kuretru.api.common.exception.NotFoundException;
 import com.kuretru.web.navigation.entity.transfer.WebCategoryDTO;
@@ -56,6 +57,14 @@ public class WebCategoryController extends BaseCrudController<WebCategoryService
     @Override
     public ApiResponse remove(@PathVariable("id") Long id) throws ApiException {
         return super.remove(id);
+    }
+
+    @RequestAuthorization
+    @PutMapping("/reorder")
+    public ApiResponse reorder(@RequestBody ReorderDTO record) throws ApiException {
+        service.reorder(record.getIdList());
+        List<WebCategoryDTO> result = service.list();
+        return ApiResponse.updated(result);
     }
 
 }

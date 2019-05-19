@@ -49,7 +49,7 @@ public class WebTagServiceImpl extends BaseServiceImpl<WebTagMapper, WebTagDO, W
             record.setSequence(sequence++);
             records.add(record);
         }
-        Integer result = mapper.updateBatchByIds(records);
+        Integer result = mapper.updateSequenceByIds(records);
         if (result == null || result != idList.size()) {
             throw new NotFoundException("部分记录不存在！");
         }
