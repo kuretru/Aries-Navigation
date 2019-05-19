@@ -50,6 +50,11 @@
 
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
+        <el-form-item label="标签" prop="name">
+          <el-select v-model="temp.tagId" class="filter-item" placeholder="Please select">
+            <el-option v-for="item in tagList" :key="item.id" :label="item.name" :value="item.id" />
+          </el-select>
+        </el-form-item>
         <el-form-item label="名称" prop="name">
           <el-input v-model="temp.name" />
         </el-form-item>
@@ -68,8 +73,8 @@
 </template>
 
 <script>
-import { list } from '@/api/tag'
-import { listByTagId } from '@/api/category'
+import { list as listTags } from '@/api/tag'
+import { list, create, update, remove, reorder } from '@/api/category'
 import Sortable from 'sortablejs'
 
 export default {
@@ -82,6 +87,7 @@ export default {
       listLoading: true,
       sortable: null,
       temp: {
+        tagId: 0,
         name: ''
       },
       dialogStatus: '',
@@ -91,17 +97,16 @@ export default {
         create: '新增'
       },
       rules: {
-        name: [{ required: true, message: '标签名称是必填项', trigger: 'blur' }]
+        name: [{ required: true, message: '分类名称是必填项', trigger: 'blur' }]
       }
     }
   },
   created() {
     this.fetchTags()
-    // this.fetchData()
   },
   methods: {
     fetchTags() {
-      list().then(response => {
+      listTags().then(response => {
         this.tagList = response.data
         this.tagId = this.tagList[0].id
         this.fetchData()
@@ -112,7 +117,7 @@ export default {
     },
     fetchData() {
       this.listLoading = true
-      listByTagId(this.tagId).then(response => {
+      list(this.tagId).then(response => {
         console.log(response)
         this.list = response.data
         this.listLoading = false
@@ -120,10 +125,14 @@ export default {
         this.$nextTick(() => {
           this.setSort()
         })
+      }).catch(response => {
+        this.list = []
+        this.listLoading = false
       })
     },
     resetTemp() {
       this.temp = {
+        tagId: this.tagId,
         name: ''
       }
     },
@@ -144,7 +153,7 @@ export default {
       })
     },
     handleDelete(row) {
-      this.$confirm('是否删除标签【' + row.name + '】？', '提示', {
+      this.$confirm('是否删除分类【' + row.name + '】？', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
@@ -153,7 +162,7 @@ export default {
           this.fetchData()
           this.$message({
             type: 'success',
-            message: '标签信息删除成功!'
+            message: '分类信息删除成功!'
           })
         })
       }).catch(() => {
@@ -169,7 +178,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        reorder(this.idList).then(response => {
+        reorder(this.tagId, this.idList).then(response => {
           // TODO 这里待解决更新数据后重置顺序的问题
           this.$message({
             type: 'success',
@@ -190,7 +199,7 @@ export default {
             this.list.push(response.data)
             this.dialogFormVisible = false
             this.$message({
-              message: '标签信息新增成功',
+              message: '分类信息新增成功',
               type: 'success'
             })
           })
@@ -201,16 +210,10 @@ export default {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
           update(this.temp).then((response) => {
-            for (const v of this.list) {
-              if (v.id === this.temp.id) {
-                const index = this.list.indexOf(v)
-                this.list.splice(index, 1, this.temp)
-                break
-              }
-            }
+            this.fetchData()
             this.dialogFormVisible = false
             this.$message({
-              message: '标签信息修改成功',
+              message: '分类信息修改成功',
               type: 'success'
             })
           })
