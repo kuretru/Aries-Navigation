@@ -27,6 +27,6 @@ public interface WebTagMapper extends BaseMapper<WebTagDO> {
      * @param records 要更新的数据
      * @return 受影响的行数
      */
-    Integer updateBatchByIds(List<WebTagDO> records);
+    Integer updateSequenceByIds(List<WebTagDO> records);
 
 }

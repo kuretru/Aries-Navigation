@@ -25,6 +25,7 @@ public interface WebTagService extends BaseService<WebTagMapper, WebTagDO, WebTa
      *
      * @param idList 要重新排序的ID列表
      * @return 受影响的行数
+     * @throws ApiException 业务异常
      */
     int reorder(List<Long> idList) throws ApiException;
 
