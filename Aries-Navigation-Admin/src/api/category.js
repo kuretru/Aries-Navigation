@@ -1,8 +1,8 @@
 import request from '@/utils/request'
 
-export function listByTagId(tagId, params) {
+export function list(tagId, params) {
   return request({
-    url: '/tags/' + tagId + '/categories',
+    url: '/tags/' + tagId + '/categories/',
     method: 'get',
     params
   })
@@ -10,7 +10,7 @@ export function listByTagId(tagId, params) {
 
 export function create(data) {
   return request({
-    url: '/tags/',
+    url: '/tags/' + data.tagId + '/categories/',
     method: 'post',
     data
   })
@@ -18,22 +18,22 @@ export function create(data) {
 
 export function update(data) {
   return request({
-    url: '/tags/' + data.id,
+    url: '/tags/' + data.tagId + '/categories/' + data.id,
     method: 'put',
     data
   })
 }
 
-export function remove(id) {
+export function remove(tagId, id) {
   return request({
-    url: '/tags/' + id,
+    url: '/tags/' + tagId + '/categories/' + id,
     method: 'delete'
   })
 }
 
-export function reorder(ids) {
+export function reorder(tagId, ids) {
   return request({
-    url: '/tags/reorder',
+    url: '/tags/' + tagId + '/categories/reorder',
     method: 'put',
     data: {
       idList: ids

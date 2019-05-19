@@ -103,6 +103,9 @@ export default {
         this.$nextTick(() => {
           this.setSort()
         })
+      }).catch(response => {
+        this.list = []
+        this.listLoading = false
       })
     },
     resetTemp() {
