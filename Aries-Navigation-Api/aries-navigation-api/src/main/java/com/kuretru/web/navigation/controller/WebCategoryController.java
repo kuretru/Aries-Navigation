@@ -61,9 +61,9 @@ public class WebCategoryController extends BaseCrudController<WebCategoryService
 
     @RequestAuthorization
     @PutMapping("/reorder")
-    public ApiResponse reorder(@RequestBody ReorderDTO record) throws ApiException {
+    public ApiResponse reorder(@PathVariable("tagId") Long tagId, @RequestBody ReorderDTO record) throws ApiException {
         service.reorder(record.getIdList());
-        List<WebCategoryDTO> result = service.list();
+        List<WebCategoryDTO> result = service.list(tagId);
         return ApiResponse.updated(result);
     }
 

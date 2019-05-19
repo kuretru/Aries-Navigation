@@ -18,17 +18,15 @@
       v-loading="listLoading"
       :data="list"
       element-loading-text="Loading"
+      row-key="id"
+      stripe
       border
       fit
       highlight-current-row
     >
-      <el-table-column label="ID" align="center" width="95">
-        <template slot-scope="scope">{{ scope.row.id }}</template>
-      </el-table-column>
+      <el-table-column prop="id" label="ID" align="center" width="95" />
 
-      <el-table-column label="分类名称" align="center" width="100">
-        <template slot-scope="scope">{{ scope.row.name }}</template>
-      </el-table-column>
+      <el-table-column prop="name" label="分类名称" align="center" width="100" />
 
       <el-table-column label="操作" align="center" width="230" class-name="small-padding fixed-width">
         <template slot-scope="{row}">
@@ -42,9 +40,7 @@
       </el-table-column>
 
       <el-table-column align="center" label="拖动排序" width="100">
-        <template slot-scope="{}">
-          <svg-icon class="drag-handler" icon-class="drag" />
-        </template>
+        <svg-icon class="drag-handler" icon-class="drag" />
       </el-table-column>
     </el-table>
 
@@ -179,7 +175,7 @@ export default {
         type: 'warning'
       }).then(() => {
         reorder(this.tagId, this.idList).then(response => {
-          // TODO 这里待解决更新数据后重置顺序的问题
+          this.list = response.data
           this.$message({
             type: 'success',
             message: '新顺序保存成功!'
