@@ -1,0 +1,270 @@
+<template>
+  <div class="app-container">
+
+    <div class="filter-container">
+      <el-select v-model="tagId" placeholder="标签" class="filter-item" style="width: 130px" @change="onTagChange">
+        <el-option v-for="item in tagList" :key="item.id" :label="item.name" :value="item.id" />
+      </el-select>
+      <el-select v-model="categoryId" placeholder="分类" class="filter-item" style="width: 130px" @change="onCategoryChange">
+        <el-option v-for="item in categoryList" :key="item.id" :label="item.name" :value="item.id" />
+      </el-select>
+      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
+        新增
+      </el-button>
+      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-sort" @click="handlerReorder">
+        保存新顺序
+      </el-button>
+    </div>
+
+    <el-table
+      ref="dragTable"
+      v-loading="listLoading"
+      :data="list"
+      element-loading-text="Loading"
+      row-key="id"
+      stripe
+      border
+      fit
+      highlight-current-row
+    >
+      <el-table-column prop="id" label="ID" align="center" width="95" />
+
+      <el-table-column prop="name" label="导航名称" align="center" width="100">
+        <template slot-scope="{row}">
+          <a :href="row.siteUrl" target="blank">{{ row.name }}</a>
+        </template>
+      </el-table-column>
+
+      <el-table-column label="操作" align="center" width="230" class-name="small-padding fixed-width">
+        <template slot-scope="{row}">
+          <el-button type="primary" size="mini" @click="handleUpdate(row)">
+            编辑
+          </el-button>
+          <el-button type="danger" size="mini" @click="handleDelete(row)">
+            删除
+          </el-button>
+        </template>
+      </el-table-column>
+
+      <el-table-column align="center" label="拖动排序" width="100">
+        <svg-icon class="drag-handler" icon-class="drag" />
+      </el-table-column>
+    </el-table>
+
+    <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
+      <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
+        <el-form-item label="标签" prop="name">
+          <el-select v-model="temp.tagId" class="filter-item" placeholder="Please select">
+            <el-option v-for="item in tagList" :key="item.id" :label="item.name" :value="item.id" />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="名称" prop="name">
+          <el-input v-model="temp.name" />
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">
+          取消
+        </el-button>
+        <el-button type="primary" @click="dialogStatus==='create'?createData():updateData()">
+          保存
+        </el-button>
+      </div>
+    </el-dialog>
+
+  </div>
+</template>
+
+<script>
+import { list as listTags } from '@/api/tag'
+import { list as listCategories } from '@/api/category'
+import { list } from '@/api/site'
+import Sortable from 'sortablejs'
+
+export default {
+  data() {
+    return {
+      tagList: null,
+      tagId: null,
+      categoryList: null,
+      categoryId: null,
+      list: null,
+      idList: [],
+      listLoading: true,
+      sortable: null,
+      temp: {
+        tagId: 0,
+        name: ''
+      },
+      dialogStatus: '',
+      dialogFormVisible: false,
+      textMap: {
+        update: '编辑',
+        create: '新增'
+      },
+      rules: {
+        name: [{ required: true, message: '分类名称是必填项', trigger: 'blur' }]
+      }
+    }
+  },
+  created() {
+    this.fetchTags()
+  },
+  methods: {
+    fetchTags() {
+      listTags().then(response => {
+        this.tagList = response.data
+        this.tagId = this.tagList[0].id
+        this.fetchCategories()
+      })
+    },
+    fetchCategories() {
+      listCategories(this.tagId).then(response => {
+        this.categoryList = response.data
+        this.categoryId = this.categoryList[0].id
+        this.fetchData()
+      })
+    },
+    onTagChange() {
+      this.fetchCategories()
+    },
+    onCategoryChange() {
+      this.fetchData()
+    },
+    fetchData() {
+      this.listLoading = true
+      list(this.tagId, this.categoryId).then(response => {
+        console.log(response)
+        this.list = response.data
+        this.listLoading = false
+        this.idList = this.list.map(v => v.id)
+        this.$nextTick(() => {
+          this.setSort()
+        })
+      }).catch(response => {
+        this.list = []
+        this.listLoading = false
+      })
+    },
+    resetTemp() {
+      this.temp = {
+        tagId: this.tagId,
+        name: ''
+      }
+    },
+    handleCreate() {
+      this.resetTemp()
+      this.dialogStatus = 'create'
+      this.dialogFormVisible = true
+      this.$nextTick(() => {
+        this.$refs['dataForm'].clearValidate()
+      })
+    },
+    handleUpdate(row) {
+      this.temp = Object.assign({}, row)
+      this.dialogStatus = 'update'
+      this.dialogFormVisible = true
+      this.$nextTick(() => {
+        this.$refs['dataForm'].clearValidate()
+      })
+    },
+    handleDelete(row) {
+      this.$confirm('是否删除分类【' + row.name + '】？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        remove(this.tagId, row.id).then(() => {
+          this.fetchData()
+          this.$message({
+            type: 'success',
+            message: '分类信息删除成功!'
+          })
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
+      })
+    },
+    handlerReorder() {
+      this.$confirm('是否保存新顺序？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        reorder(this.tagId, this.idList).then(response => {
+          this.list = response.data
+          this.$message({
+            type: 'success',
+            message: '新顺序保存成功!'
+          })
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消'
+        })
+      })
+    },
+    createData() {
+      this.$refs['dataForm'].validate((valid) => {
+        if (valid) {
+          create(this.temp).then((response) => {
+            this.list.push(response.data)
+            this.dialogFormVisible = false
+            this.$message({
+              message: '分类信息新增成功',
+              type: 'success'
+            })
+          })
+        }
+      })
+    },
+    updateData() {
+      this.$refs['dataForm'].validate((valid) => {
+        if (valid) {
+          update(this.temp).then((response) => {
+            this.fetchData()
+            this.dialogFormVisible = false
+            this.$message({
+              message: '分类信息修改成功',
+              type: 'success'
+            })
+          })
+        }
+      })
+    },
+    setSort() {
+      const el = this.$refs.dragTable.$el.querySelectorAll('.el-table__body-wrapper > table > tbody')[0]
+      this.sortable = Sortable.create(el, {
+        ghostClass: 'sortable-ghost',
+        setData: function(dataTransfer) {
+          dataTransfer.setData('Text', '')
+        },
+        onEnd: evt => {
+          const tempIndex = this.idList.splice(evt.oldIndex, 1)[0]
+          this.idList.splice(evt.newIndex, 0, tempIndex)
+        }
+      })
+    }
+  }
+}
+</script>
+
+<style>
+.sortable-ghost{
+  opacity: .8;
+  color: #fff!important;
+  background: #42b983!important;
+}
+</style>
+
+<style scoped>
+.drag-handler{
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+</style>
