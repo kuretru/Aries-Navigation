@@ -95,6 +95,20 @@ export const constantRoutes = [
   },
 
   {
+    path: '/sites',
+    component: Layout,
+    redirect: '/sites',
+    children: [
+      {
+        path: 'index',
+        name: '导航管理',
+        component: () => import('@/views/site/index'),
+        meta: { title: '导航管理', icon: 'table' }
+      }
+    ]
+  },
+
+  {
     path: '/form',
     component: Layout,
     children: [
