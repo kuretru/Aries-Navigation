@@ -54,12 +54,20 @@
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
         <el-form-item label="标签" prop="name">
-          <el-select v-model="temp.tagId" class="filter-item" placeholder="Please select">
+          <el-select v-model="temp.tagId" class="filter-item" placeholder="Please select" @change="onTagChange">
             <el-option v-for="item in tagList" :key="item.id" :label="item.name" :value="item.id" />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="分类" prop="name">
+          <el-select v-model="temp.categoryId" class="filter-item" placeholder="Please select">
+            <el-option v-for="item in categoryList" :key="item.id" :label="item.name" :value="item.id" />
           </el-select>
         </el-form-item>
         <el-form-item label="名称" prop="name">
           <el-input v-model="temp.name" />
+        </el-form-item>
+        <el-form-item label="链接" prop="name">
+          <el-input v-model="temp.siteUrl" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -94,7 +102,10 @@ export default {
       sortable: null,
       temp: {
         tagId: 0,
-        name: ''
+        categoryId: 0,
+        name: '',
+        imageUrl: '',
+        siteUrl: ''
       },
       dialogStatus: '',
       dialogFormVisible: false,
@@ -149,7 +160,10 @@ export default {
     resetTemp() {
       this.temp = {
         tagId: this.tagId,
-        name: ''
+        categoryId: this.categoryId,
+        name: '',
+        imageUrl: '',
+        siteUrl: ''
       }
     },
     handleCreate() {
@@ -162,6 +176,7 @@ export default {
     },
     handleUpdate(row) {
       this.temp = Object.assign({}, row)
+      this.temp.tagId = this.tagId
       this.dialogStatus = 'update'
       this.dialogFormVisible = true
       this.$nextTick(() => {
