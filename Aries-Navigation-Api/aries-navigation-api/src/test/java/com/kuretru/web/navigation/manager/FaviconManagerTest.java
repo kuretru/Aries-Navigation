@@ -1,5 +1,6 @@
 package com.kuretru.web.navigation.manager;
 
+import com.kuretru.api.common.exception.ApiException;
 import com.kuretru.web.navigation.ApplicationTests;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,13 @@ public class FaviconManagerTest extends ApplicationTests {
         assertEquals(answer, faviconManager.getFaviconUrl(url1));
         assertEquals(answer, faviconManager.getFaviconUrl(url2));
         assertEquals(answer, faviconManager.getFaviconUrl(url3));
+    }
+
+    @Test
+    public void downloadFavicon() throws ApiException {
+        String url = "https://www.baidu.com/xxx?keywork=test";
+        String path = faviconManager.downloadFavicon(url);
+        System.out.println(path);
     }
 
 }
