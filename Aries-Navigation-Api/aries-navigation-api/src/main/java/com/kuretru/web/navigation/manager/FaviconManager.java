@@ -1,5 +1,7 @@
 package com.kuretru.web.navigation.manager;
 
+import com.kuretru.api.common.exception.ApiException;
+
 /**
  * @author 呉真 Kuretru < kuretru@gmail.com >
  */
@@ -20,5 +22,13 @@ public interface FaviconManager {
      * @return 网站图标的路径
      */
     String getFaviconUrl(String url);
+
+    /**
+     * 下载网站图标
+     *
+     * @param url 网站图标路径
+     * @return 本地存储的文件名
+     */
+    String downloadFavicon(String url) throws ApiException;
 
 }
