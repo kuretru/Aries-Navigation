@@ -1,3 +1,6 @@
+####################     项目属性        ####################
+kuretru.common.file-upload-root=/home/nginx/Aries-Navigation/data/
+kuretru.common.file-cdn-prefix=http://127.0.0.1:7012/
 ####################     环境配置        ####################
 # 可以将此文件复制多份，以适配不同环境
 # application-development.properties   ->   开发环境

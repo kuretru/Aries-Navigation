@@ -28,6 +28,7 @@ public interface FaviconManager {
      *
      * @param url 网站图标路径
      * @return 本地存储的文件名
+     * @throws ApiException 业务异常
      */
     String downloadFavicon(String url) throws ApiException;
 

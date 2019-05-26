@@ -29,7 +29,7 @@ public class FaviconManagerImpl implements FaviconManager {
 
     @Autowired
     public FaviconManagerImpl(CommonProperties commonProperties) {
-        this.TEMP_UPLOAD_PATH = commonProperties.getFileUploadRoot() + "temp" + File.separator;
+        this.TEMP_UPLOAD_PATH = commonProperties.getFileUploadRoot() + "temporary" + File.separator;
     }
 
     @Override
@@ -60,13 +60,16 @@ public class FaviconManagerImpl implements FaviconManager {
     public String downloadFavicon(String urlString) throws ApiException {
         urlString = fixUrlPrefix(urlString);
         urlString = getFaviconUrl(urlString);
-        String imagePath = TEMP_UPLOAD_PATH + UUID.randomUUID().toString() + ".ico";
+        String imageName = UUID.randomUUID().toString() + ".ico";
+        String imagePath = TEMP_UPLOAD_PATH + imageName;
         try {
+            //Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress("127.0.0.1", 1081));
             URL url = new URL(urlString);
             URLConnection connection = url.openConnection();
             connection.setConnectTimeout(2000);
             @Cleanup InputStream inputStream = connection.getInputStream();
             @Cleanup OutputStream outputStream = new FileOutputStream(imagePath);
+
             byte[] buffer = new byte[1024];
             int length;
             while ((length = inputStream.read(buffer)) != -1) {
@@ -75,11 +78,11 @@ public class FaviconManagerImpl implements FaviconManager {
         } catch (MalformedURLException e) {
             throw new InvalidParametersException("给定URL地址不合法！");
         } catch (IOException e) {
-            throw new ApiException("下载网站图标失败！");
+            throw new ApiException(e.getClass().getSimpleName() + "：" + e.getMessage());
         } catch (Exception e) {
             throw new ApiException(e.getMessage());
         }
-        return imagePath;
+        return imageName;
     }
 
 }

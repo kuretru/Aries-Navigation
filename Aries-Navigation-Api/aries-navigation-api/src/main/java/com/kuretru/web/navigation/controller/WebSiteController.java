@@ -5,14 +5,12 @@ import com.kuretru.api.common.controller.BaseCrudController;
 import com.kuretru.api.common.entity.ApiResponse;
 import com.kuretru.api.common.exception.ApiException;
 import com.kuretru.api.common.exception.NotFoundException;
+import com.kuretru.web.navigation.entity.transfer.WebFaviconDTO;
 import com.kuretru.web.navigation.entity.transfer.WebSiteDTO;
 import com.kuretru.web.navigation.service.WebSiteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -35,6 +33,13 @@ public class WebSiteController extends BaseCrudController<WebSiteService, WebSit
         if (result.isEmpty()) {
             throw new NotFoundException("未找到相关对象！");
         }
+        return ApiResponse.success(result);
+    }
+
+    @RequestAuthorization
+    @PostMapping("/favicon")
+    public ApiResponse fetchFavicon(@RequestBody WebFaviconDTO record) throws ApiException {
+        WebFaviconDTO result = service.fetchFavicon(record);
         return ApiResponse.success(result);
     }
 
