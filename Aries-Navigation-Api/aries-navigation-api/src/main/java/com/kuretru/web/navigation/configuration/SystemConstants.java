@@ -13,6 +13,11 @@ public class SystemConstants {
     /**
      * 上传文件后存放的临时目录
      */
-    public static final String TEMPORARY_DIRECTORY="temporary";
+    public static final String TEMPORARY_DIRECTORY = "temporary";
+
+    /**
+     * 网站图标文件存放的目录
+     */
+    public static final String ICON_DIRECTORY = "icons";
 
 }

@@ -32,4 +32,13 @@ public interface FaviconManager {
      */
     String downloadFavicon(String url) throws ApiException;
 
+    /**
+     * 确认网站图标，将图标从临时目录移至正式目录
+     *
+     * @param fileName 网站图标文件名
+     * @return 网站图标正式路径
+     * @throws ApiException 业务异常
+     */
+    String confirmFavicon(String fileName) throws ApiException;
+
 }
