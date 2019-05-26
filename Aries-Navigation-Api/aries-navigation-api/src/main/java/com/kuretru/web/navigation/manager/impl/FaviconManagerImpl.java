@@ -4,6 +4,7 @@ import com.kuretru.api.common.configuration.CommonProperties;
 import com.kuretru.api.common.exception.ApiException;
 import com.kuretru.api.common.exception.InvalidParametersException;
 import com.kuretru.api.common.util.StringUtils;
+import com.kuretru.web.navigation.configuration.SystemConstants;
 import com.kuretru.web.navigation.manager.FaviconManager;
 import lombok.Cleanup;
 import lombok.NonNull;
@@ -25,11 +26,13 @@ public class FaviconManagerImpl implements FaviconManager {
     private static final String HTTP_URL_PREFIX = "http://";
     private static final String HTTPS_URL_PREFIX = "https://";
     private static final String FAVICON = "/favicon.ico";
-    private final String TEMP_UPLOAD_PATH;
+    private final String TEMP_PATH;
+    private final String ICON_PATH;
 
     @Autowired
     public FaviconManagerImpl(CommonProperties commonProperties) {
-        this.TEMP_UPLOAD_PATH = commonProperties.getFileUploadRoot() + "temporary" + File.separator;
+        this.TEMP_PATH = commonProperties.getFileUploadRoot() + SystemConstants.TEMPORARY_DIRECTORY + File.separator;
+        this.ICON_PATH = commonProperties.getFileUploadRoot() + SystemConstants.ICON_DIRECTORY + File.separator;
     }
 
     @Override
@@ -57,11 +60,11 @@ public class FaviconManagerImpl implements FaviconManager {
     }
 
     @Override
-    public String downloadFavicon(String urlString) throws ApiException {
+    public String downloadFavicon(@NonNull String urlString) throws ApiException {
         urlString = fixUrlPrefix(urlString);
         urlString = getFaviconUrl(urlString);
         String imageName = UUID.randomUUID().toString() + ".ico";
-        String imagePath = TEMP_UPLOAD_PATH + imageName;
+        String imagePath = TEMP_PATH + imageName;
         try {
             //Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress("127.0.0.1", 1081));
             URL url = new URL(urlString);
@@ -83,6 +86,19 @@ public class FaviconManagerImpl implements FaviconManager {
             throw new ApiException(e.getMessage());
         }
         return imageName;
+    }
+
+    @Override
+    public String confirmFavicon(@NonNull String fileName) throws ApiException {
+        String path = TEMP_PATH + fileName;
+        String destPath = ICON_PATH + fileName;
+        File file = new File(path);
+        if (!file.exists()) {
+            throw new InvalidParametersException("该图标文件不存在！");
+        }
+        File dest = new File(destPath);
+        file.renameTo(dest);
+        return SystemConstants.ICON_DIRECTORY + "/" + fileName;
     }
 
 }

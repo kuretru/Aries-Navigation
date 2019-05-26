@@ -5,6 +5,7 @@ import com.kuretru.api.common.configuration.CommonProperties;
 import com.kuretru.api.common.exception.ApiException;
 import com.kuretru.api.common.exception.NotFoundException;
 import com.kuretru.api.common.service.impl.BaseServiceImpl;
+import com.kuretru.api.common.util.StringUtils;
 import com.kuretru.web.navigation.configuration.SystemConstants;
 import com.kuretru.web.navigation.entity.data.WebSiteDO;
 import com.kuretru.web.navigation.entity.transfer.WebFaviconDTO;
@@ -12,6 +13,7 @@ import com.kuretru.web.navigation.entity.transfer.WebSiteDTO;
 import com.kuretru.web.navigation.manager.FaviconManager;
 import com.kuretru.web.navigation.mapper.WebSiteMapper;
 import com.kuretru.web.navigation.service.WebSiteService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -51,12 +53,19 @@ public class WebSiteServiceImpl extends BaseServiceImpl<WebSiteMapper, WebSiteDO
     }
 
     @Override
-    public WebSiteDTO save(WebSiteDTO record) {
+    public WebSiteDTO save(WebSiteDTO record) throws ApiException {
+        record.setImageUrl(handleImageUrl(record.getImageUrl()));
         WebSiteDO data = dtoToDO(record);
         data.addCrateTime();
         data.setSequence(getMaxSequence(record.getCategoryId()) + 1);
         mapper.insert(data);
         return get(data.getId());
+    }
+
+    @Override
+    public WebSiteDTO update(WebSiteDTO record) throws ApiException {
+        record.setImageUrl(handleImageUrl(record.getImageUrl()));
+        return super.update(record);
     }
 
     @Override
@@ -81,6 +90,34 @@ public class WebSiteServiceImpl extends BaseServiceImpl<WebSiteMapper, WebSiteDO
         String path = faviconManager.downloadFavicon(record.getUrl());
         path = commonProperties.getFileCdnPrefix() + SystemConstants.TEMPORARY_DIRECTORY + "/" + path;
         return new WebFaviconDTO(path);
+    }
+
+    @Override
+    public WebSiteDTO doToDTO(WebSiteDO record) {
+        if (record == null) {
+            return null;
+        }
+        WebSiteDTO result = new WebSiteDTO();
+        BeanUtils.copyProperties(record, result);
+        String imageUrl = commonProperties.getFileCdnPrefix() + record.getImageUrl();
+        result.setImageUrl(imageUrl);
+        return result;
+    }
+
+    private String handleImageUrl(String imageUrl) throws ApiException {
+        if (StringUtils.isNullOrEmpty(imageUrl)) {
+            return "";
+        }
+        int index = imageUrl.lastIndexOf("/");
+        if (index == -1) {
+            return imageUrl;
+        }
+        boolean temporary = imageUrl.contains(SystemConstants.TEMPORARY_DIRECTORY);
+        imageUrl = imageUrl.substring(index + 1);
+        if (temporary) {
+            imageUrl = faviconManager.confirmFavicon(imageUrl);
+        }
+        return imageUrl;
     }
 
 }
