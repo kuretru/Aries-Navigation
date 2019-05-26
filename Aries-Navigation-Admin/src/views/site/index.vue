@@ -53,12 +53,12 @@
 
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
-        <el-form-item label="标签" prop="name">
+        <el-form-item label="标签" prop="tagId">
           <el-select v-model="temp.tagId" class="filter-item" placeholder="Please select" @change="onTempTagChange">
             <el-option v-for="item in temp.tagList" :key="item.id" :label="item.name" :value="item.id" />
           </el-select>
         </el-form-item>
-        <el-form-item label="分类" prop="name">
+        <el-form-item label="分类" prop="categoryId">
           <el-select v-model="temp.categoryId" class="filter-item" placeholder="Please select">
             <el-option v-for="item in temp.categoryList" :key="item.id" :label="item.name" :value="item.id" />
           </el-select>
@@ -66,8 +66,11 @@
         <el-form-item label="名称" prop="name">
           <el-input v-model="temp.name" />
         </el-form-item>
-        <el-form-item label="链接" prop="name">
-          <el-input v-model="temp.siteUrl" />
+        <el-form-item label="链接" prop="siteUrl">
+          <el-input v-model="temp.siteUrl" @blur="onSiteUrlChange" />
+        </el-form-item>
+        <el-form-item label="图标">
+          <img :src="temp.imageUrl" class="favicon">
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -86,7 +89,7 @@
 <script>
 import { list as listTags } from '@/api/tag'
 import { list as listCategories } from '@/api/category'
-import { list, create, update, remove, reorder } from '@/api/site'
+import { list, create, update, remove, reorder, fetchFavicon } from '@/api/site'
 import Sortable from 'sortablejs'
 
 export default {
@@ -116,7 +119,10 @@ export default {
         create: '新增'
       },
       rules: {
-        name: [{ required: true, message: '分类名称是必填项', trigger: 'blur' }]
+        tagId: [{ required: true, message: '标签ID是必填项', trigger: 'blur' }],
+        categoryId: [{ required: true, message: '分类ID是必填项', trigger: 'blur' }],
+        name: [{ required: true, message: '站点名称是必填项', trigger: 'blur' }],
+        siteUrl: [{ required: true, message: '站点地址是必填项', trigger: 'blur' }]
       }
     }
   },
@@ -129,6 +135,20 @@ export default {
     },
     onCategoryChange() {
       this.fetchData()
+    },
+    onSiteUrlChange() {
+      if (this.temp.siteUrl) {
+        fetchFavicon(this.temp.tagId, this.temp.categoryId, this.temp.siteUrl)
+          .then((response) => {
+            this.temp.imageUrl = response.data.url
+            console.log(response)
+          })
+          .catch((error) => {
+            const response = error.response.data
+            this.temp.imageUrl = ''
+            console.log(response)
+          })
+      }
     },
     onTempTagChange() {
       listCategories(this.temp.tagId).then(response => {
@@ -289,6 +309,11 @@ export default {
   color: #fff!important;
   background: #42b983!important;
 }
+
+.favicon{
+  width: 16px;
+  height: 16px;
+}
 </style>
 
 <style scoped>
@@ -298,3 +323,4 @@ export default {
   cursor: pointer;
 }
 </style>
+
