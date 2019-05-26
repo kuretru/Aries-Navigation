@@ -33,12 +33,27 @@ public class WebSiteServiceImpl extends BaseServiceImpl<WebSiteMapper, WebSiteDO
     }
 
     @Override
+    public int getMaxSequence(long categoryId) {
+        Integer result = mapper.getMaxSequence(categoryId);
+        return result == null ? 0 : result;
+    }
+
+    @Override
     public List<WebSiteDTO> list(long categoryId) {
         QueryWrapper<WebSiteDO> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("category_id", categoryId);
         queryWrapper.orderByAsc("sequence");
         List<WebSiteDO> records = mapper.selectList(queryWrapper);
         return doToDTO(records);
+    }
+
+    @Override
+    public WebSiteDTO save(WebSiteDTO record) {
+        WebSiteDO data = dtoToDO(record);
+        data.addCrateTime();
+        data.setSequence(getMaxSequence(record.getCategoryId()) + 1);
+        mapper.insert(data);
+        return get(data.getId());
     }
 
     @Override

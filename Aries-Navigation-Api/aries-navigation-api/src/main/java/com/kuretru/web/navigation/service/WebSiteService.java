@@ -15,6 +15,14 @@ import java.util.List;
 public interface WebSiteService extends BaseService<WebSiteMapper, WebSiteDO, WebSiteDTO> {
 
     /**
+     * 查询数据库中指定分类下的最大的排序号
+     *
+     * @param categoryId CategoryID
+     * @return 最大的排序号
+     */
+    int getMaxSequence(long categoryId);
+
+    /**
      * 获取指定CategoryID下的所有记录
      *
      * @param categoryId CategoryID
