@@ -54,13 +54,13 @@
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
         <el-form-item label="标签" prop="name">
-          <el-select v-model="temp.tagId" class="filter-item" placeholder="Please select" @change="onTagChange">
-            <el-option v-for="item in tagList" :key="item.id" :label="item.name" :value="item.id" />
+          <el-select v-model="temp.tagId" class="filter-item" placeholder="Please select" @change="onTempTagChange">
+            <el-option v-for="item in temp.tagList" :key="item.id" :label="item.name" :value="item.id" />
           </el-select>
         </el-form-item>
         <el-form-item label="分类" prop="name">
           <el-select v-model="temp.categoryId" class="filter-item" placeholder="Please select">
-            <el-option v-for="item in categoryList" :key="item.id" :label="item.name" :value="item.id" />
+            <el-option v-for="item in temp.categoryList" :key="item.id" :label="item.name" :value="item.id" />
           </el-select>
         </el-form-item>
         <el-form-item label="名称" prop="name">
@@ -86,7 +86,7 @@
 <script>
 import { list as listTags } from '@/api/tag'
 import { list as listCategories } from '@/api/category'
-import { list } from '@/api/site'
+import { list, create, update, remove, reorder } from '@/api/site'
 import Sortable from 'sortablejs'
 
 export default {
@@ -105,7 +105,9 @@ export default {
         categoryId: 0,
         name: '',
         imageUrl: '',
-        siteUrl: ''
+        siteUrl: '',
+        tagList: null,
+        categoryList: null
       },
       dialogStatus: '',
       dialogFormVisible: false,
@@ -122,6 +124,19 @@ export default {
     this.fetchTags()
   },
   methods: {
+    onTagChange() {
+      this.fetchCategories()
+    },
+    onCategoryChange() {
+      this.fetchData()
+    },
+    onTempTagChange() {
+      listCategories(this.temp.tagId).then(response => {
+        this.temp.categoryList = response.data
+        this.temp.categoryId = this.temp.categoryList[0].id
+        this.fetchData()
+      })
+    },
     fetchTags() {
       listTags().then(response => {
         this.tagList = response.data
@@ -135,12 +150,6 @@ export default {
         this.categoryId = this.categoryList[0].id
         this.fetchData()
       })
-    },
-    onTagChange() {
-      this.fetchCategories()
-    },
-    onCategoryChange() {
-      this.fetchData()
     },
     fetchData() {
       this.listLoading = true
@@ -163,7 +172,9 @@ export default {
         categoryId: this.categoryId,
         name: '',
         imageUrl: '',
-        siteUrl: ''
+        siteUrl: '',
+        tagList: this.tagList,
+        categoryList: this.categoryList
       }
     },
     handleCreate() {
@@ -177,6 +188,8 @@ export default {
     handleUpdate(row) {
       this.temp = Object.assign({}, row)
       this.temp.tagId = this.tagId
+      this.temp.tagList = this.tagList
+      this.temp.categoryList = this.categoryList
       this.dialogStatus = 'update'
       this.dialogFormVisible = true
       this.$nextTick(() => {
@@ -184,12 +197,12 @@ export default {
       })
     },
     handleDelete(row) {
-      this.$confirm('是否删除分类【' + row.name + '】？', '提示', {
+      this.$confirm('是否删除导航【' + row.name + '】？', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        remove(this.tagId, row.id).then(() => {
+        remove(this.tagId, this.categoryId, row.id).then(() => {
           this.fetchData()
           this.$message({
             type: 'success',
@@ -209,7 +222,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        reorder(this.tagId, this.idList).then(response => {
+        reorder(this.tagId, this.categoryId, this.idList).then(response => {
           this.list = response.data
           this.$message({
             type: 'success',
@@ -227,10 +240,12 @@ export default {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
           create(this.temp).then((response) => {
-            this.list.push(response.data)
+            if (this.tagId === this.temp.tagId && this.categoryId === this.temp.categoryId) {
+              this.list.push(response.data)
+            }
             this.dialogFormVisible = false
             this.$message({
-              message: '分类信息新增成功',
+              message: '导航信息新增成功',
               type: 'success'
             })
           })
@@ -244,7 +259,7 @@ export default {
             this.fetchData()
             this.dialogFormVisible = false
             this.$message({
-              message: '分类信息修改成功',
+              message: '导航信息修改成功',
               type: 'success'
             })
           })
