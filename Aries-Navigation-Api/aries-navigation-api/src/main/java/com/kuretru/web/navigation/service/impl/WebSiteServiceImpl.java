@@ -5,6 +5,7 @@ import com.kuretru.api.common.configuration.CommonProperties;
 import com.kuretru.api.common.exception.ApiException;
 import com.kuretru.api.common.exception.NotFoundException;
 import com.kuretru.api.common.service.impl.BaseServiceImpl;
+import com.kuretru.web.navigation.configuration.SystemConstants;
 import com.kuretru.web.navigation.entity.data.WebSiteDO;
 import com.kuretru.web.navigation.entity.transfer.WebFaviconDTO;
 import com.kuretru.web.navigation.entity.transfer.WebSiteDTO;
@@ -78,7 +79,7 @@ public class WebSiteServiceImpl extends BaseServiceImpl<WebSiteMapper, WebSiteDO
     @Override
     public WebFaviconDTO fetchFavicon(WebFaviconDTO record) throws ApiException {
         String path = faviconManager.downloadFavicon(record.getUrl());
-        path = commonProperties.getFileCdnPrefix() + "temporary/" + path;
+        path = commonProperties.getFileCdnPrefix() + SystemConstants.TEMPORARY_DIRECTORY + "/" + path;
         return new WebFaviconDTO(path);
     }
 
