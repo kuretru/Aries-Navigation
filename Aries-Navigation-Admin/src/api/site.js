@@ -44,3 +44,13 @@ export function reorder(tagId, categoryId, ids) {
     }
   })
 }
+
+export function fetchFavicon(tagId, categoryId, siteUrl) {
+  return request({
+    url: '/tags/' + tagId + '/categories/' + categoryId + '/sites/favicon',
+    method: 'post',
+    data: {
+      url: siteUrl
+    }
+  })
+}
