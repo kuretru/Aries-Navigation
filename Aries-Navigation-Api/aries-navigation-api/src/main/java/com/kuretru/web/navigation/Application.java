@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * @author 呉真 Kuretru < kuretru@gmail.com >
@@ -15,6 +16,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @MapperScan({"com.kuretru.web.navigation.mapper", "com.kuretru.api.common.mapper"})
 @EnableAsync
 @EnableCaching
+@EnableScheduling
 public class Application {
 
     public static void main(String[] args) {
