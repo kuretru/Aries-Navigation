@@ -31,6 +31,15 @@ public interface WebSiteService extends BaseService<WebSiteMapper, WebSiteDO, We
     List<WebSiteDTO> list(long categoryId);
 
     /**
+     * 将给定的ID按升序重新排序
+     *
+     * @param idList 要重新排序的ID列表
+     * @return 受影响的行数
+     * @throws ApiException 业务异常
+     */
+    int reorder(List<Long> idList) throws ApiException;
+
+    /**
      * 抓取给定网站的网站图标
      *
      * @param record 网站地址

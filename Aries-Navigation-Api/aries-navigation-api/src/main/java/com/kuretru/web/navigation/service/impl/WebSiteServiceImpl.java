@@ -3,6 +3,7 @@ package com.kuretru.web.navigation.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.kuretru.api.common.configuration.CommonProperties;
 import com.kuretru.api.common.exception.ApiException;
+import com.kuretru.api.common.exception.NotFoundException;
 import com.kuretru.api.common.service.impl.BaseServiceImpl;
 import com.kuretru.web.navigation.entity.data.WebSiteDO;
 import com.kuretru.web.navigation.entity.transfer.WebFaviconDTO;
@@ -13,6 +14,7 @@ import com.kuretru.web.navigation.service.WebSiteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -54,6 +56,23 @@ public class WebSiteServiceImpl extends BaseServiceImpl<WebSiteMapper, WebSiteDO
         data.setSequence(getMaxSequence(record.getCategoryId()) + 1);
         mapper.insert(data);
         return get(data.getId());
+    }
+
+    @Override
+    public int reorder(List<Long> idList) throws ApiException {
+        List<WebSiteDO> records = new ArrayList<>(idList.size());
+        int sequence = 1;
+        for (Long id : idList) {
+            WebSiteDO record = new WebSiteDO();
+            record.setId(id);
+            record.setSequence(sequence++);
+            records.add(record);
+        }
+        Integer result = mapper.updateSequenceByIds(records);
+        if (result == null || result != idList.size()) {
+            throw new NotFoundException("部分记录不存在！");
+        }
+        return result;
     }
 
     @Override
