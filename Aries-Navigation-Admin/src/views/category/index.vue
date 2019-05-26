@@ -192,7 +192,9 @@ export default {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
           create(this.temp).then((response) => {
-            this.list.push(response.data)
+            if (this.tagId === this.temp.tagId) {
+              this.list.push(response.data)
+            }
             this.dialogFormVisible = false
             this.$message({
               message: '分类信息新增成功',
