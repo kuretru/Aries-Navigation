@@ -1,7 +1,9 @@
 # Aries-Navigation
-【开发中】简单的导航站
 
-* Aries-Navigation-Web 前台前端Web展示模块
+【开发中】简单的导航站  
+如有冒犯，请邮件联系
+
+* Aries-Navigation-Web 前台前端Web展示模块 仿[zhuye.kim](https://www.zhuye.kim/)
 * Aries-Navigation-Admin 后台前端管理系统模块
 * Aries-Navigation-Api 后端API接口模块
   * aries-navigation-parent 后端API接口模块的父工程
