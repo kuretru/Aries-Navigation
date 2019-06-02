@@ -99,8 +99,10 @@ public class WebSiteServiceImpl extends BaseServiceImpl<WebSiteMapper, WebSiteDO
         }
         WebSiteDTO result = new WebSiteDTO();
         BeanUtils.copyProperties(record, result);
-        String imageUrl = commonProperties.getFileCdnPrefix() + record.getImageUrl();
-        result.setImageUrl(imageUrl);
+        if (!StringUtils.isNullOrEmpty(record.getImageUrl())) {
+            String imageUrl = commonProperties.getFileCdnPrefix() + record.getImageUrl();
+            result.setImageUrl(imageUrl);
+        }
         return result;
     }
 
