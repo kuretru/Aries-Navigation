@@ -78,7 +78,7 @@ export default {
     return {
       tagList: null,
       tagId: null,
-      list: null,
+      list: [],
       idList: [],
       listLoading: true,
       sortable: null,
@@ -114,7 +114,6 @@ export default {
     fetchData() {
       this.listLoading = true
       list(this.tagId).then(response => {
-        console.log(response)
         this.list = response.data
         this.listLoading = false
         this.idList = this.list.map(v => v.id)
