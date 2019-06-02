@@ -66,7 +66,7 @@ import Sortable from 'sortablejs'
 export default {
   data() {
     return {
-      list: null,
+      list: [],
       idList: [],
       listLoading: true,
       sortable: null,
@@ -91,7 +91,6 @@ export default {
     fetchData() {
       this.listLoading = true
       list().then(response => {
-        console.log(response)
         this.list = response.data
         this.listLoading = false
         this.idList = this.list.map(v => v.id)
