@@ -889,7 +889,7 @@
   resolved "https://registry.npm.taobao.org/@vue/cli-overlay/download/@vue/cli-overlay-3.8.0.tgz#e4e8e2fa92b06fc282916df9c924f1dba50eeabb"
   integrity sha1-5Oji+pKwb8KCkW35ySTx26UO6rs=
 
-"@vue/cli-plugin-babel@3.8.0":
+"@vue/cli-plugin-babel@^3.8.0":
   version "3.8.0"
   resolved "https://registry.npm.taobao.org/@vue/cli-plugin-babel/download/@vue/cli-plugin-babel-3.8.0.tgz#a7ce6ef9c6680e7953c609d859451dd937c7284e"
   integrity sha1-p85u+cZoDnlTxgnYWUUd2TfHKE4=
@@ -900,7 +900,7 @@
     babel-loader "^8.0.5"
     webpack ">=4 < 4.29"
 
-"@vue/cli-plugin-eslint@3.8.0":
+"@vue/cli-plugin-eslint@^3.8.0":
   version "3.8.0"
   resolved "https://registry.npm.taobao.org/@vue/cli-plugin-eslint/download/@vue/cli-plugin-eslint-3.8.0.tgz#0402dfd3864b0224bceb264df89a4209000bb98c"
   integrity sha1-BALf04ZLAiS86yZN+JpCCQALuYw=
@@ -914,7 +914,7 @@
     eslint "^4.19.1"
     eslint-plugin-vue "^4.7.1"
 
-"@vue/cli-plugin-unit-jest@3.8.0":
+"@vue/cli-plugin-unit-jest@^3.8.0":
   version "3.8.0"
   resolved "https://registry.npm.taobao.org/@vue/cli-plugin-unit-jest/download/@vue/cli-plugin-unit-jest-3.8.0.tgz#13cd3b4f5d1c9e0ef1982cbaea19b73f7df947d6"
   integrity sha1-E807T10cng7xmCy66hm3P335R9Y=
@@ -928,7 +928,7 @@
     jest-watch-typeahead "0.2.1"
     vue-jest "^3.0.4"
 
-"@vue/cli-service@3.8.0":
+"@vue/cli-service@^3.8.0":
   version "3.8.0"
   resolved "https://registry.npm.taobao.org/@vue/cli-service/download/@vue/cli-service-3.8.0.tgz#47eaa169a7bd96522c1a0df89214f1afee843cd6"
   integrity sha1-R+qhaae9llIsGg34khTxr+6EPNY=
