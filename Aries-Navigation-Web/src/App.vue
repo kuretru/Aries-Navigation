@@ -7,10 +7,22 @@
     <el-container>
       <el-main>
         <el-tabs type="border-card">
-          <el-tab-pane label="用户管理">用户管理</el-tab-pane>
-          <el-tab-pane label="配置管理">配置管理</el-tab-pane>
-          <el-tab-pane label="角色管理">角色管理</el-tab-pane>
-          <el-tab-pane label="定时任务补偿">定时任务补偿</el-tab-pane>
+          <el-tab-pane v-for="tag in tags" :key="tag.name" :label="tag.name">
+            <el-tabs type="card" tab-position="left">
+              <el-tab-pane v-for="category in tag.categories" :key="category.name" :label="category.name">
+                <el-row>
+                  <el-col v-for="site in category.sites" :key="site.name" :span="4">
+                    <div>
+                      <el-image :src="site.imageUrl" />
+                      <el-link target="_blank" :href="site.siteUrl">
+                        {{ site.name }}
+                      </el-link>
+                    </div>
+                  </el-col>
+                </el-row>
+              </el-tab-pane>
+            </el-tabs>
+          </el-tab-pane>
         </el-tabs>
       </el-main>
     </el-container>
@@ -22,13 +34,15 @@
 </template>
 
 <script>
-import { index as fetchIndexData } from './api/index'
+import { list } from './api/data'
 
 export default {
   name: 'App',
   data() {
     return {
-      data: null
+      tags: [],
+      categories: [],
+      sites: []
     }
   },
   created() {
@@ -36,9 +50,8 @@ export default {
   },
   methods: {
     fetchData() {
-      fetchIndexData().then(response => {
-        this.data = response.data
-        console.log(this.data)
+      list().then(response => {
+        this.tags = response.data
       })
     }
   }
