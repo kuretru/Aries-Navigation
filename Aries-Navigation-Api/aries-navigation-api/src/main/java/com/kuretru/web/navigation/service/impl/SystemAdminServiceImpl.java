@@ -26,7 +26,7 @@ import java.time.Instant;
 @Service
 public class SystemAdminServiceImpl extends BaseServiceImpl<SystemAdminMapper, SystemAdminDO, SystemAdminDTO> implements SystemAdminService {
 
-    private AccessTokenManager tokenManager;
+    private final AccessTokenManager tokenManager;
 
     @Autowired
     public SystemAdminServiceImpl(SystemAdminMapper mapper, AccessTokenManager tokenManager) {
