@@ -19,7 +19,7 @@ import java.util.List;
 @RequestMapping(value = "/api/data", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 public class WebController extends BaseController {
 
-    private WebService service;
+    private final WebService service;
 
     @Autowired
     public WebController(WebService service) {
