@@ -13,7 +13,7 @@
                 <el-row>
                   <el-col v-for="site in category.sites" :key="site.name" :span="4">
                     <div>
-                      <el-image :src="site.imageUrl" />
+                      <el-image :src="site.imageUrl" style="width: 24px; height: 24px;" />
                       <el-link target="_blank" :href="site.siteUrl">
                         {{ site.name }}
                       </el-link>
