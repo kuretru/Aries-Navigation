@@ -1,5 +1,6 @@
 package com.kuretru.web.navigation.controller;
 
+import com.kuretru.api.common.annotation.RequestAuthorization;
 import com.kuretru.api.common.controller.BaseController;
 import com.kuretru.api.common.entity.ApiResponse;
 import com.kuretru.api.common.exception.ApiException;
@@ -35,6 +36,7 @@ public class WebController extends BaseController {
         return ApiResponse.success(result);
     }
 
+    @RequestAuthorization
     @DeleteMapping("/cache")
     public ApiResponse removeCache() {
         service.removeCache();
