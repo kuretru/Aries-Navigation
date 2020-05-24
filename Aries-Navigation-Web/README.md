@@ -1,29 +1,29 @@
-# web
+# Aries-Navigation-Web
 
 ## Project setup
-```
+
+``` bash
 yarn install
 ```
 
 ### Compiles and hot-reloads for development
-```
-yarn run serve
+
+``` bash
+yarn serve
 ```
 
 ### Compiles and minifies for production
-```
-yarn run build
-```
 
-### Run your tests
-```
-yarn run test
+``` bash
+yarn build
 ```
 
 ### Lints and fixes files
-```
-yarn run lint
+
+``` bash
+yarn lint
 ```
 
 ### Customize configuration
+
 See [Configuration Reference](https://cli.vuejs.org/config/).
