@@ -19,4 +19,6 @@ public class WebSiteDTO extends BaseDTO {
 
     private String siteUrl;
 
+    private String description;
+
 }

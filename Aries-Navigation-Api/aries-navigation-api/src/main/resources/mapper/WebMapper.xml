@@ -20,6 +20,7 @@
         <result property="name" column="name"/>
         <result property="imageUrl" column="image_url"/>
         <result property="siteUrl" column="site_url"/>
+        <result property="description" column="description"/>
     </resultMap>
 
     <select id="listTags" resultMap="tags">
@@ -36,7 +37,7 @@
     </select>
 
     <select id="listSites" resultMap="sites">
-        select id, name, image_url, site_url
+        select id, name, image_url, site_url, description
         from web_site
         where category_id = #{categoryId}
         order by sequence asc

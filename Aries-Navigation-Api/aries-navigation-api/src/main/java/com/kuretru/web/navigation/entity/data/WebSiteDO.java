@@ -21,6 +21,8 @@ public class WebSiteDO extends BaseDO {
 
     private String siteUrl;
 
+    private String description;
+
     private Integer sequence;
 
 }

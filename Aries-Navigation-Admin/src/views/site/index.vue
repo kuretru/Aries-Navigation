@@ -112,6 +112,9 @@
         <el-form-item label="链接" prop="siteUrl">
           <el-input v-model="temp.siteUrl" @blur="onSiteUrlChange" />
         </el-form-item>
+        <el-form-item label="描述" prop="description">
+          <el-input v-model="temp.description" @blur="onSiteUrlChange" />
+        </el-form-item>
         <el-form-item label="图标">
           <img :src="temp.imageUrl" class="favicon favicon-dialog">
           <el-button
@@ -161,6 +164,7 @@ export default {
         name: '',
         imageUrl: '',
         siteUrl: '',
+        description: '',
         tagList: null,
         categoryList: null
       },
@@ -401,4 +405,3 @@ export default {
   cursor: pointer;
 }
 </style>
-

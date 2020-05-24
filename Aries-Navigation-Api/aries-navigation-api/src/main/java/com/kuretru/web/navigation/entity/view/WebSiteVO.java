@@ -20,4 +20,6 @@ public class WebSiteVO implements Serializable {
 
     private String siteUrl;
 
+    private String description;
+
 }
