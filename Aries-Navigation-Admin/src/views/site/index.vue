@@ -48,13 +48,13 @@
     >
       <el-table-column prop="id" label="ID" align="center" width="95" />
 
-      <el-table-column prop="imageUrl" label="图标" align="center" width="100">
+      <el-table-column prop="imageUrl" label="图标" align="center" width="80">
         <template slot-scope="{row}">
           <img class="favicon" :src="row.imageUrl">
         </template>
       </el-table-column>
 
-      <el-table-column prop="name" label="导航名称" align="center" width="100">
+      <el-table-column prop="name" label="导航名称" align="center" width="160">
         <template slot-scope="{row}">
           <a :href="row.siteUrl" target="blank">{{ row.name }}</a>
         </template>

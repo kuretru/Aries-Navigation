@@ -10,6 +10,8 @@ import com.kuretru.web.navigation.manager.FaviconManager;
 import com.zaxxer.hikari.pool.ProxyPreparedStatement;
 import lombok.Cleanup;
 import lombok.NonNull;
+import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.aop.framework.ProxyProcessorSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,7 @@ import java.util.UUID;
  * @author 呉真 Kuretru < kuretru@gmail.com >
  */
 @Service
+@Slf4j
 public class FaviconManagerImpl implements FaviconManager {
 
     private static final String PROXY_TYPE_SOCKS = "socks";
@@ -74,18 +77,24 @@ public class FaviconManagerImpl implements FaviconManager {
             tryDownloadFile(urlString, imagePath, false);
         } catch (MalformedURLException e) {
             throw new InvalidParametersException("给定URL地址不合法！");
-        } catch (SocketTimeoutException e) {
+        } catch (FileNotFoundException e) {
+            // TODO 网站图标路径特殊，待后续解析HTML处理
+            throw new ApiException("未找到网站图标");
+        } catch (IOException e) {
+            // 其他异常按照可能被墙的情况处理，尝试使用代理
             if (proxyProperties.getEnable()) {
                 try {
                     tryDownloadFile(urlString, imagePath, true);
                 } catch (IOException exp) {
-                    throw new ApiException(exp.getClass().getSimpleName() + "：" + exp.getMessage());
+                    log.error(exp.getClass().getSimpleName() + "：" + exp.getMessage());
+                    throw new ApiException("使用代理获取网站图标失败");
                 }
+            } else {
+                log.error(e.getClass().getSimpleName() + "：" + e.getMessage());
+                throw new ApiException("获取网站图标失败");
             }
-        } catch (IOException e) {
-            throw new ApiException(e.getClass().getSimpleName() + "：" + e.getMessage());
         } catch (Exception e) {
-            throw new ApiException(e.getMessage());
+            throw new ApiException("未知异常：" + e.getMessage());
         }
         return imageName;
     }

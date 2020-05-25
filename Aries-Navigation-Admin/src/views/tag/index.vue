@@ -22,7 +22,7 @@
     >
       <el-table-column prop="id" label="ID" align="center" width="95" />
 
-      <el-table-column prop="name" label="标签名称" align="center" width="100" />
+      <el-table-column prop="name" label="标签名称" align="center" width="120" />
 
       <el-table-column label="操作" align="center" width="230" class-name="small-padding fixed-width">
         <template slot-scope="{row}">

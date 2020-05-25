@@ -115,9 +115,9 @@ public class WebSiteServiceImpl extends BaseServiceImpl<WebSiteMapper, WebSiteDO
             return imageUrl;
         }
         boolean temporary = imageUrl.contains(SystemConstants.TEMPORARY_DIRECTORY);
-        imageUrl = imageUrl.substring(index + 1);
+        String fileName = imageUrl.substring(index + 1);
         if (temporary) {
-            imageUrl = faviconManager.confirmFavicon(imageUrl);
+            imageUrl = faviconManager.confirmFavicon(fileName);
         }
         return imageUrl;
     }
