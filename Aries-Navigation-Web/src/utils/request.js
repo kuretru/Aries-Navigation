@@ -4,7 +4,7 @@ import { Message } from 'element-ui'
 const service = axios.create({
     baseURL: process.env.VUE_APP_BASE_API,
     withCredentials: true,
-    timeout: 5000
+    timeout: 2000
 })
 
 service.interceptors.request.use(
@@ -33,7 +33,7 @@ service.interceptors.response.use(
         Message({
             message: res.data,
             type: 'error',
-            duration: 5 * 1000
+            duration: 3 * 1000
         })
         return Promise.reject(error)
     }

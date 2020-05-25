@@ -43,9 +43,7 @@ export default {
   },
   data() {
     return {
-      tags: [],
-      categories: [],
-      sites: []
+      tags: []
     };
   },
   created() {

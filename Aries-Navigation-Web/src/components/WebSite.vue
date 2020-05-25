@@ -6,12 +6,16 @@
     <el-popover
       trigger="hover"
       :content="site.description"
+      :disabled="site.description === ''"
       width="300"
     >
-      <div slot="reference">
+      <div
+        slot="reference" 
+        style="float: left;"
+      >
         <el-image
           :src="site.imageUrl"
-          :fit="fill"
+          fit="fill"
         >
           <div slot="error">
             <i class="el-icon-guide" />
