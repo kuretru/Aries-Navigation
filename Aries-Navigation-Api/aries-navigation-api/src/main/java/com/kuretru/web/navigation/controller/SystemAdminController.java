@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(value = "/api/admins", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 public class SystemAdminController extends BaseRestController<SystemAdminService, SystemAdminDTO> {
 
-    private Kaptcha kaptcha;
+    private final Kaptcha kaptcha;
 
     @Autowired
     public SystemAdminController(SystemAdminService service, Kaptcha kaptcha) {

@@ -44,7 +44,7 @@
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>kaptcha-spring-boot-starter</artifactId>
-            <version>RELEASE</version>
+            <version>[3.3.0,4.0.0)</version>
             <exclusions>
                 <exclusion>
                     <artifactId>javax.servlet-api</artifactId>
@@ -58,6 +58,13 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <scope>runtime</scope>
+        </dependency>
+
+        <!-- Configuration Processor -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
         </dependency>
 
         <!-- Lombok -->
