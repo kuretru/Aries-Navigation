@@ -12,8 +12,11 @@
         <el-image
           :src="site.imageUrl"
           :fit="fill"
-          style="width: 24px; height: 24px;"
-        />
+        >
+          <div slot="error">
+            <i class="el-icon-guide" />
+          </div>
+        </el-image>
         <el-link
           :href="site.siteUrl"
           target="_blank"
@@ -47,3 +50,10 @@ export default {
   }
 };
 </script>
+
+<style>
+.el-image{
+  width:1em;
+  height:1em;
+}
+</style>

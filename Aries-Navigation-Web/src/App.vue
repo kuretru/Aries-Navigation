@@ -70,4 +70,9 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
+
+.el-row {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
 </style>
