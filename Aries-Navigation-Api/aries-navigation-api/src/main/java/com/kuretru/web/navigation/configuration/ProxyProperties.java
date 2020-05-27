@@ -6,6 +6,9 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.stereotype.Component;
 
+/**
+ * @author 呉真 Kuretru < kuretru@gmail.com >
+ */
 @Data
 @Component
 @EnableConfigurationProperties(ProxyProperties.class)

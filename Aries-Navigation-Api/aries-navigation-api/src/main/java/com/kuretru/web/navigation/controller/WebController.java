@@ -17,7 +17,7 @@ import java.util.List;
  * @author 呉真 Kuretru < kuretru@gmail.com >
  */
 @RestController
-@RequestMapping(value = "/api/data", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+@RequestMapping(value = "/api/data", produces = MediaType.APPLICATION_JSON_VALUE)
 public class WebController extends BaseController {
 
     private final WebService service;
