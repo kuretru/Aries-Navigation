@@ -1,11 +1,12 @@
 import Vue from 'vue'
 import {
-    Col, Container, Footer, Header, Image, Link, Main, Message, Popover, Row,
-    TabPane, Tabs
+    Col, Container, Divider, Footer, Header, Image, Link, Main, Message, Popover,
+    Row, TabPane, Tabs
 } from 'element-ui'
 
 Vue.use(Col)
 Vue.use(Container)
+Vue.use(Divider)
 Vue.use(Footer)
 Vue.use(Header)
 Vue.use(Image)

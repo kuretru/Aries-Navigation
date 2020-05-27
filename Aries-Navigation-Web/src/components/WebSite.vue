@@ -1,7 +1,7 @@
 <template>
   <el-col
     :span="3"
-    :offset="index > 0 && index % 6 == 0 ? 6 : 0"
+    :offset="index > 0 && index % 6 == 0 ? 0 : 0"
   >
     <el-popover
       trigger="hover"

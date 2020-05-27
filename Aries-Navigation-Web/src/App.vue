@@ -9,21 +9,25 @@
             :key="tag.name"
             :label="tag.name"
           >
-            <el-row
+            <div
               v-for="category in tag.categories"
               :key="category.name"
-              :label="category.name"
             >
-              <el-col :span="6">
-                <span>{{ category.name }}</span>
-              </el-col>
-              <WebSite
-                v-for="(site,index) in category.sites"
-                :key="site.name"
-                :site="site"
-                :index="index"
-              />
-            </el-row>
+              <el-row
+                :label="category.name"
+              >
+                <el-col :span="6">
+                  <span>{{ category.name }}</span>
+                </el-col>
+                <WebSite
+                  v-for="(site,index) in category.sites"
+                  :key="site.name"
+                  :site="site"
+                  :index="index"
+                />
+              </el-row>
+              <el-divider />
+            </div>
           </el-tab-pane>
         </el-tabs>
       </el-main>
@@ -70,7 +74,7 @@ export default {
 }
 
 .el-row {
-  margin-top: 1em;
-  margin-bottom: 1em;
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
 }
 </style>
