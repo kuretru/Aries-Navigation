@@ -1,0 +1,4 @@
+[submodule "api-common-utils"]
+	path = Aries-Navigation-Api/api-common-utils
+	url = git@github.com:kuretru/Api-Common-Utils.git
+	branch = main
