@@ -36,6 +36,13 @@
             <artifactId>spring-boot-starter</artifactId>
         </dependency>
 
+        <!-- Lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+
         <!-- JUnit -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -50,6 +57,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>2.4.3</version>
             </plugin>
         </plugins>
     </build>
