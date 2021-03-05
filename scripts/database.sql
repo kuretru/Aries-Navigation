@@ -11,7 +11,7 @@
  Target Server Version : 80023
  File Encoding         : 65001
 
- Date: 05/03/2021 10:32:59
+ Date: 05/03/2021 13:22:27
 */
 
 SET NAMES utf8mb4;
@@ -26,7 +26,7 @@ CREATE TABLE `web_category`  (
   `uuid` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '业务逻辑主键',
   `create_time` datetime NOT NULL COMMENT '记录主动创建的时刻',
   `update_time` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '记录上一次被动更新的时刻',
-  `tag_id` bigint UNSIGNED NOT NULL COMMENT '所属标签ID',
+  `tag_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '所属标签ID',
   `name` char(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '分类名称',
   `sequence` smallint UNSIGNED NOT NULL COMMENT '排序依据',
   PRIMARY KEY (`id`) USING BTREE,
@@ -47,7 +47,7 @@ CREATE TABLE `web_site`  (
   `uuid` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '业务逻辑主键',
   `create_time` datetime NOT NULL COMMENT '记录主动创建的时刻',
   `update_time` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '记录上一次被动更新的时刻',
-  `category_id` bigint UNSIGNED NOT NULL COMMENT '所属分类ID',
+  `category_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '所属分类ID',
   `name` char(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '站点名称',
   `image_url` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '站点图标URL',
   `site_url` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '站点超链接URL',

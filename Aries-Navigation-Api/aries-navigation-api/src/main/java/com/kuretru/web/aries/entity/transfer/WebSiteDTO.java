@@ -1,22 +1,20 @@
-package com.kuretru.web.aries.entity;
+package com.kuretru.web.aries.entity.transfer;
 
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.kuretru.api.common.entity.data.BaseDO;
+import com.kuretru.api.common.entity.transfer.BaseDTO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.util.UUID;
+
 /**
- * 站点数据对象
- *
  * @author 呉真(kuretru) <kuretru@gmail.com>
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@TableName("web_site")
-public class WebSiteDO extends BaseDO {
+public class WebSiteDTO extends BaseDTO {
 
     /** 所属分类ID */
-    private Long categoryId;
+    private UUID categoryId;
 
     /** 站点名称 */
     private String name;
@@ -29,8 +27,5 @@ public class WebSiteDO extends BaseDO {
 
     /** 站点描述 */
     private String description;
-
-    /** 排序依据 */
-    private Short sequence;
 
 }

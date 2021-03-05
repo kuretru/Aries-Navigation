@@ -1,7 +1,7 @@
 package com.kuretru.web.aries.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.kuretru.web.aries.entity.WebCategoryDO;
+import com.kuretru.web.aries.entity.data.WebCategoryDO;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
