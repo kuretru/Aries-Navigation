@@ -1,7 +1,7 @@
 package com.kuretru.web.aries.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.kuretru.common.entity.data.BaseDO;
+import com.kuretru.api.common.entity.data.BaseDO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
