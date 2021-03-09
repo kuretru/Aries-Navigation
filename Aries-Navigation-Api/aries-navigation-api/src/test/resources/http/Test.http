@@ -1,0 +1,4 @@
+### ping()
+GET http://{{hostname}}/api/ping
+
+###
