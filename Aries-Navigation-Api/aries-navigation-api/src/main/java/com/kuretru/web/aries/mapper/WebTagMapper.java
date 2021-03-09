@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 public interface WebTagMapper extends BaseMapper<WebTagDO> {
 
     /**
-     * 查询数据库中当前最大的序列编号
+     * 查询当前最大的序列编号
      *
      * @return 最大的序列编号
      */

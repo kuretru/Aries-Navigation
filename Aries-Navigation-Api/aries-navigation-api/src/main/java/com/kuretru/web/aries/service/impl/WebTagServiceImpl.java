@@ -1,9 +1,12 @@
 package com.kuretru.web.aries.service.impl;
 
+import com.kuretru.api.common.constant.code.UserErrorCodes;
+import com.kuretru.api.common.exception.ServiceException;
 import com.kuretru.api.common.service.impl.BaseServiceImpl;
 import com.kuretru.web.aries.entity.data.WebTagDO;
 import com.kuretru.web.aries.entity.transfer.WebTagDTO;
 import com.kuretru.web.aries.mapper.WebTagMapper;
+import com.kuretru.web.aries.service.WebCategoryService;
 import com.kuretru.web.aries.service.WebTagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,9 +20,12 @@ import java.util.UUID;
 @Service
 public class WebTagServiceImpl extends BaseServiceImpl<WebTagMapper, WebTagDO, WebTagDTO> implements WebTagService {
 
+    private final WebCategoryService webCategoryService;
+
     @Autowired
-    public WebTagServiceImpl(WebTagMapper mapper) {
+    public WebTagServiceImpl(WebTagMapper mapper, WebCategoryService webCategoryService) {
         super(mapper, WebTagDO.class, WebTagDTO.class);
+        this.webCategoryService = webCategoryService;
     }
 
     @Override
@@ -32,6 +38,16 @@ public class WebTagServiceImpl extends BaseServiceImpl<WebTagMapper, WebTagDO, W
         data.setSequence((short)(getMaxSequence() + 1));
         mapper.insert(data);
         return get(data.getId());
+    }
+
+    @Override
+    public void remove(UUID uuid) throws ServiceException {
+        int childrenCount = webCategoryService.count(uuid);
+        if (childrenCount > 0) {
+            throw new ServiceException.BadRequest(UserErrorCodes.REQUEST_PARAMETER_ERROR,
+                    "标签下存在未删除的分类，请先删除所有分类记录");
+        }
+        super.remove(uuid);
     }
 
     @Override
