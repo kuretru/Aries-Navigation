@@ -8,6 +8,7 @@ import com.kuretru.web.aries.service.WebCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -30,9 +31,16 @@ public class WebCategoryController extends BaseCrudController<WebCategoryService
     }
 
     @GetMapping
-    @Override
-    public ApiResponse<List<WebCategoryDTO>> list() throws ServiceException {
-        return super.list();
+    public ApiResponse<List<WebCategoryDTO>> list(@PathVariable("tagId") UUID tagId) throws ServiceException {
+        List<WebCategoryDTO> result = service.list(tagId);
+        if (null == result) {
+            result = new ArrayList<>();
+        }
+        if (result.isEmpty()) {
+            // 批量查询实体但实体不存在时，认为实体确实有不存在的可能，因此返回相应业务状态码和空列表
+            return ApiResponse.notFound(result);
+        }
+        return ApiResponse.success(result);
     }
 
     @PostMapping

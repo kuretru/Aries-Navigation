@@ -34,7 +34,7 @@ public class WebCategoryServiceImpl extends BaseServiceImpl<WebCategoryMapper, W
     @Override
     public List<WebCategoryDTO> list(UUID tagId) {
         QueryWrapper<WebCategoryDO> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("tag_id", tagId);
+        queryWrapper.eq("tag_id", tagId.toString());
         queryWrapper.orderByAsc("sequence");
         List<WebCategoryDO> records = mapper.selectList(queryWrapper);
         return doToDto(records);
@@ -43,7 +43,7 @@ public class WebCategoryServiceImpl extends BaseServiceImpl<WebCategoryMapper, W
     @Override
     public int count(UUID tagId) {
         QueryWrapper<WebCategoryDO> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("tag_id", tagId);
+        queryWrapper.eq("tag_id", tagId.toString());
         return mapper.selectCount(queryWrapper);
     }
 
