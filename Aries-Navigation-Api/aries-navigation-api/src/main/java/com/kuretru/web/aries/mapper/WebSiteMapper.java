@@ -12,4 +12,12 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface WebSiteMapper extends BaseMapper<WebSiteDO> {
 
+    /**
+     * 查询指定CategoryId下最大的序列编号
+     *
+     * @param categoryId 指定CategoryId
+     * @return 最大的序列编号
+     */
+    Short getMaxSequence(String categoryId);
+
 }

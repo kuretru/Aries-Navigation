@@ -19,4 +19,20 @@ public interface WebSiteService extends BaseService<WebSiteDTO> {
      */
     List<WebSiteDTO> list(UUID categoryId);
 
+    /**
+     * 查询指定CategoryID下的记录条数
+     *
+     * @param categoryId 指定CategoryID
+     * @return 记录条数
+     */
+    int count(UUID categoryId);
+
+    /**
+     * 查询指定CategoryID下最大的序列编号
+     *
+     * @param categoryId 指定CategoryID
+     * @return 最大的序列编号
+     */
+    short getMaxSequence(UUID categoryId);
+
 }

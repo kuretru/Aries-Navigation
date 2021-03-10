@@ -9,8 +9,10 @@ import com.kuretru.web.aries.entity.transfer.WebCategoryDTO;
 import com.kuretru.web.aries.entity.transfer.WebTagDTO;
 import com.kuretru.web.aries.mapper.WebCategoryMapper;
 import com.kuretru.web.aries.service.WebCategoryService;
+import com.kuretru.web.aries.service.WebSiteService;
 import com.kuretru.web.aries.service.WebTagService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -24,11 +26,13 @@ import java.util.UUID;
 public class WebCategoryServiceImpl extends BaseServiceImpl<WebCategoryMapper, WebCategoryDO, WebCategoryDTO> implements WebCategoryService {
 
     private final WebTagService webTagService;
+    private final WebSiteService webSiteService;
 
     @Autowired
-    public WebCategoryServiceImpl(WebCategoryMapper mapper, WebTagService webTagService) {
+    public WebCategoryServiceImpl(WebCategoryMapper mapper, WebTagService webTagService, @Lazy WebSiteService webSiteService) {
         super(mapper, WebCategoryDO.class, WebCategoryDTO.class);
         this.webTagService = webTagService;
+        this.webSiteService = webSiteService;
     }
 
     @Override
@@ -73,6 +77,16 @@ public class WebCategoryServiceImpl extends BaseServiceImpl<WebCategoryMapper, W
                     "指定标签ID不存在，无法移动分类到此标签下");
         }
         return super.update(record);
+    }
+
+    @Override
+    public void remove(UUID uuid) throws ServiceException {
+        int childrenCount = webSiteService.count(uuid);
+        if (childrenCount > 0) {
+            throw new ServiceException.BadRequest(UserErrorCodes.REQUEST_PARAMETER_ERROR,
+                    "分类下存在未删除的站点，请先删除所有站点记录");
+        }
+        super.remove(uuid);
     }
 
     @Override
