@@ -12,4 +12,12 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface WebCategoryMapper extends BaseMapper<WebCategoryDO> {
 
+    /**
+     * 查询指定TagId下最大的序列编号
+     *
+     * @param tagId 指定TagId
+     * @return 最大的序列编号
+     */
+    Short getMaxSequence(String tagId);
+
 }

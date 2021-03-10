@@ -9,6 +9,7 @@ import com.kuretru.web.aries.mapper.WebTagMapper;
 import com.kuretru.web.aries.service.WebCategoryService;
 import com.kuretru.web.aries.service.WebTagService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -23,13 +24,13 @@ public class WebTagServiceImpl extends BaseServiceImpl<WebTagMapper, WebTagDO, W
     private final WebCategoryService webCategoryService;
 
     @Autowired
-    public WebTagServiceImpl(WebTagMapper mapper, WebCategoryService webCategoryService) {
+    public WebTagServiceImpl(WebTagMapper mapper,@Lazy WebCategoryService webCategoryService) {
         super(mapper, WebTagDO.class, WebTagDTO.class);
         this.webCategoryService = webCategoryService;
     }
 
     @Override
-    public WebTagDTO save(WebTagDTO record) {
+    public synchronized WebTagDTO save(WebTagDTO record) {
         WebTagDO data = dtoToDo(record);
         data.setUuid(UUID.randomUUID().toString());
         Instant now = Instant.now();

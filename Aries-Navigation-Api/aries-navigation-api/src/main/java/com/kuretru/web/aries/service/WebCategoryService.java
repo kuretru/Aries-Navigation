@@ -19,4 +19,20 @@ public interface WebCategoryService extends BaseService<WebCategoryDTO> {
      */
     List<WebCategoryDTO> list(UUID tagId);
 
+    /**
+     * 查询指定TagID下的记录条数
+     *
+     * @param tagId 指定TagID
+     * @return 记录条数
+     */
+    int count(UUID tagId);
+
+    /**
+     * 查询指定TagId下最大的序列编号
+     *
+     * @param tagId 指定TagId
+     * @return 最大的序列编号
+     */
+    short getMaxSequence(UUID tagId);
+
 }

@@ -1,0 +1,24 @@
+### get()
+GET http://{{hostname}}/api/tags/{{tagId}}/categories/{{categoryId}}
+
+### list()
+GET http://{{hostname}}/api/tags/{{tagId}}/categories
+
+### create()
+POST http://{{hostname}}/api/tags/{{tagId}}/categories
+Content-Type: application/json
+
+{
+  "name": "邮箱"
+}
+
+### update()
+PUT http://{{hostname}}/api/tags/{{tagId}}/categories/{{categoryId}}
+Content-Type: application/json
+
+{
+  "name": "搜索引擎"
+}
+
+### remove()
+DELETE http://{{hostname}}/api/tags/{{tagId}}/categories/27ad060f-e26a-4232-bab4-9d729a3e4f7a

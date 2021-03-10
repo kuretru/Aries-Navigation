@@ -20,5 +20,5 @@ Content-Type: application/json
   "name": "常用"
 }
 
-###
+### remove()
 DELETE http://{{hostname}}/api/tags/02ed71c6-bf45-45cf-81a9-5b102ac86b9b
