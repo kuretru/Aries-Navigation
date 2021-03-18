@@ -8,6 +8,7 @@
     <version>1.0.0</version>
     <name>Aries-Navigation-Parent</name>
     <description>白羊导航-后端API-父项目</description>
+    <packaging>pom</packaging>
 
     <modules>
         <module>api-common-utils</module>
