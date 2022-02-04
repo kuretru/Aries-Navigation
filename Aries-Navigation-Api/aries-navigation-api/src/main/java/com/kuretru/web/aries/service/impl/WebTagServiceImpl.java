@@ -4,6 +4,7 @@ import com.kuretru.api.common.constant.code.UserErrorCodes;
 import com.kuretru.api.common.exception.ServiceException;
 import com.kuretru.api.common.service.impl.BaseServiceImpl;
 import com.kuretru.web.aries.entity.data.WebTagDO;
+import com.kuretru.web.aries.entity.query.WebTagQuery;
 import com.kuretru.web.aries.entity.transfer.WebTagDTO;
 import com.kuretru.web.aries.mapper.WebTagMapper;
 import com.kuretru.web.aries.service.WebCategoryService;
@@ -19,12 +20,12 @@ import java.util.UUID;
  * @author 呉真(kuretru) <kuretru@gmail.com>
  */
 @Service
-public class WebTagServiceImpl extends BaseServiceImpl<WebTagMapper, WebTagDO, WebTagDTO> implements WebTagService {
+public class WebTagServiceImpl extends BaseServiceImpl<WebTagMapper, WebTagDO, WebTagDTO, WebTagQuery> implements WebTagService {
 
     private final WebCategoryService webCategoryService;
 
     @Autowired
-    public WebTagServiceImpl(WebTagMapper mapper,@Lazy WebCategoryService webCategoryService) {
+    public WebTagServiceImpl(WebTagMapper mapper, @Lazy WebCategoryService webCategoryService) {
         super(mapper, WebTagDO.class, WebTagDTO.class);
         this.webCategoryService = webCategoryService;
     }

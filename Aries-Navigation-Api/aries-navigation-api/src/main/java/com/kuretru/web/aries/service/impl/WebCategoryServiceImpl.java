@@ -5,6 +5,7 @@ import com.kuretru.api.common.constant.code.UserErrorCodes;
 import com.kuretru.api.common.exception.ServiceException;
 import com.kuretru.api.common.service.impl.BaseServiceImpl;
 import com.kuretru.web.aries.entity.data.WebCategoryDO;
+import com.kuretru.web.aries.entity.query.WebCategoryQuery;
 import com.kuretru.web.aries.entity.transfer.WebCategoryDTO;
 import com.kuretru.web.aries.entity.transfer.WebTagDTO;
 import com.kuretru.web.aries.mapper.WebCategoryMapper;
@@ -23,7 +24,7 @@ import java.util.UUID;
  * @author 呉真(kuretru) <kuretru@gmail.com>
  */
 @Service
-public class WebCategoryServiceImpl extends BaseServiceImpl<WebCategoryMapper, WebCategoryDO, WebCategoryDTO> implements WebCategoryService {
+public class WebCategoryServiceImpl extends BaseServiceImpl<WebCategoryMapper, WebCategoryDO, WebCategoryDTO, WebCategoryQuery> implements WebCategoryService {
 
     private final WebTagService webTagService;
     private final WebSiteService webSiteService;
@@ -48,7 +49,7 @@ public class WebCategoryServiceImpl extends BaseServiceImpl<WebCategoryMapper, W
     public int count(UUID tagId) {
         QueryWrapper<WebCategoryDO> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("tag_id", tagId.toString());
-        return mapper.selectCount(queryWrapper);
+        return Math.toIntExact(mapper.selectCount(queryWrapper));
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.kuretru.web.aries.service;
 
 import com.kuretru.api.common.service.BaseService;
+import com.kuretru.web.aries.entity.query.WebCategoryQuery;
 import com.kuretru.web.aries.entity.transfer.WebCategoryDTO;
 
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.UUID;
 /**
  * @author 呉真(kuretru) <kuretru@gmail.com>
  */
-public interface WebCategoryService extends BaseService<WebCategoryDTO> {
+public interface WebCategoryService extends BaseService<WebCategoryDTO, WebCategoryQuery> {
 
     /**
      * 查询指定TagID下的所有记录

@@ -4,14 +4,17 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.kuretru.api.common.entity.data.BaseDO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 /**
  * 站点数据对象
+ * 站点实际数据
  *
  * @author 呉真(kuretru) <kuretru@gmail.com>
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 @TableName("web_site")
 public class WebSiteDO extends BaseDO {
 
@@ -29,6 +32,9 @@ public class WebSiteDO extends BaseDO {
 
     /** 站点描述 */
     private String description;
+
+    /** 访问次数 */
+    private Integer visitCount;
 
     /** 排序依据 */
     private Short sequence;

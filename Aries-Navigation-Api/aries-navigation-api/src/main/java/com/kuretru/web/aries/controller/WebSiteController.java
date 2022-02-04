@@ -3,6 +3,7 @@ package com.kuretru.web.aries.controller;
 import com.kuretru.api.common.controller.BaseCrudController;
 import com.kuretru.api.common.entity.ApiResponse;
 import com.kuretru.api.common.exception.ServiceException;
+import com.kuretru.web.aries.entity.query.WebSiteQuery;
 import com.kuretru.web.aries.entity.transfer.WebSiteDTO;
 import com.kuretru.web.aries.service.WebSiteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ import java.util.UUID;
  */
 @RestController
 @RequestMapping("/api/tags/{tagId}/categories/{categoryId}/sites")
-public class WebSiteController extends BaseCrudController<WebSiteService, WebSiteDTO> {
+public class WebSiteController extends BaseCrudController<WebSiteService, WebSiteDTO, WebSiteQuery> {
 
     @Autowired
     public WebSiteController(WebSiteService service) {
