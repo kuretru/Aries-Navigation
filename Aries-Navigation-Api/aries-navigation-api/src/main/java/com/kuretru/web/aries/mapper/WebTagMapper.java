@@ -1,6 +1,6 @@
 package com.kuretru.web.aries.mapper;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.kuretru.api.common.mapper.BaseSequenceMapper;
 import com.kuretru.web.aries.entity.data.WebTagDO;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
@@ -10,13 +10,6 @@ import org.springframework.stereotype.Repository;
  */
 @Mapper
 @Repository
-public interface WebTagMapper extends BaseMapper<WebTagDO> {
-
-    /**
-     * 查询当前最大的序列编号
-     *
-     * @return 最大的序列编号
-     */
-    Short getMaxSequence();
+public interface WebTagMapper extends BaseSequenceMapper<WebTagDO> {
 
 }

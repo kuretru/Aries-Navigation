@@ -1,7 +1,7 @@
 package com.kuretru.web.aries.entity.data;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.kuretru.api.common.entity.data.BaseDO;
+import com.kuretru.api.common.entity.data.BaseSequenceDO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -16,12 +16,9 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @TableName("web_tag")
-public class WebTagDO extends BaseDO {
+public class WebTagDO extends BaseSequenceDO {
 
     /** 标签名称 */
     private String name;
-
-    /** 排序依据 */
-    private Short sequence;
 
 }

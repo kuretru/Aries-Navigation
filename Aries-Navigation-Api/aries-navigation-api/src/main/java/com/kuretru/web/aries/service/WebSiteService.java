@@ -34,6 +34,6 @@ public interface WebSiteService extends BaseService<WebSiteDTO, WebSiteQuery> {
      * @param categoryId 指定CategoryID
      * @return 最大的序列编号
      */
-    short getMaxSequence(UUID categoryId);
+    int getMaxSequence(UUID categoryId);
 
 }

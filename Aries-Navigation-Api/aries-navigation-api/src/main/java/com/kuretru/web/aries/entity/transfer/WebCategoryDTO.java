@@ -1,6 +1,7 @@
 package com.kuretru.web.aries.entity.transfer;
 
 import com.kuretru.api.common.entity.transfer.BaseDTO;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -15,15 +16,16 @@ import java.util.UUID;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
+@Schema(description = "站点分类(二级分类)-数据传输实体")
 public class WebCategoryDTO extends BaseDTO {
 
-    /** 所属标签ID */
     @NotNull
+    @Schema(description = "所属标签ID")
     private UUID tagId;
 
-    /** 分类名称 */
     @NotNull
     @Size(max = 16)
+    @Schema(description = "分类名称")
     private String name;
 
 }

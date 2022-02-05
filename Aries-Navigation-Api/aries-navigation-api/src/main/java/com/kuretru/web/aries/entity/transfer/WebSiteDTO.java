@@ -1,6 +1,7 @@
 package com.kuretru.web.aries.entity.transfer;
 
 import com.kuretru.api.common.entity.transfer.BaseDTO;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -16,35 +17,36 @@ import java.util.UUID;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
+@Schema(description = "站点数据-数据传输实体")
 public class WebSiteDTO extends BaseDTO {
 
-    /** 所属分类ID */
     @NotNull
+    @Schema(description = "所属分类ID")
     private UUID categoryId;
 
-    /** 站点名称 */
     @NotNull
     @Size(max = 16)
+    @Schema(description = "站点名称")
     private String name;
 
-    /** 站点图标URL */
     @NotNull
     @Size(max = 50)
+    @Schema(description = "站点图标URL")
     private String imageUrl;
 
-    /** 站点超链接URL */
     @NotNull
     @Size(max = 50)
+    @Schema(description = "站点超链接URL")
     private String siteUrl;
 
-    /** 站点描述 */
     @NotNull
     @Size(max = 50)
+    @Schema(description = "站点描述")
     private String description;
 
-    /** 访问次数 */
     @NotNull
     @Min(0)
+    @Schema(description = "访问次数")
     private Integer visitCount;
 
 }

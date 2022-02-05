@@ -1,7 +1,7 @@
 package com.kuretru.web.aries.entity.data;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.kuretru.api.common.entity.data.BaseDO;
+import com.kuretru.api.common.entity.data.BaseSequenceDO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -16,7 +16,7 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @TableName("web_site")
-public class WebSiteDO extends BaseDO {
+public class WebSiteDO extends BaseSequenceDO {
 
     /** 所属分类ID */
     private String categoryId;
@@ -35,8 +35,5 @@ public class WebSiteDO extends BaseDO {
 
     /** 访问次数 */
     private Integer visitCount;
-
-    /** 排序依据 */
-    private Short sequence;
 
 }

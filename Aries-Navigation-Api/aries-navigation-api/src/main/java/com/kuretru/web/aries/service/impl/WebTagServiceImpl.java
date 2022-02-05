@@ -2,7 +2,7 @@ package com.kuretru.web.aries.service.impl;
 
 import com.kuretru.api.common.constant.code.UserErrorCodes;
 import com.kuretru.api.common.exception.ServiceException;
-import com.kuretru.api.common.service.impl.BaseServiceImpl;
+import com.kuretru.api.common.service.impl.BaseSequenceServiceImpl;
 import com.kuretru.web.aries.entity.data.WebTagDO;
 import com.kuretru.web.aries.entity.query.WebTagQuery;
 import com.kuretru.web.aries.entity.transfer.WebTagDTO;
@@ -20,7 +20,7 @@ import java.util.UUID;
  * @author 呉真(kuretru) <kuretru@gmail.com>
  */
 @Service
-public class WebTagServiceImpl extends BaseServiceImpl<WebTagMapper, WebTagDO, WebTagDTO, WebTagQuery> implements WebTagService {
+public class WebTagServiceImpl extends BaseSequenceServiceImpl<WebTagMapper, WebTagDO, WebTagDTO, WebTagQuery> implements WebTagService {
 
     private final WebCategoryService webCategoryService;
 
@@ -37,7 +37,7 @@ public class WebTagServiceImpl extends BaseServiceImpl<WebTagMapper, WebTagDO, W
         Instant now = Instant.now();
         data.setCreateTime(now);
         data.setUpdateTime(now);
-        data.setSequence((short)(getMaxSequence() + 1));
+        data.setSequence(getMaxSequence() + 1);
         mapper.insert(data);
         return get(data.getId());
     }
@@ -50,12 +50,6 @@ public class WebTagServiceImpl extends BaseServiceImpl<WebTagMapper, WebTagDO, W
                     "标签下存在未删除的分类，请先删除所有分类记录");
         }
         super.remove(uuid);
-    }
-
-    @Override
-    public short getMaxSequence() {
-        Short result = mapper.getMaxSequence();
-        return result == null ? 0 : result;
     }
 
 }

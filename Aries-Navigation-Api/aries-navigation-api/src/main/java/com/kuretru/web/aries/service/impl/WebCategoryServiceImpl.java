@@ -3,7 +3,7 @@ package com.kuretru.web.aries.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.kuretru.api.common.constant.code.UserErrorCodes;
 import com.kuretru.api.common.exception.ServiceException;
-import com.kuretru.api.common.service.impl.BaseServiceImpl;
+import com.kuretru.api.common.service.impl.BaseSequenceServiceImpl;
 import com.kuretru.web.aries.entity.data.WebCategoryDO;
 import com.kuretru.web.aries.entity.query.WebCategoryQuery;
 import com.kuretru.web.aries.entity.transfer.WebCategoryDTO;
@@ -24,7 +24,7 @@ import java.util.UUID;
  * @author 呉真(kuretru) <kuretru@gmail.com>
  */
 @Service
-public class WebCategoryServiceImpl extends BaseServiceImpl<WebCategoryMapper, WebCategoryDO, WebCategoryDTO, WebCategoryQuery> implements WebCategoryService {
+public class WebCategoryServiceImpl extends BaseSequenceServiceImpl<WebCategoryMapper, WebCategoryDO, WebCategoryDTO, WebCategoryQuery> implements WebCategoryService {
 
     private final WebTagService webTagService;
     private final WebSiteService webSiteService;
@@ -65,7 +65,7 @@ public class WebCategoryServiceImpl extends BaseServiceImpl<WebCategoryMapper, W
         Instant now = Instant.now();
         data.setCreateTime(now);
         data.setUpdateTime(now);
-        data.setSequence((short)(getMaxSequence(record.getTagId()) + 1));
+        data.setSequence(getMaxSequence(record.getTagId()) + 1);
         mapper.insert(data);
         return get(data.getId());
     }
@@ -91,8 +91,10 @@ public class WebCategoryServiceImpl extends BaseServiceImpl<WebCategoryMapper, W
     }
 
     @Override
-    public short getMaxSequence(UUID tagId) {
-        Short result = mapper.getMaxSequence(tagId.toString());
+    public int getMaxSequence(UUID tagId) {
+        QueryWrapper<WebCategoryDO> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("tagId", tagId.toString());
+        Integer result = mapper.getMaxSequence(queryWrapper);
         return result == null ? 0 : result;
     }
 

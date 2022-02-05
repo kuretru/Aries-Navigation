@@ -61,7 +61,7 @@ public class WebSiteServiceImpl extends BaseServiceImpl<WebSiteMapper, WebSiteDO
         Instant now = Instant.now();
         data.setCreateTime(now);
         data.setUpdateTime(now);
-        data.setSequence((short)(getMaxSequence(record.getCategoryId()) + 1));
+        data.setSequence(getMaxSequence(record.getCategoryId()) + 1);
         mapper.insert(data);
         return get(data.getId());
     }
@@ -77,8 +77,10 @@ public class WebSiteServiceImpl extends BaseServiceImpl<WebSiteMapper, WebSiteDO
     }
 
     @Override
-    public short getMaxSequence(UUID categoryId) {
-        Short result = mapper.getMaxSequence(categoryId.toString());
+    public int getMaxSequence(UUID categoryId) {
+        QueryWrapper<WebSiteDO> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("categoryId", categoryId.toString());
+        Integer result = mapper.getMaxSequence(queryWrapper);
         return result == null ? 0 : result;
     }
 
