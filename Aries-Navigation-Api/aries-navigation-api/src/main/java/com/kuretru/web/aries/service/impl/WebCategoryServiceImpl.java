@@ -93,7 +93,7 @@ public class WebCategoryServiceImpl extends BaseSequenceServiceImpl<WebCategoryM
     @Override
     public int getMaxSequence(UUID tagId) {
         QueryWrapper<WebCategoryDO> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("tagId", tagId.toString());
+        queryWrapper.eq("tag_id", tagId.toString());
         Integer result = mapper.getMaxSequence(queryWrapper);
         return result == null ? 0 : result;
     }

@@ -3,7 +3,7 @@ package com.kuretru.web.aries.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.kuretru.api.common.constant.code.UserErrorCodes;
 import com.kuretru.api.common.exception.ServiceException;
-import com.kuretru.api.common.service.impl.BaseServiceImpl;
+import com.kuretru.api.common.service.impl.BaseSequenceServiceImpl;
 import com.kuretru.web.aries.entity.data.WebSiteDO;
 import com.kuretru.web.aries.entity.query.WebSiteQuery;
 import com.kuretru.web.aries.entity.transfer.WebCategoryDTO;
@@ -22,7 +22,7 @@ import java.util.UUID;
  * @author 呉真(kuretru) <kuretru@gmail.com>
  */
 @Service
-public class WebSiteServiceImpl extends BaseServiceImpl<WebSiteMapper, WebSiteDO, WebSiteDTO, WebSiteQuery> implements WebSiteService {
+public class WebSiteServiceImpl extends BaseSequenceServiceImpl<WebSiteMapper, WebSiteDO, WebSiteDTO, WebSiteQuery> implements WebSiteService {
 
     private final WebCategoryService webCategoryService;
 
@@ -79,7 +79,7 @@ public class WebSiteServiceImpl extends BaseServiceImpl<WebSiteMapper, WebSiteDO
     @Override
     public int getMaxSequence(UUID categoryId) {
         QueryWrapper<WebSiteDO> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("categoryId", categoryId.toString());
+        queryWrapper.eq("category_id", categoryId.toString());
         Integer result = mapper.getMaxSequence(queryWrapper);
         return result == null ? 0 : result;
     }

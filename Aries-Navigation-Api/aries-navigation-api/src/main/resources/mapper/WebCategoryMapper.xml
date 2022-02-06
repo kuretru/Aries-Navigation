@@ -4,4 +4,19 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kuretru.web.aries.mapper.WebCategoryMapper">
 
+    <update id="updateSequenceByUuids" parameterType="com.kuretru.web.aries.entity.data.WebCategoryDO">
+        update web_category
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="sequence = CASE" suffix="END">
+                <foreach collection="list" item="item">
+                    when uuid = #{item.uuid} then #{item.sequence}
+                </foreach>
+            </trim>
+        </trim>
+        where uuid in
+        <foreach collection="list" item="item" open="(" separator="," close=")">
+            '${item.uuid}'
+        </foreach>
+    </update>
+
 </mapper>
