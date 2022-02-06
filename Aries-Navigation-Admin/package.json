@@ -23,8 +23,8 @@
     "precommit": "lint-staged",
     "prettier": "prettier -c --write \"src/**/*\"",
     "serve": "umi-serve",
-    "start": "cross-env UMI_ENV=dev umi dev",
-    "start:dev": "cross-env REACT_APP_ENV=dev MOCK=none UMI_ENV=dev umi dev",
+    "start": "cross-env UMI_ENV=dev umi dev --port=7011",
+    "start:dev": "cross-env REACT_APP_ENV=dev MOCK=none UMI_ENV=dev umi dev --port=7011",
     "start:no-mock": "cross-env MOCK=none UMI_ENV=dev umi dev",
     "start:no-ui": "cross-env UMI_UI=none UMI_ENV=dev umi dev",
     "start:pre": "cross-env REACT_APP_ENV=pre UMI_ENV=dev umi dev",
@@ -37,9 +37,15 @@
   "lint-staged": {
     "**/*.less": "stylelint --syntax less",
     "**/*.{js,jsx,ts,tsx}": "npm run lint-staged:js",
-    "**/*.{js,jsx,tsx,ts,less,md,json}": ["prettier --write"]
+    "**/*.{js,jsx,tsx,ts,less,md,json}": [
+      "prettier --write"
+    ]
   },
-  "browserslist": ["> 1%", "last 2 versions", "not ie <= 10"],
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 10"
+  ],
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
     "@ant-design/pro-descriptions": "^1.10.0",
@@ -48,6 +54,7 @@
     "@ant-design/pro-table": "^2.61.0",
     "@umijs/route-utils": "^2.0.0",
     "antd": "^4.17.0",
+    "array-move": "^4.0.0",
     "classnames": "^2.3.0",
     "lodash": "^4.17.0",
     "moment": "^2.29.0",
@@ -97,6 +104,10 @@
     "typescript": "^4.5.0",
     "umi-serve": "^1.9.10"
   },
-  "engines": { "node": ">=10.0.0" },
-  "gitHooks": { "commit-msg": "fabric verify-commit" }
+  "engines": {
+    "node": ">=10.0.0"
+  },
+  "gitHooks": {
+    "commit-msg": "fabric verify-commit"
+  }
 }

@@ -1,8 +1,8 @@
 import type { Settings as LayoutSettings } from '@ant-design/pro-layout';
 import { SettingDrawer } from '@ant-design/pro-layout';
 import { PageLoading } from '@ant-design/pro-layout';
-import type { RunTimeLayoutConfig } from 'umi';
-import { history, Link } from 'umi';
+import type { RequestConfig, RunTimeLayoutConfig } from 'umi';
+import { ErrorShowType, history, Link } from 'umi';
 import RightContent from '@/components/RightContent';
 import Footer from '@/components/Footer';
 import { currentUser as queryCurrentUser } from './services/ant-design-pro/api';
@@ -49,6 +49,26 @@ export async function getInitialState(): Promise<{
     settings: defaultSettings,
   };
 }
+
+export const request: RequestConfig = {
+  errorConfig: {
+    adaptor: (resData: any) => {
+      if (resData.code && resData.code >= 10000) {
+        return {
+          ...resData,
+          success: false,
+          errorCode: String(resData.code),
+          errorMessage: `${resData.message}: ${resData.data}`,
+          showType: ErrorShowType.ERROR_MESSAGE,
+        };
+      }
+      return {
+        ...resData,
+        success: true,
+      };
+    },
+  },
+};
 
 // ProLayout 支持的api https://procomponents.ant.design/components/layout
 export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) => {
