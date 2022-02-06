@@ -7,6 +7,7 @@
     "sourceMap": true,
     "baseUrl": ".",
     "jsx": "react-jsx",
+    "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
     "moduleResolution": "node",
     "forceConsistentCasingInFileNames": true,
@@ -25,6 +26,7 @@
   "include": [
     "mock/**/*",
     "src/**/*",
+    "playwright.config.ts",
     "tests/**/*",
     "test/**/*",
     "__test__/**/*",

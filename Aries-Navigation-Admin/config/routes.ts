@@ -9,9 +9,12 @@
           {
             name: 'login',
             path: '/user/login',
-            component: './User/login',
+            component: './user/Login',
           },
         ],
+      },
+      {
+        component: './404',
       },
     ],
   },
@@ -33,6 +36,9 @@
         name: 'sub-page',
         icon: 'smile',
         component: './Welcome',
+      },
+      {
+        component: './404',
       },
     ],
   },

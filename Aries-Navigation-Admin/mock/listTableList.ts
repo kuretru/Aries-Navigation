@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { Request, Response } from 'express';
 import moment from 'moment';
 import { parse } from 'url';
@@ -39,7 +38,7 @@ function getRule(req: Request, res: Response, u: string) {
     realUrl = req.url;
   }
   const { current = 1, pageSize = 10 } = req.query;
-  const params = (parse(realUrl, true).query as unknown) as API.PageParams &
+  const params = parse(realUrl, true).query as unknown as API.PageParams &
     API.RuleListItem & {
       sorter: any;
       filter: any;
@@ -49,8 +48,8 @@ function getRule(req: Request, res: Response, u: string) {
     ((current as number) - 1) * (pageSize as number),
     (current as number) * (pageSize as number),
   );
-  const sorter = JSON.parse(params.sorter || ('{}' as any));
-  if (sorter) {
+  if (params.sorter) {
+    const sorter = JSON.parse(params.sorter);
     dataSource = dataSource.sort((prev, next) => {
       let sortNumber = 0;
       Object.keys(sorter).forEach((key) => {
