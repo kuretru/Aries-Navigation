@@ -8,7 +8,7 @@ abstract class BaseService<T extends API.BaseDTO, Q extends API.PaginationQuery>
   }
 
   async get(id: string): Promise<API.ApiResponse<T>> {
-    return request<API.ApiResponse<T>>(`${API_URL}${this.url}/${id}`, {
+    return request<API.ApiResponse<T>>(`/api${this.url}/${id}`, {
       method: 'get',
     });
   }
@@ -22,7 +22,7 @@ abstract class BaseService<T extends API.BaseDTO, Q extends API.PaginationQuery>
 
   async list(params?: Q): Promise<API.ApiResponse<T[]>> {
     this.camelToUnderscore(params);
-    return request<API.ApiResponse<T[]>>(`${API_URL}${this.url}`, {
+    return request<API.ApiResponse<T[]>>(`/api${this.url}`, {
       method: 'get',
       params,
     });
@@ -30,7 +30,7 @@ abstract class BaseService<T extends API.BaseDTO, Q extends API.PaginationQuery>
 
   async listByPage(params: API.PaginationQuery): Promise<API.ProTableData<T>> {
     this.camelToUnderscore(params);
-    return request<API.ApiResponse<API.PaginationResponse<T>>>(`${API_URL}${this.url}`, {
+    return request<API.ApiResponse<API.PaginationResponse<T>>>(`/api${this.url}`, {
       method: 'get',
       params,
     }).then((response: API.ApiResponse<API.PaginationResponse<T>>) => {
@@ -45,21 +45,21 @@ abstract class BaseService<T extends API.BaseDTO, Q extends API.PaginationQuery>
   }
 
   async create(record: T): Promise<API.ApiResponse<T>> {
-    return request<API.ApiResponse<T>>(`${API_URL}${this.url}`, {
+    return request<API.ApiResponse<T>>(`/api${this.url}`, {
       method: 'post',
       data: record,
     });
   }
 
   async update(record: T): Promise<API.ApiResponse<T>> {
-    return request<API.ApiResponse<T>>(`${API_URL}${this.url}/${record.id}`, {
+    return request<API.ApiResponse<T>>(`/api${this.url}/${record.id}`, {
       method: 'put',
       data: record,
     });
   }
 
   async remove(id: string): Promise<API.ApiResponse<string>> {
-    return request<API.ApiResponse<string>>(`${API_URL}${this.url}/${id}`, {
+    return request<API.ApiResponse<string>>(`/api${this.url}/${id}`, {
       method: 'delete',
     });
   }

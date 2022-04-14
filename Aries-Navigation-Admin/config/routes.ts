@@ -1,18 +1,19 @@
 export default [
   {
-    path: '/user',
+    path: '/users',
     layout: false,
     routes: [
-      { path: '/user', routes: [{ name: '登录', path: '/user/login', component: './user/Login' }] },
+      {
+        path: '/users',
+        routes: [
+          { component: './User/Login', name: '登录', path: '/users/login' },
+          { component: './User/Callback', name: '回调', path: '/users/login/callback' },
+        ],
+      },
       { component: './404' },
     ],
   },
-  {
-    component: './Welcome',
-    icon: 'smile',
-    name: '欢迎',
-    path: '/welcome',
-  },
+  { component: './Welcome', icon: 'smile', path: '/welcome', name: '欢迎' },
   {
     icon: 'fileText',
     name: '内容管理',

@@ -1,3 +1,6 @@
+// @ts-ignore
+/* eslint-disable */
+
 declare namespace API {
   type BaseDTO = {
     id?: string;

@@ -1,6 +1,9 @@
+// @ts-ignore
+/* eslint-disable */
+
 declare namespace API.Web {
   type WebTagDTO = API.BaseDTO & {
-    name?: string;
+    name: string;
   };
 
   type WebTagQuery = API.PaginationQuery & {
@@ -8,8 +11,8 @@ declare namespace API.Web {
   };
 
   type WebCategoryDTO = API.BaseDTO & {
-    tagId?: string;
-    name?: string;
+    tagId: string;
+    name: string;
   };
 
   type WebCategoryQuery = API.PaginationQuery & {
@@ -17,12 +20,11 @@ declare namespace API.Web {
   };
 
   type WebSiteDTO = API.BaseDTO & {
-    categoryId?: string;
-    name?: string;
-    imageUrl?: string;
-    siteUrl?: string;
-    description?: string;
-    visitCount?: number;
+    categoryId: string;
+    name: string;
+    imageUrl: string;
+    siteUrl: string;
+    description: string;
   };
 
   type WebSiteQuery = API.PaginationQuery & {

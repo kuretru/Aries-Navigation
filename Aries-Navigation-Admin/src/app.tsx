@@ -1,16 +1,16 @@
-import type { Settings as LayoutSettings } from '@ant-design/pro-layout';
-import { SettingDrawer } from '@ant-design/pro-layout';
-import { PageLoading } from '@ant-design/pro-layout';
 import type { RequestConfig, RunTimeLayoutConfig } from 'umi';
-import { ErrorShowType, history, Link } from 'umi';
+import { history } from 'umi';
+import { PageLoading, SettingDrawer } from '@ant-design/pro-layout';
+import type { Settings as LayoutSettings } from '@ant-design/pro-layout';
 import RightContent from '@/components/RightContent';
 import Footer from '@/components/Footer';
-import { currentUser as queryCurrentUser } from './services/ant-design-pro/api';
-import { BookOutlined, LinkOutlined } from '@ant-design/icons';
+import { LinkOutlined } from '@ant-design/icons';
 import defaultSettings from '../config/defaultSettings';
+import { fetchUserInfo, requestConfig } from '@/utils/app-utils';
 
 const isDev = process.env.NODE_ENV === 'development';
-const loginPath = '/user/login';
+const loginPath = '/users/login';
+const callbackPath = '/users/login/callback';
 
 /** 获取用户信息比较慢的时候会展示一个 loading */
 export const initialStateConfig = {
@@ -19,56 +19,32 @@ export const initialStateConfig = {
 
 /**
  * @see  https://umijs.org/zh-CN/plugins/plugin-initial-state
- * */
+ */
 export async function getInitialState(): Promise<{
   settings?: Partial<LayoutSettings>;
-  currentUser?: API.CurrentUser;
+  currentUser?: Galaxy.OAuth2.System.UserDTO;
   loading?: boolean;
-  fetchUserInfo?: () => Promise<API.CurrentUser | undefined>;
+  fetchUserInfo?: () => Promise<Galaxy.OAuth2.System.UserDTO | undefined>;
 }> {
-  const fetchUserInfo = async () => {
-    try {
-      const msg = await queryCurrentUser();
-      return msg.data;
-    } catch (error) {
-      history.push(loginPath);
-    }
-    return undefined;
-  };
   // 如果是登录页面，不执行
-  if (history.location.pathname !== loginPath) {
+  if (history.location.pathname !== loginPath && history.location.pathname !== callbackPath) {
     const currentUser = await fetchUserInfo();
     return {
-      fetchUserInfo,
-      currentUser,
       settings: defaultSettings,
+      currentUser,
+      fetchUserInfo,
     };
   }
   return {
-    fetchUserInfo,
     settings: defaultSettings,
+    fetchUserInfo,
   };
 }
 
-export const request: RequestConfig = {
-  errorConfig: {
-    adaptor: (resData: any) => {
-      if (resData.code && resData.code >= 10000) {
-        return {
-          ...resData,
-          success: false,
-          errorCode: String(resData.code),
-          errorMessage: `${resData.message}: ${resData.data}`,
-          showType: ErrorShowType.ERROR_MESSAGE,
-        };
-      }
-      return {
-        ...resData,
-        success: true,
-      };
-    },
-  },
-};
+/**
+ * 全局Request配置
+ */
+export const request: RequestConfig = requestConfig;
 
 // ProLayout 支持的api https://procomponents.ant.design/components/layout
 export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) => {
@@ -82,20 +58,31 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
     onPageChange: () => {
       const { location } = history;
       // 如果没有登录，重定向到 login
-      if (!initialState?.currentUser && location.pathname !== loginPath) {
-        history.push(loginPath);
+      if (
+        !initialState?.currentUser &&
+        location.pathname !== loginPath &&
+        location.pathname !== callbackPath
+      ) {
+        history.push({
+          pathname: loginPath,
+          query: {
+            redirect: history.location.pathname,
+            ...history.location.query,
+          },
+        });
       }
     },
     links: isDev
       ? [
-          <Link to="/umi/plugin/openapi" target="_blank">
+          <a
+            key="github"
+            target="_blank"
+            href="https://github.com/kuretru/Aries-Navigation/"
+            rel="noreferrer"
+          >
             <LinkOutlined />
-            <span>OpenAPI 文档</span>
-          </Link>,
-          <Link to="/~docs">
-            <BookOutlined />
-            <span>业务组件文档</span>
-          </Link>,
+            <span>GitHub</span>
+          </a>,
         ]
       : [],
     menuHeaderRender: undefined,
@@ -112,7 +99,7 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
               enableDarkTheme
               settings={initialState?.settings}
               onSettingChange={(settings) => {
-                setInitialState((preInitialState) => ({
+                setInitialState((preInitialState: any) => ({
                   ...preInitialState,
                   settings,
                 }));
