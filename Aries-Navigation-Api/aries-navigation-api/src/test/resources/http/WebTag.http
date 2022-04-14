@@ -6,7 +6,7 @@ GET {{hostname}}/tags/{{tagId}}
 GET {{hostname}}/tags
 
 
-### create()
+### create
 POST {{hostname}}/tags
 Content-Type: application/json
 

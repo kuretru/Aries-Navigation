@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author 呉真(kuretru) <kuretru@gmail.com>
  */
 @RestController
-@RequestMapping("/api/categories")
+@RequestMapping("/categories")
 public class WebCategoryController extends BaseSequenceRestController<WebCategoryService, WebCategoryDTO, WebCategoryQuery> {
 
     @Autowired

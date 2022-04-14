@@ -56,6 +56,13 @@ public class WebCategoryServiceImpl extends BaseSequenceServiceImpl<WebCategoryM
         if (webTagDTO == null) {
             throw new ServiceException(UserErrorCodes.REQUEST_PARAMETER_ERROR, "指定标签ID不存在，无法设置分类到此标签下");
         }
+
+        QueryWrapper<WebCategoryDO> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("name", record.getName());
+        WebCategoryDO webCategoryDO = mapper.selectOne(queryWrapper);
+        if (webCategoryDO != null) {
+            throw new ServiceException(UserErrorCodes.REQUEST_PARAMETER_ERROR, "已存在指定名称的分类");
+        }
     }
 
     @Override
