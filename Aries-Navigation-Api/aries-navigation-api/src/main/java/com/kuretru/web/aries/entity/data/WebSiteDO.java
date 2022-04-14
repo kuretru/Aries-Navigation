@@ -1,7 +1,7 @@
 package com.kuretru.web.aries.entity.data;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.kuretru.api.common.entity.data.BaseSequenceDO;
+import com.kuretru.microservices.web.entity.data.BaseSequenceDO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -32,8 +32,5 @@ public class WebSiteDO extends BaseSequenceDO {
 
     /** 站点描述 */
     private String description;
-
-    /** 访问次数 */
-    private Integer visitCount;
 
 }

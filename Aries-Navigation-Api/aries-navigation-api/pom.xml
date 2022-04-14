@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.6.3</version>
+        <version>2.6.5</version>
         <relativePath/>
         <!-- lookup parent from repository -->
     </parent>
@@ -14,7 +14,7 @@
     <groupId>com.kuretru.web</groupId>
     <artifactId>aries-navigation-api</artifactId>
     <version>0.4.0</version>
-    <name>Aries-Navigation-Api</name>
+    <name>aries-navigation-api</name>
     <description>白羊导航-后端API</description>
 
     <properties>
@@ -23,17 +23,34 @@
 
     <dependencies>
 
-        <!-- 通用模块 -->
         <dependency>
-            <groupId>com.kuretru.common</groupId>
-            <artifactId>api-common-utils</artifactId>
-            <version>0.4.0</version>
+            <groupId>com.kuretru.microservices</groupId>
+            <artifactId>galaxy-web</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.kuretru.microservices</groupId>
+            <artifactId>galaxy-authentication</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.kuretru.microservices</groupId>
+            <artifactId>galaxy-oauth2-client</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
         <!-- Spring Boot -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+
+        <!-- Spring Data Redis -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
 
         <!-- MySQL Driver -->
@@ -64,7 +81,6 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>2.6.3</version>
             </plugin>
         </plugins>
     </build>

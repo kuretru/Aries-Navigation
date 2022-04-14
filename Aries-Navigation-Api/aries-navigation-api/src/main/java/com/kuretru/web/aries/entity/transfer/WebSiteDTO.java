@@ -1,12 +1,11 @@
 package com.kuretru.web.aries.entity.transfer;
 
-import com.kuretru.api.common.entity.transfer.BaseDTO;
+import com.kuretru.microservices.web.entity.transfer.BaseDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.UUID;
@@ -43,10 +42,5 @@ public class WebSiteDTO extends BaseDTO {
     @Size(max = 50)
     @Schema(description = "站点描述")
     private String description;
-
-    @NotNull
-    @Min(0)
-    @Schema(description = "访问次数")
-    private Integer visitCount;
 
 }

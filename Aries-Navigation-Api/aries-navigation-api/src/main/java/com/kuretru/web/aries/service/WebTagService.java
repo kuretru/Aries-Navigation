@@ -1,6 +1,6 @@
 package com.kuretru.web.aries.service;
 
-import com.kuretru.api.common.service.BaseSequenceService;
+import com.kuretru.microservices.web.service.BaseSequenceService;
 import com.kuretru.web.aries.entity.query.WebTagQuery;
 import com.kuretru.web.aries.entity.transfer.WebTagDTO;
 

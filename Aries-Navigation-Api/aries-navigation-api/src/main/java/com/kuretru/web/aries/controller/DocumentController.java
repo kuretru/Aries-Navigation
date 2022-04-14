@@ -1,7 +1,7 @@
 package com.kuretru.web.aries.controller;
 
-import com.kuretru.api.common.controller.BaseController;
-import com.kuretru.api.common.entity.ApiResponse;
+import com.kuretru.microservices.web.controller.BaseController;
+import com.kuretru.microservices.web.entity.ApiResponse;
 import com.kuretru.web.aries.constant.DocumentConstants;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

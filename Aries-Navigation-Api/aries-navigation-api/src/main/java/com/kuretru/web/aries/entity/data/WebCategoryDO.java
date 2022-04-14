@@ -1,7 +1,7 @@
 package com.kuretru.web.aries.entity.data;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.kuretru.api.common.entity.data.BaseSequenceDO;
+import com.kuretru.microservices.web.entity.data.BaseSequenceDO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;

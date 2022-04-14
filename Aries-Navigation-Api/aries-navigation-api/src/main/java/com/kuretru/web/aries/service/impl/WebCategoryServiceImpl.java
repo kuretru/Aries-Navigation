@@ -1,9 +1,9 @@
 package com.kuretru.web.aries.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.kuretru.api.common.constant.code.UserErrorCodes;
-import com.kuretru.api.common.exception.ServiceException;
-import com.kuretru.api.common.service.impl.BaseSequenceServiceImpl;
+import com.kuretru.microservices.web.constant.code.UserErrorCodes;
+import com.kuretru.microservices.web.exception.ServiceException;
+import com.kuretru.microservices.web.service.impl.BaseSequenceServiceImpl;
 import com.kuretru.web.aries.entity.data.WebCategoryDO;
 import com.kuretru.web.aries.entity.query.WebCategoryQuery;
 import com.kuretru.web.aries.entity.transfer.WebCategoryDTO;
@@ -16,8 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
-import java.util.List;
 import java.util.UUID;
 
 /**
@@ -37,15 +35,6 @@ public class WebCategoryServiceImpl extends BaseSequenceServiceImpl<WebCategoryM
     }
 
     @Override
-    public List<WebCategoryDTO> list(UUID tagId) {
-        QueryWrapper<WebCategoryDO> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("tag_id", tagId.toString());
-        queryWrapper.orderByAsc("sequence");
-        List<WebCategoryDO> records = mapper.selectList(queryWrapper);
-        return doToDto(records);
-    }
-
-    @Override
     public int count(UUID tagId) {
         QueryWrapper<WebCategoryDO> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("tag_id", tagId.toString());
@@ -53,49 +42,20 @@ public class WebCategoryServiceImpl extends BaseSequenceServiceImpl<WebCategoryM
     }
 
     @Override
-    public synchronized WebCategoryDTO save(WebCategoryDTO record) throws ServiceException {
-        WebTagDTO webTagDTO = webTagService.get(record.getTagId());
-        if (webTagDTO == null) {
-            throw new ServiceException.BadRequest(UserErrorCodes.REQUEST_PARAMETER_ERROR,
-                    "指定标签ID不存在，无法在此标签下新增分类");
-        }
-
-        WebCategoryDO data = dtoToDo(record);
-        data.setUuid(UUID.randomUUID().toString());
-        Instant now = Instant.now();
-        data.setCreateTime(now);
-        data.setUpdateTime(now);
-        data.setSequence(getMaxSequence(record.getTagId()) + 1);
-        mapper.insert(data);
-        return get(data.getId());
-    }
-
-    @Override
-    public WebCategoryDTO update(WebCategoryDTO record) throws ServiceException {
-        WebTagDTO webTagDTO = webTagService.get(record.getTagId());
-        if (webTagDTO == null) {
-            throw new ServiceException.BadRequest(UserErrorCodes.REQUEST_PARAMETER_ERROR,
-                    "指定标签ID不存在，无法移动分类到此标签下");
-        }
-        return super.update(record);
-    }
-
-    @Override
     public void remove(UUID uuid) throws ServiceException {
         int childrenCount = webSiteService.count(uuid);
         if (childrenCount > 0) {
-            throw new ServiceException.BadRequest(UserErrorCodes.REQUEST_PARAMETER_ERROR,
-                    "分类下存在未删除的站点，请先删除所有站点记录");
+            throw new ServiceException(UserErrorCodes.REQUEST_PARAMETER_ERROR, "分类下存在未删除的站点，请先删除所有站点记录");
         }
         super.remove(uuid);
     }
 
     @Override
-    public int getMaxSequence(UUID tagId) {
-        QueryWrapper<WebCategoryDO> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("tag_id", tagId.toString());
-        Integer result = mapper.getMaxSequence(queryWrapper);
-        return result == null ? 0 : result;
+    protected void verifyDTO(WebCategoryDTO record) throws ServiceException {
+        WebTagDTO webTagDTO = webTagService.get(record.getTagId());
+        if (webTagDTO == null) {
+            throw new ServiceException(UserErrorCodes.REQUEST_PARAMETER_ERROR, "指定标签ID不存在，无法设置分类到此标签下");
+        }
     }
 
     @Override

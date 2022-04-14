@@ -3,6 +3,7 @@ package com.kuretru.web.aries.entity.query;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.UUID;
 
@@ -13,6 +14,7 @@ import java.util.UUID;
 @Schema(description = "站点数据-查询条件")
 public class WebSiteQuery {
 
+    @NotNull
     @Schema(description = "所属分类ID")
     private UUID categoryId;
 

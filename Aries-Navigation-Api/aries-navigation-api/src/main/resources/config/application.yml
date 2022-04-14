@@ -1,2 +1,15 @@
 server:
-  port: 7010
+  port: 7011
+  servlet:
+    context-path: /api
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: ${MYSQL_USERNAME:aries}
+    password: ${MYSQL_PASSWORD:123456}
+    url: jdbc:mysql://${MYSQL_HOSTNAME:127.0.0.1}:${MYSQL_PORT:3306}/${MYSQL_SCHEMA:aries}?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8
+  redis:
+    host: ${REDIS_HOST:127.0.0.1}
+    password: ${REDIS_PASSWORD:}
+    port: ${REDIS_PORT:6379}
+    database: ${REDIS_DATABASE:1}

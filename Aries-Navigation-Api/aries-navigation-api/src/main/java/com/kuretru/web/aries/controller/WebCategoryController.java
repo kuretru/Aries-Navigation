@@ -1,6 +1,6 @@
 package com.kuretru.web.aries.controller;
 
-import com.kuretru.api.common.controller.BaseSequenceRestController;
+import com.kuretru.microservices.web.controller.BaseSequenceRestController;
 import com.kuretru.web.aries.entity.query.WebCategoryQuery;
 import com.kuretru.web.aries.entity.transfer.WebCategoryDTO;
 import com.kuretru.web.aries.service.WebCategoryService;

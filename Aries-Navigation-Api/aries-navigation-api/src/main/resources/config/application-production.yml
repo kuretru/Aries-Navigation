@@ -1,9 +1,4 @@
 spring:
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    username: ${mysql.username:aries}
-    password: ${mysql.password:123456}
-    url: jdbc:mysql://127.0.0.1:3306/${mysql.schema}?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8
   config:
     activate:
       on-profile: production

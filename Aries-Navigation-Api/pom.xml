@@ -6,12 +6,16 @@
     <groupId>com.kuretru.web</groupId>
     <artifactId>aries-navigation-parent</artifactId>
     <version>1.0.0</version>
-    <name>Aries-Navigation-Parent</name>
+    <name>aries-navigation-parent</name>
     <description>白羊导航-后端API-父项目</description>
     <packaging>pom</packaging>
 
     <modules>
-        <module>api-common-utils</module>
+        <module>../Galaxy-Microservices/galaxy-common</module>
+        <module>../Galaxy-Microservices/galaxy-web</module>
+        <module>../Galaxy-Microservices/galaxy-authentication</module>
+        <module>../Galaxy-Microservices/galaxy-oauth2-common</module>
+        <module>../Galaxy-Microservices/galaxy-oauth2-client</module>
         <module>aries-navigation-api</module>
     </modules>
 
