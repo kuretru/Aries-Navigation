@@ -8,6 +8,7 @@ import com.kuretru.web.aries.entity.data.WebCategoryDO;
 import com.kuretru.web.aries.entity.query.WebCategoryQuery;
 import com.kuretru.web.aries.entity.transfer.WebCategoryDTO;
 import com.kuretru.web.aries.entity.transfer.WebTagDTO;
+import com.kuretru.web.aries.entity.view.WebCategoryVO;
 import com.kuretru.web.aries.mapper.WebCategoryMapper;
 import com.kuretru.web.aries.service.WebCategoryService;
 import com.kuretru.web.aries.service.WebSiteService;
@@ -16,7 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
+import java.util.*;
 
 /**
  * @author 呉真(kuretru) <kuretru@gmail.com>
@@ -32,6 +33,18 @@ public class WebCategoryServiceImpl extends BaseSequenceServiceImpl<WebCategoryM
         super(mapper, WebCategoryDO.class, WebCategoryDTO.class);
         this.webTagService = webTagService;
         this.webSiteService = webSiteService;
+    }
+
+    @Override
+    public Map<UUID, List<WebCategoryVO>> listVO() {
+        List<WebCategoryDTO> records = list();
+        Map<UUID, List<WebCategoryVO>> result = new HashMap<>(16);
+        for (WebCategoryDTO record : records) {
+            List<WebCategoryVO> vos = result.getOrDefault(record.getTagId(), new ArrayList<>());
+            result.put(record.getTagId(), vos);
+            vos.add(new WebCategoryVO(record.getId(), record.getName()));
+        }
+        return result;
     }
 
     @Override
@@ -63,6 +76,12 @@ public class WebCategoryServiceImpl extends BaseSequenceServiceImpl<WebCategoryM
         if (webCategoryDO != null) {
             throw new ServiceException(UserErrorCodes.REQUEST_PARAMETER_ERROR, "已存在指定名称的分类");
         }
+    }
+
+    @Override
+    protected void addDefaultOrderBy(QueryWrapper<WebCategoryDO> queryWrapper) {
+        queryWrapper.orderByAsc("tag_id");
+        super.addDefaultOrderBy(queryWrapper);
     }
 
     @Override

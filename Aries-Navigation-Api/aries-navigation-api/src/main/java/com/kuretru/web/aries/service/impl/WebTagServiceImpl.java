@@ -7,6 +7,7 @@ import com.kuretru.microservices.web.service.impl.BaseSequenceServiceImpl;
 import com.kuretru.web.aries.entity.data.WebTagDO;
 import com.kuretru.web.aries.entity.query.WebTagQuery;
 import com.kuretru.web.aries.entity.transfer.WebTagDTO;
+import com.kuretru.web.aries.entity.view.WebTagVO;
 import com.kuretru.web.aries.mapper.WebTagMapper;
 import com.kuretru.web.aries.service.WebCategoryService;
 import com.kuretru.web.aries.service.WebTagService;
@@ -14,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -28,6 +31,16 @@ public class WebTagServiceImpl extends BaseSequenceServiceImpl<WebTagMapper, Web
     public WebTagServiceImpl(WebTagMapper mapper, @Lazy WebCategoryService webCategoryService) {
         super(mapper, WebTagDO.class, WebTagDTO.class);
         this.webCategoryService = webCategoryService;
+    }
+
+    @Override
+    public List<WebTagVO> listVO() {
+        List<WebTagDTO> records = list();
+        List<WebTagVO> result = new ArrayList<>(records.size());
+        for (WebTagDTO record : records) {
+            result.add(new WebTagVO(record.getId(), record.getName()));
+        }
+        return result;
     }
 
     @Override

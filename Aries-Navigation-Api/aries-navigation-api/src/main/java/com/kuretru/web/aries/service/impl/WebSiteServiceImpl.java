@@ -8,13 +8,14 @@ import com.kuretru.web.aries.entity.data.WebSiteDO;
 import com.kuretru.web.aries.entity.query.WebSiteQuery;
 import com.kuretru.web.aries.entity.transfer.WebCategoryDTO;
 import com.kuretru.web.aries.entity.transfer.WebSiteDTO;
+import com.kuretru.web.aries.entity.view.WebSiteVO;
 import com.kuretru.web.aries.mapper.WebSiteMapper;
 import com.kuretru.web.aries.service.WebCategoryService;
 import com.kuretru.web.aries.service.WebSiteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
+import java.util.*;
 
 /**
  * @author 呉真(kuretru) <kuretru@gmail.com>
@@ -31,6 +32,18 @@ public class WebSiteServiceImpl extends BaseSequenceServiceImpl<WebSiteMapper, W
     }
 
     @Override
+    public Map<UUID, List<WebSiteVO>> listVO() {
+        List<WebSiteDTO> records = list();
+        Map<UUID, List<WebSiteVO>> result = new HashMap<>(16);
+        for (WebSiteDTO record : records) {
+            List<WebSiteVO> vos = result.getOrDefault(record.getCategoryId(), new ArrayList<>());
+            result.put(record.getCategoryId(), vos);
+            vos.add(new WebSiteVO(record.getId(), record.getName(), record.getImageUrl(), record.getSiteUrl()));
+        }
+        return result;
+    }
+
+    @Override
     public int count(UUID categoryId) {
         QueryWrapper<WebSiteDO> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("category_id", categoryId.toString());
@@ -43,6 +56,12 @@ public class WebSiteServiceImpl extends BaseSequenceServiceImpl<WebSiteMapper, W
         if (webCategoryDTO == null) {
             throw new ServiceException(UserErrorCodes.REQUEST_PARAMETER_ERROR, "指定分类ID不存在，无法设置站点到此分类下");
         }
+    }
+
+    @Override
+    protected void addDefaultOrderBy(QueryWrapper<WebSiteDO> queryWrapper) {
+        queryWrapper.orderByAsc("category_id");
+        super.addDefaultOrderBy(queryWrapper);
     }
 
     @Override
