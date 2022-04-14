@@ -1,24 +1,29 @@
-### get()
-GET http://{{hostname}}/api/tags/{{tagId}}
+### get
+GET {{hostname}}/tags/{{tagId}}
 
-### list()
-GET http://{{hostname}}/api/tags
+
+### list
+GET {{hostname}}/tags
+
 
 ### create()
-POST http://{{hostname}}/api/tags
+POST {{hostname}}/tags
 Content-Type: application/json
 
 {
-  "name": "娱乐"
+  "name": "1024"
 }
 
+
 ### update
-PUT http://{{hostname}}/api/tags/{{tagId}}
+PUT {{hostname}}/tags/{{tagId}}
 Content-Type: application/json
 
 {
+  "id": "{{tagId}}",
   "name": "常用"
 }
 
-### remove()
-DELETE http://{{hostname}}/api/tags/02ed71c6-bf45-45cf-81a9-5b102ac86b9b
+
+### remove
+DELETE {{hostname}}/tags/59b201ce-01ed-48c8-a003-7d20c389039b

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author 呉真(kuretru) <kuretru@gmail.com>
  */
 @RestController
-@RequestMapping("/api/tags")
+@RequestMapping("/tags")
 public class WebTagController extends BaseSequenceRestController<WebTagService, WebTagDTO, WebTagQuery> {
 
     @Autowired

@@ -1,5 +1,6 @@
 package com.kuretru.web.aries.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.kuretru.microservices.web.constant.code.UserErrorCodes;
 import com.kuretru.microservices.web.exception.ServiceException;
 import com.kuretru.microservices.web.service.impl.BaseSequenceServiceImpl;
@@ -36,6 +37,16 @@ public class WebTagServiceImpl extends BaseSequenceServiceImpl<WebTagMapper, Web
             throw new ServiceException(UserErrorCodes.REQUEST_PARAMETER_ERROR, "标签下存在未删除的分类，请先删除所有分类记录");
         }
         super.remove(uuid);
+    }
+
+    @Override
+    protected synchronized void verifyDTO(WebTagDTO record) throws ServiceException {
+        QueryWrapper<WebTagDO> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("name", record.getName());
+        WebTagDO webTagDO = mapper.selectOne(queryWrapper);
+        if (webTagDO != null) {
+            throw new ServiceException(UserErrorCodes.REQUEST_PARAMETER_ERROR, "已存在指定名称的标签");
+        }
     }
 
 }
