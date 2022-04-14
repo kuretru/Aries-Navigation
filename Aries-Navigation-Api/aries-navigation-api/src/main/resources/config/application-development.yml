@@ -9,3 +9,10 @@ logging:
         web:
           aries:
             mapper: debug
+galaxy:
+  oauth2:
+    client:
+      galaxy:
+        server-url: https://oauth2.i5zhen.com
+        application-id: ${GEMINI_APPLICATION_ID:}
+        application-secret: ${GEMINI_APPLICATION_SECRET:}

@@ -1,5 +1,6 @@
 package com.kuretru.web.aries.controller;
 
+import com.kuretru.microservices.authentication.annotaion.RequireAuthorization;
 import com.kuretru.microservices.web.controller.BaseSequenceRestController;
 import com.kuretru.web.aries.entity.query.WebCategoryQuery;
 import com.kuretru.web.aries.entity.transfer.WebCategoryDTO;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/categories")
+@RequireAuthorization
 public class WebCategoryController extends BaseSequenceRestController<WebCategoryService, WebCategoryDTO, WebCategoryQuery> {
 
     @Autowired

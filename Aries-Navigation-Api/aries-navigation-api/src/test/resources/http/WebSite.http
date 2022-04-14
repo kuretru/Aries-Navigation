@@ -1,30 +1,37 @@
-### get()
-GET http://{{hostname}}/api/tags/{{tagId}}/categories/{{categoryId}}/sites/{{siteId}}
+### get
+GET {{hostname}}/sites/{{siteId}}
 
-### list()
-GET http://{{hostname}}/api/tags/{{tagId}}/categories/{{categoryId}}/sites
 
-### create()
-POST http://{{hostname}}/api/tags/{{tagId}}/categories/{{categoryId}}/sites
+### list
+GET {{hostname}}/sites?category_id={{categoryId}}
+
+
+### create
+POST{{hostname}}/sites
 Content-Type: application/json
 
 {
+  "categoryId": "{{categoryId}}",
   "name": "邮箱",
   "imageUrl": "https://www.baidu.com/favicon.ico",
   "siteUrl": "https://www.baidu.com/",
   "description": "描述"
 }
 
-### update()
-PUT http://{{hostname}}/api/tags/{{tagId}}/categories/{{categoryId}}/sites/{{siteId}}
+
+### update
+PUT {{hostname}}/sites/{{siteId}}
 Content-Type: application/json
 
 {
+  "id": "{{siteId}}",
+  "categoryId": "{{categoryId}}",
   "name": "百度",
   "imageUrl": "https://www.baidu.com/favicon.ico",
   "siteUrl": "https://www.baidu.com/",
   "description": "描述"
 }
 
-### remove()
-DELETE http://{{hostname}}/api/tags/{{tagId}}/categories/{{categoryId}}/sites/eb8e8f74-64d9-4c31-ab39-57fbb676bba2
+
+### remove
+DELETE {{hostname}}/sites/eb8e8f74-64d9-4c31-ab39-57fbb676bba2

@@ -1,5 +1,6 @@
 package com.kuretru.web.aries.controller;
 
+import com.kuretru.microservices.authentication.annotaion.RequireAuthorization;
 import com.kuretru.microservices.web.controller.BaseSequenceRestController;
 import com.kuretru.web.aries.entity.query.WebTagQuery;
 import com.kuretru.web.aries.entity.transfer.WebTagDTO;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/tags")
+@RequireAuthorization
 public class WebTagController extends BaseSequenceRestController<WebTagService, WebTagDTO, WebTagQuery> {
 
     @Autowired
