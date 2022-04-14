@@ -47,7 +47,7 @@ const Callback: React.FC = () => {
           query: query,
         });
       } else {
-        history.push('/');
+        history.push('/welcome');
       }
     }
   };
