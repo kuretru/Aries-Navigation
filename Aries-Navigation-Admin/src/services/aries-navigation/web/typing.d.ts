@@ -10,6 +10,12 @@ declare namespace API.Web {
     name?: string;
   };
 
+  type WebTagVO = {
+    id: string;
+    name: string;
+    categories: WebCategoryVO[];
+  };
+
   type WebCategoryDTO = API.BaseDTO & {
     tagId: string;
     name: string;
@@ -17,6 +23,12 @@ declare namespace API.Web {
 
   type WebCategoryQuery = API.PaginationQuery & {
     name?: string;
+  };
+
+  type WebCategoryVO = {
+    id: string;
+    name: string;
+    sites: WebSiteVO[];
   };
 
   type WebSiteDTO = API.BaseDTO & {
@@ -29,5 +41,13 @@ declare namespace API.Web {
 
   type WebSiteQuery = API.PaginationQuery & {
     name?: string;
+  };
+
+  type WebSiteVO = {
+    id: string;
+    name: string;
+    imageUrl: string;
+    siteUrl: string;
+    description: string;
   };
 }

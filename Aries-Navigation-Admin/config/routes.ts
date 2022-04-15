@@ -13,7 +13,8 @@ export default [
       { component: './404' },
     ],
   },
-  { component: './Welcome', icon: 'smile', path: '/welcome', name: '欢迎' },
+  { component: './Welcome', icon: 'smile', name: '欢迎', path: '/welcome' },
+  { component: './Index/WebIndex', icon: 'smile', layout: false, name: '主页', path: '/' },
   {
     icon: 'fileText',
     name: '内容管理',
@@ -23,6 +24,5 @@ export default [
       { component: './Web/Site', name: '站点管理', path: '/admin/web/sites' },
     ],
   },
-  { path: '/', redirect: '/welcome' },
   { component: './404' },
 ];
