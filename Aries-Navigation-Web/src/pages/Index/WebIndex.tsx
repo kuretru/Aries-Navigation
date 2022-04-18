@@ -1,36 +1,49 @@
-import { useState } from 'react';
+import React from 'react';
 import { Menu } from 'antd';
 import type { MenuInfo } from 'rc-menu/lib/interface';
 import { getRecords } from '@/services/aries-navigation';
 import WebTagView from './WebTag';
 
-const WebIndex: React.FC = () => {
-  const [tags, setTags] = useState<API.Web.WebTagVO[]>([]);
-  const [currentIndex, setCurrentIndex] = useState<number>(0);
+interface IWebIndexProps {}
+interface IWebIndexState {
+  tags: API.Web.WebTagVO[];
+  currentIndex: number;
+}
+class WebIndex extends React.Component<IWebIndexProps, IWebIndexState> {
+  constructor(props: IWebIndexProps) {
+    super(props);
+    this.state = {
+      tags: [],
+      currentIndex: 0,
+    };
+    this.fetchData();
+  }
 
-  getRecords().then((response) => {
-    setTags(response.data);
-  });
+  fetchData = () => {
+    getRecords().then((response) => {
+      this.setState({ tags: response.data });
+    });
+  };
 
-  const onMenuClick = (props: MenuInfo) => {
-    for (let i = 0; i < tags.length; i++) {
-      if (props.key === tags[i].id) {
-        setCurrentIndex(i);
+  onMenuClick = (props: MenuInfo) => {
+    for (let i = 0; i < this.state.tags.length; i++) {
+      if (props.key === this.state.tags[i].id) {
+        this.setState({ currentIndex: i });
         break;
       }
     }
   };
 
-  return (
+  render = () => (
     <>
-      <Menu mode="horizontal" onClick={onMenuClick}>
-        {tags.map((item) => {
+      <Menu mode="horizontal" onClick={this.onMenuClick}>
+        {this.state.tags.map((item) => {
           return <Menu.Item key={item.id}>{item.name}</Menu.Item>;
         })}
       </Menu>
-      {tags.length > 0 && <WebTagView tag={tags[currentIndex]} />}
+      {this.state.tags.length > 0 && <WebTagView tag={this.state.tags[this.state.currentIndex]} />}
     </>
   );
-};
+}
 
 export default WebIndex;

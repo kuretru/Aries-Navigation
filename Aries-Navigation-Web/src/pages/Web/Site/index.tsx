@@ -1,6 +1,6 @@
 import React from 'react';
 import type { ProColumns } from '@ant-design/pro-table';
-import { ProFormDigit, ProFormSelect, ProFormText } from '@ant-design/pro-form';
+import { ProFormSelect, ProFormText } from '@ant-design/pro-form';
 import type { RequestOptionsType } from '@ant-design/pro-utils';
 import { Image } from 'antd';
 import WebSiteService from '@/services/aries-navigation/web/web-site';
@@ -63,13 +63,6 @@ class WebSite extends React.Component {
       search: false,
       title: '站点描述',
     },
-    {
-      align: 'center',
-      dataIndex: 'visitCount',
-      search: false,
-      title: '访问次数',
-      width: 160,
-    },
   ];
 
   formItem = () => {
@@ -95,16 +88,16 @@ class WebSite extends React.Component {
           label="站点链接"
           name="siteUrl"
           placeholder="请输入站点链接"
-          rules={[{ max: 50, required: true }]}
-          tooltip="最长50位"
+          rules={[{ max: 200, required: true }]}
+          tooltip="最长200位"
           width="lg"
         />
         <ProFormText
           label="站点图标"
           name="imageUrl"
           placeholder="请输入站点图标链接"
-          rules={[{ max: 50, required: true }]}
-          tooltip="最长50位"
+          rules={[{ max: 250, required: true }]}
+          tooltip="最长250位"
           width="lg"
         />
         <ProFormText
@@ -113,16 +106,6 @@ class WebSite extends React.Component {
           placeholder="请输入站点描述"
           rules={[{ max: 50, required: true }]}
           tooltip="最长50位"
-          width="lg"
-        />
-        <ProFormDigit
-          disabled
-          fieldProps={{ precision: 0 }}
-          initialValue={0}
-          label="访问次数"
-          name="visitCount"
-          placeholder="请输入访问次数"
-          rules={[{ required: true }]}
           width="lg"
         />
       </>

@@ -9,8 +9,10 @@ import defaultSettings from '../config/defaultSettings';
 import { fetchUserInfo, requestConfig } from '@/utils/app-utils';
 
 const isDev = process.env.NODE_ENV === 'development';
+const indexPath = '/';
 const loginPath = '/users/login';
 const callbackPath = '/users/login/callback';
+const nonLoginPaths = [indexPath, loginPath, callbackPath];
 
 /** 获取用户信息比较慢的时候会展示一个 loading */
 export const initialStateConfig = {
@@ -27,7 +29,7 @@ export async function getInitialState(): Promise<{
   fetchUserInfo?: () => Promise<Galaxy.OAuth2.System.UserDTO | undefined>;
 }> {
   // 如果是登录页面，不执行
-  if (history.location.pathname !== loginPath && history.location.pathname !== callbackPath) {
+  if (!nonLoginPaths.includes(history.location.pathname)) {
     const currentUser = await fetchUserInfo();
     return {
       settings: defaultSettings,
@@ -58,11 +60,7 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
     onPageChange: () => {
       const { location } = history;
       // 如果没有登录，重定向到 login
-      if (
-        !initialState?.currentUser &&
-        location.pathname !== loginPath &&
-        location.pathname !== callbackPath
-      ) {
+      if (!initialState?.currentUser && !nonLoginPaths.includes(location.pathname)) {
         history.push({
           pathname: loginPath,
           query: {

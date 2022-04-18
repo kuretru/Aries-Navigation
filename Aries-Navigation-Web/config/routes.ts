@@ -14,7 +14,7 @@ export default [
     ],
   },
   { component: './Welcome', icon: 'smile', name: '欢迎', path: '/welcome' },
-  { component: './Index/WebIndex', icon: 'smile', layout: false, name: '主页', path: '/' },
+  { component: './Index/WebIndex', hideInMenu: true, layout: false, name: '主页', path: '/' },
   {
     icon: 'fileText',
     name: '内容管理',
