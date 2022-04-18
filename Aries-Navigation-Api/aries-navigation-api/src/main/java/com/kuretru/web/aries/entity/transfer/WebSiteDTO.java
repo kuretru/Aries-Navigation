@@ -29,12 +29,12 @@ public class WebSiteDTO extends BaseDTO {
     private String name;
 
     @NotNull
-    @Size(max = 50)
+    @Size(max = 250)
     @Schema(description = "站点图标URL")
     private String imageUrl;
 
     @NotNull
-    @Size(max = 50)
+    @Size(max = 200)
     @Schema(description = "站点超链接URL")
     private String siteUrl;
 

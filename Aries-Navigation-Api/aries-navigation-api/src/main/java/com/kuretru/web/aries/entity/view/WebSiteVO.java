@@ -28,4 +28,7 @@ public class WebSiteVO {
     @Schema(description = "站点超链接URL")
     private String siteUrl;
 
+    @Schema(description = "站点描述")
+    private String description;
+
 }

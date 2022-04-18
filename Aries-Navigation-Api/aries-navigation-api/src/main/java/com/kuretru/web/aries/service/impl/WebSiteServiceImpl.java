@@ -38,7 +38,7 @@ public class WebSiteServiceImpl extends BaseSequenceServiceImpl<WebSiteMapper, W
         for (WebSiteDTO record : records) {
             List<WebSiteVO> vos = result.getOrDefault(record.getCategoryId(), new ArrayList<>());
             result.put(record.getCategoryId(), vos);
-            vos.add(new WebSiteVO(record.getId(), record.getName(), record.getImageUrl(), record.getSiteUrl()));
+            vos.add(new WebSiteVO(record.getId(), record.getName(), record.getImageUrl(), record.getSiteUrl(), record.getDescription()));
         }
         return result;
     }

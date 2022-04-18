@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -27,6 +28,7 @@ public class WebCategoryVO {
     public WebCategoryVO(UUID id, String name) {
         this.id = id;
         this.name = name;
+        this.sites = new ArrayList<>(0);
     }
 
 }
