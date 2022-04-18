@@ -4,6 +4,9 @@ server:
     context-path: /api
 spring:
   datasource:
+    hikari:
+      maximum-pool-size: 4
+      minimum-idle: 4
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: ${MYSQL_USERNAME:aries}
     password: ${MYSQL_PASSWORD:123456}
