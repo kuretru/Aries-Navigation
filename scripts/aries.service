@@ -1,0 +1,15 @@
+[Unit]
+Description=Aries-Navigation-API
+After=syslog.target
+
+[Service]
+User=nginx
+EnvironmentFile=/home/nginx/kuretru.com/api/environment
+WorkingDirectory=/home/nginx/kuretru.com/api/
+ExecStart=/usr/bin/java -Xmx256m -jar /home/nginx/kuretru.com/api/aries-navigation-api.jar --spring.profiles.active=production
+SuccessExitStatus=143
+StandardOutput=append:/home/nginx/kuretru.com/log/api.log
+StandardError=append:/home/nginx/kuretru.com/log/api.log
+
+[Install]
+WantedBy=multi-user.target
