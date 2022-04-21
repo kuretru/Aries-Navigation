@@ -73,7 +73,7 @@ public class WebCategoryServiceImpl extends BaseSequenceServiceImpl<WebCategoryM
         QueryWrapper<WebCategoryDO> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("name", record.getName());
         WebCategoryDO webCategoryDO = mapper.selectOne(queryWrapper);
-        if (webCategoryDO != null) {
+        if (webCategoryDO != null && !webCategoryDO.getUuid().equals(record.getId().toString())) {
             throw new ServiceException(UserErrorCodes.REQUEST_PARAMETER_ERROR, "已存在指定名称的分类");
         }
     }
