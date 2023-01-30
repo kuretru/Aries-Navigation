@@ -154,7 +154,7 @@ export async function uploadFile(
     }
   });
 
-  return request<API.ApiResponse>(`/pet/${param0}/uploadImage`, {
+  return request<API.ApiResponseSwagger>(`/pet/${param0}/uploadImage`, {
     method: 'POST',
     headers: {
       'Content-Type': 'multipart/form-data',

@@ -1,7 +1,7 @@
 import { ErrorShowType, history } from 'umi';
 import type { RequestConfig } from 'umi';
 import type { RequestOptionsInit } from 'umi-request';
-import { get as getUser } from '@/services/galaxy-oauth2-client/user';
+import { get as getUser } from '@/services/gemini-oauth2/user/user';
 
 const loginPath = '/users/login';
 
@@ -11,9 +11,9 @@ const loginPath = '/users/login';
  */
 const fetchUserInfo = async () => {
   try {
-    const userid = localStorage.getItem('userId');
-    if (!userid) return undefined;
-    const msg = await getUser(userid);
+    const userId = localStorage.getItem('userId');
+    if (!userId) return undefined;
+    const msg = await getUser(userId);
     return msg.data;
   } catch (error) {
     history.push({
@@ -43,7 +43,7 @@ const accessTokenInterceptor = (url: string, options: RequestOptionsInit) => {
   }
   const authHeader = {
     'Access-Token-ID': id,
-    'Access-Token': localStorage.getItem('accessToken'),
+    'Access-Token': localStorage.getItem('accessToken')!,
   };
   return {
     url: `${url}`,

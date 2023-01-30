@@ -44,7 +44,7 @@ declare namespace API {
     status?: 'available' | 'pending' | 'sold';
   };
 
-  type ApiResponse = {
+  type ApiResponseSwagger = {
     code?: number;
     type?: string;
     message?: string;

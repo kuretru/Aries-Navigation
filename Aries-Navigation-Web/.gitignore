@@ -16,9 +16,9 @@ yarn-error.log
 
 /coverage
 .idea
-yarn.lock
-package-lock.json
-pnpm-lock.yaml
+# yarn.lock
+# package-lock.json
+# pnpm-lock.yaml
 *bak
 
 
@@ -27,7 +27,6 @@ pnpm-lock.yaml
 *.log
 functions/*
 .temp/**
-*.code-workspace
 
 # umi
 .umi

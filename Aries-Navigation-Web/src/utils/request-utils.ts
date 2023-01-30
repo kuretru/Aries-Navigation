@@ -6,7 +6,7 @@ function getRequestParam(name: string) {
 }
 
 function getRequestParams() {
-  const result: { [key: string]: any } = {};
+  const result: Record<string, string> = {};
   const search = decodeURIComponent(window.location.search).replace('?', '');
   const pairs = search !== '' ? search.split('&') : [];
   pairs.forEach((item) => {

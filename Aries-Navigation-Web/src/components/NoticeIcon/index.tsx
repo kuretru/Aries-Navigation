@@ -1,12 +1,11 @@
-import { useEffect, useState } from 'react';
-import { Tag, message } from 'antd';
+import { getNotices } from '@/services/ant-design-pro/api';
+import { message, Tag } from 'antd';
 import { groupBy } from 'lodash';
 import moment from 'moment';
+import { useEffect, useState } from 'react';
 import { useModel, useRequest } from 'umi';
-import { getNotices } from '@/services/ant-design-pro/api';
-
-import NoticeIcon from './NoticeIcon';
 import styles from './index.less';
+import NoticeIcon from './NoticeIcon';
 
 export type GlobalHeaderRightProps = {
   fetchingNotices?: boolean;
@@ -111,7 +110,8 @@ const NoticeIconView: React.FC = () => {
   return (
     <NoticeIcon
       className={styles.action}
-      count={currentUser && currentUser.unreadCount}
+      // count={currentUser && currentUser.unreadCount}
+      count={currentUser && 0}
       onItemClick={(item) => {
         changeReadState(item.id!);
       }}

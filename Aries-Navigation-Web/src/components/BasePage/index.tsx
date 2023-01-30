@@ -16,7 +16,7 @@ import type BaseService from '@/services/aries-navigation/base-service';
 
 const { confirm } = Modal;
 
-interface IBasePageProps<T extends API.BaseDTO, Q> {
+interface IBasePageProps<T extends API.BaseDTO, Q extends API.PaginationQuery> {
   pageName: string;
   service: BaseService<T, Q>;
   columns: ProColumns<T>[];
@@ -33,10 +33,10 @@ interface IBasePageState {
   tableLoading: boolean;
 }
 
-abstract class BasePage<T extends API.BaseDTO, Q> extends React.Component<
-  IBasePageProps<T, Q>,
-  IBasePageState
-> {
+abstract class BasePage<
+  T extends API.BaseDTO,
+  Q extends API.PaginationQuery,
+> extends React.Component<IBasePageProps<T, Q>, IBasePageState> {
   columnsPrefix: ProColumns<T>[] = [
     {
       align: 'center',
@@ -90,7 +90,9 @@ abstract class BasePage<T extends API.BaseDTO, Q> extends React.Component<
   }
 
   fetchData = async (params: API.PaginationQuery) => {
-    return this.props.service.listByPage(params);
+    return this.props.service
+      .listByPage(params)
+      .catch((error: any) => message.error(error.message));
   };
 
   onAddButtonClick = () => {
@@ -105,21 +107,23 @@ abstract class BasePage<T extends API.BaseDTO, Q> extends React.Component<
 
   onDeleteButtonClick = (id: string) => {
     const messageKey = 'delete';
-    const _this = this;
+    const service = this.props.service;
+    const tableRef = this.tableRef;
     confirm({
       title: `确定删除这个${this.props.pageName}吗？`,
       icon: <QuestionCircleOutlined />,
       okType: 'danger',
       onOk() {
         message.loading({ content: '请求处理中...', duration: 0, key: messageKey });
-        _this.props.service
+        service
           .remove(id)
           .then(() => {
-            _this.tableRef.current?.reload();
+            tableRef.current?.reload();
             message.success({ content: '删除成功！', key: messageKey });
           })
-          .catch(() => {
+          .catch((error: any) => {
             message.destroy(messageKey);
+            message.error(error.message);
           });
       },
     });
@@ -133,30 +137,31 @@ abstract class BasePage<T extends API.BaseDTO, Q> extends React.Component<
 
   onFormFinish = async (record: T) => {
     const messageKey = 'create';
-    const _this = this;
     let result = false;
     message.loading({ content: '请求处理中...', duration: 0, key: messageKey });
     if (record.id) {
       await this.props.service
         .update(record)
         .then(() => {
-          _this.tableRef.current?.reload();
+          this.tableRef.current?.reload();
           message.success({ content: '修改成功！', key: messageKey });
           result = true;
         })
-        .catch(() => {
+        .catch((error: any) => {
           message.destroy(messageKey);
+          message.error(error.message);
         });
     } else {
       await this.props.service
         .create(record)
         .then(() => {
-          _this.tableRef.current?.reload();
+          this.tableRef.current?.reload();
           message.success({ content: '新增成功！', key: messageKey });
           result = true;
         })
-        .catch(() => {
+        .catch((error: any) => {
           message.destroy(messageKey);
+          message.error(error.message);
         });
     }
     return result;
@@ -172,7 +177,7 @@ abstract class BasePage<T extends API.BaseDTO, Q> extends React.Component<
           headerTitle={`${this.props.pageName}管理`}
           loading={this.state.tableLoading}
           options={{ fullScreen: true, setting: true }}
-          pagination={{ defaultPageSize: 20, showSizeChanger: true }}
+          pagination={{ defaultPageSize: 20 }}
           request={this.fetchData}
           rowKey="id"
           tooltip={`${this.props.pageName}管理`}
@@ -189,6 +194,7 @@ abstract class BasePage<T extends API.BaseDTO, Q> extends React.Component<
         />
         <ModalForm<T>
           formRef={this.formRef}
+          modalProps={{ forceRender: true }}
           onFinish={this.onFormFinish}
           onValuesChange={this.onFormValuesChange}
           onVisibleChange={(visible) => this.setState({ modalVisible: visible })}
