@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.kuretru.microservices.web.constant.code.UserErrorCodes;
 import com.kuretru.microservices.web.exception.ServiceException;
 import com.kuretru.microservices.web.service.impl.BaseSequenceServiceImpl;
+import com.kuretru.microservices.web.service.impl.BaseServiceImpl;
 import com.kuretru.web.aries.entity.data.WebCategoryDO;
 import com.kuretru.web.aries.entity.query.WebCategoryQuery;
 import com.kuretru.web.aries.entity.transfer.WebCategoryDTO;
@@ -13,6 +14,7 @@ import com.kuretru.web.aries.mapper.WebCategoryMapper;
 import com.kuretru.web.aries.service.WebCategoryService;
 import com.kuretru.web.aries.service.WebSiteService;
 import com.kuretru.web.aries.service.WebTagService;
+import org.mapstruct.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -29,8 +31,8 @@ public class WebCategoryServiceImpl extends BaseSequenceServiceImpl<WebCategoryM
     private final WebSiteService webSiteService;
 
     @Autowired
-    public WebCategoryServiceImpl(WebCategoryMapper mapper, WebTagService webTagService, @Lazy WebSiteService webSiteService) {
-        super(mapper, WebCategoryDO.class, WebCategoryDTO.class);
+    public WebCategoryServiceImpl(WebCategoryMapper mapper, WebCategoryEntityMapper entityMap, WebTagService webTagService, @Lazy WebSiteService webSiteService) {
+        super(mapper, entityMap);
         this.webTagService = webTagService;
         this.webSiteService = webSiteService;
     }
@@ -84,22 +86,9 @@ public class WebCategoryServiceImpl extends BaseSequenceServiceImpl<WebCategoryM
         super.addDefaultOrderBy(queryWrapper);
     }
 
-    @Override
-    protected WebCategoryDTO doToDto(WebCategoryDO record) {
-        WebCategoryDTO result = super.doToDto(record);
-        if (result != null) {
-            result.setTagId(UUID.fromString(record.getTagId()));
-        }
-        return result;
-    }
+    @Mapper(componentModel = "spring")
+    interface WebCategoryEntityMapper extends BaseServiceImpl.BaseEntityMapper<WebCategoryDO, WebCategoryDTO> {
 
-    @Override
-    protected WebCategoryDO dtoToDo(WebCategoryDTO record) {
-        WebCategoryDO result = super.dtoToDo(record);
-        if (result != null) {
-            result.setTagId(record.getTagId().toString());
-        }
-        return result;
     }
 
 }

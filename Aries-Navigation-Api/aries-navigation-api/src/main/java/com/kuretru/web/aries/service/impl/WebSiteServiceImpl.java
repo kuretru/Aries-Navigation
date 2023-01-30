@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.kuretru.microservices.web.constant.code.UserErrorCodes;
 import com.kuretru.microservices.web.exception.ServiceException;
 import com.kuretru.microservices.web.service.impl.BaseSequenceServiceImpl;
+import com.kuretru.microservices.web.service.impl.BaseServiceImpl;
 import com.kuretru.web.aries.entity.data.WebSiteDO;
 import com.kuretru.web.aries.entity.query.WebSiteQuery;
 import com.kuretru.web.aries.entity.transfer.WebCategoryDTO;
@@ -12,6 +13,7 @@ import com.kuretru.web.aries.entity.view.WebSiteVO;
 import com.kuretru.web.aries.mapper.WebSiteMapper;
 import com.kuretru.web.aries.service.WebCategoryService;
 import com.kuretru.web.aries.service.WebSiteService;
+import org.mapstruct.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,8 +28,8 @@ public class WebSiteServiceImpl extends BaseSequenceServiceImpl<WebSiteMapper, W
     private final WebCategoryService webCategoryService;
 
     @Autowired
-    public WebSiteServiceImpl(WebSiteMapper mapper, WebCategoryService webCategoryService) {
-        super(mapper, WebSiteDO.class, WebSiteDTO.class);
+    public WebSiteServiceImpl(WebSiteMapper mapper, WebSiteEntityMapper entityMapper, WebCategoryService webCategoryService) {
+        super(mapper, entityMapper);
         this.webCategoryService = webCategoryService;
     }
 
@@ -64,22 +66,9 @@ public class WebSiteServiceImpl extends BaseSequenceServiceImpl<WebSiteMapper, W
         super.addDefaultOrderBy(queryWrapper);
     }
 
-    @Override
-    protected WebSiteDTO doToDto(WebSiteDO record) {
-        WebSiteDTO result = super.doToDto(record);
-        if (result != null) {
-            result.setCategoryId(UUID.fromString(record.getCategoryId()));
-        }
-        return result;
-    }
+    @Mapper(componentModel = "spring")
+    interface WebSiteEntityMapper extends BaseServiceImpl.BaseEntityMapper<WebSiteDO, WebSiteDTO> {
 
-    @Override
-    protected WebSiteDO dtoToDo(WebSiteDTO record) {
-        WebSiteDO result = super.dtoToDo(record);
-        if (result != null) {
-            result.setCategoryId(record.getCategoryId().toString());
-        }
-        return result;
     }
 
 }
