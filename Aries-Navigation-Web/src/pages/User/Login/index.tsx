@@ -18,12 +18,12 @@ const Login: React.FC = () => {
       <div className={styles.content}>
         <LoginForm
           logo={<img alt="logo" src="/logo.svg" />}
-          title="天秤财富"
-          subTitle="可供多人协作的家庭账本"
+          title="白羊导航"
+          subTitle="基于Spring Boot+Ant Design Pro的练手项目"
           initialValues={{ autoLogin: true }}
           onFinish={handleSubmit}
         >
-          占位文字
+          转到【双子·身份验证中心】登录
         </LoginForm>
       </div>
       <Footer />
