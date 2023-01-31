@@ -1,10 +1,10 @@
 import React from 'react';
-import type { ProColumns } from '@ant-design/pro-table';
 import { ProFormSelect, ProFormText } from '@ant-design/pro-form';
+import type { ProColumns } from '@ant-design/pro-table';
 import type { RequestOptionsType } from '@ant-design/pro-utils';
 import { Image } from 'antd';
-import WebSiteService from '@/services/aries-navigation/web/web-site';
 import BaseSequencePage from '@/components/BaseSequencePage';
+import WebSiteService from '@/services/aries-navigation/web/web-site';
 import WebCategoryService from '@/services/aries-navigation/web/web-category';
 
 class WebSite extends React.Component {
@@ -20,13 +20,6 @@ class WebSite extends React.Component {
   };
 
   columns: ProColumns<API.Web.WebSiteDTO>[] = [
-    {
-      align: 'center',
-      key: 'index',
-      title: '序号',
-      valueType: 'indexBorder',
-      width: 60,
-    },
     {
       align: 'center',
       copyable: true,

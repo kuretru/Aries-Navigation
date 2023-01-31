@@ -1,18 +1,11 @@
 import React from 'react';
-import type { ProColumns } from '@ant-design/pro-table';
 import { ProFormText } from '@ant-design/pro-form';
-import WebTagService from '@/services/aries-navigation/web/web-tag';
+import type { ProColumns } from '@ant-design/pro-table';
 import BaseSequencePage from '@/components/BaseSequencePage';
+import WebTagService from '@/services/aries-navigation/web/web-tag';
 
 class WebTag extends React.Component {
   columns: ProColumns<API.Web.WebTagDTO>[] = [
-    {
-      align: 'center',
-      key: 'index',
-      title: '序号',
-      valueType: 'indexBorder',
-      width: 60,
-    },
     {
       align: 'center',
       copyable: true,

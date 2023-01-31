@@ -2,6 +2,7 @@ import React from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
 import type { ActionType, ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
+import type { ProFormInstance } from '@ant-design/pro-form';
 import { ModalForm, ProFormText } from '@ant-design/pro-form';
 import type { FormInstance } from 'antd';
 import { Button, message, Modal } from 'antd';
@@ -23,7 +24,7 @@ const DragHandle = SortableHandle(() => <DragOutlined style={{ color: '#999', cu
 const SortableItem = SortableElement((props: any) => <tr {...props} />);
 const SortContainer = SortableContainer((props: any) => <tbody {...props} />);
 
-interface IBaseSequencePageProps<T extends API.BaseDTO, Q> {
+interface IBaseSequencePageProps<T extends API.BaseDTO, Q extends API.PaginationQuery> {
   pageName: string;
   service: BaseSequenceService<T, Q>;
   columns: ProColumns<T>[];
@@ -42,10 +43,19 @@ interface IBaseSequencePageState<T> {
   dataSource: API.ProTableData<T>;
 }
 
-class BaseSequencePage<T extends API.BaseDTO, Q> extends React.Component<
-  IBaseSequencePageProps<T, Q>,
-  IBaseSequencePageState<T>
-> {
+class BaseSequencePage<
+  T extends API.BaseDTO,
+  Q extends API.PaginationQuery,
+> extends React.Component<IBaseSequencePageProps<T, Q>, IBaseSequencePageState<T>> {
+  columnsPrefix: ProColumns<T>[] = [
+    {
+      align: 'center',
+      key: 'index',
+      title: '序号',
+      valueType: 'indexBorder',
+      width: 60,
+    },
+  ];
   columnsSuffix: ProColumns<T>[] = [
     {
       align: 'center',
@@ -84,8 +94,8 @@ class BaseSequencePage<T extends API.BaseDTO, Q> extends React.Component<
       render: () => <DragHandle />,
     },
   ];
-  formRef: React.MutableRefObject<FormInstance>;
-  tableRef: React.MutableRefObject<ActionType>;
+  formRef: React.MutableRefObject<ProFormInstance>;
+  tableRef: React.RefObject<ActionType>;
 
   constructor(props: IBaseSequencePageProps<T, Q>) {
     super(props);
@@ -95,8 +105,8 @@ class BaseSequencePage<T extends API.BaseDTO, Q> extends React.Component<
       useLocalData: false,
       dataSource: { success: false, data: [], current: 0, pageSize: 0, total: 0 },
     };
-    this.formRef = React.createRef<FormInstance>() as React.MutableRefObject<FormInstance>;
-    this.tableRef = React.createRef<ActionType>() as React.MutableRefObject<ActionType>;
+    this.formRef = React.createRef<ProFormInstance>() as React.MutableRefObject<ProFormInstance>;
+    this.tableRef = React.createRef<ActionType>();
   }
 
   fetchData = async (params: API.PaginationQuery) => {
@@ -112,7 +122,7 @@ class BaseSequencePage<T extends API.BaseDTO, Q> extends React.Component<
   };
 
   onAddButtonClick = () => {
-    this.formRef.current.resetFields();
+    this.formRef.current?.resetFields();
     this.setState({ modalVisible: true });
   };
 
@@ -123,17 +133,18 @@ class BaseSequencePage<T extends API.BaseDTO, Q> extends React.Component<
 
   onDeleteButtonClick = (id: string) => {
     const messageKey = 'delete';
-    const that = this;
+    const service = this.props.service;
+    const tableRef = this.tableRef;
     confirm({
       title: `确定删除这个${this.props.pageName}吗？`,
       icon: <QuestionCircleOutlined />,
       okType: 'danger',
       onOk() {
         message.loading({ content: '请求处理中...', duration: 0, key: messageKey });
-        that.props.service
+        service
           .remove(id)
           .then(() => {
-            that.tableRef.current?.reload();
+            tableRef.current?.reload();
             message.success({ content: '删除成功！', key: messageKey });
           })
           .catch((error: any) => {
@@ -157,7 +168,7 @@ class BaseSequencePage<T extends API.BaseDTO, Q> extends React.Component<
       .catch((error: any) => {
         message.error(error.message);
       });
-    this.tableRef.current.reload();
+    this.tableRef.current?.reload();
   };
 
   onFormValuesChange = (changedValues: any, values: T) => {
@@ -168,14 +179,13 @@ class BaseSequencePage<T extends API.BaseDTO, Q> extends React.Component<
 
   onFormFinish = async (record: T) => {
     const messageKey = 'create';
-    const that = this;
     let result = false;
     message.loading({ content: '请求处理中...', duration: 0, key: messageKey });
     if (record.id) {
       await this.props.service
         .update(record)
         .then(() => {
-          that.tableRef.current?.reload();
+          this.tableRef.current?.reload();
           message.success({ content: '修改成功！', key: messageKey });
           result = true;
         })
@@ -187,7 +197,7 @@ class BaseSequencePage<T extends API.BaseDTO, Q> extends React.Component<
       await this.props.service
         .create(record)
         .then(() => {
-          that.tableRef.current?.reload();
+          this.tableRef.current?.reload();
           message.success({ content: '新增成功！', key: messageKey });
           result = true;
         })
@@ -205,7 +215,7 @@ class BaseSequencePage<T extends API.BaseDTO, Q> extends React.Component<
         <ProTable<T>
           actionRef={this.tableRef}
           bordered
-          columns={this.props.columns.concat(this.columnsSuffix)}
+          columns={this.columnsPrefix.concat(this.props.columns).concat(this.columnsSuffix)}
           components={{ body: { row: this.DraggableBodyRow, wrapper: this.DraggableContainer } }}
           dataSource={this.state.dataSource.data}
           headerTitle={`${this.props.pageName}管理`}
@@ -217,15 +227,15 @@ class BaseSequencePage<T extends API.BaseDTO, Q> extends React.Component<
           tooltip={`${this.props.pageName}管理`}
           toolBarRender={() => [
             <Button
-              key={'add'}
               icon={<PlusOutlined />}
+              key="add"
               onClick={this.onAddButtonClick}
               type="primary"
             >
               新增{this.props.pageName}
             </Button>,
             <Button
-              key={'reorder'}
+              key="reorder"
               icon={<SortAscendingOutlined />}
               onClick={this.onReorderButtonClick}
             >
@@ -235,6 +245,7 @@ class BaseSequencePage<T extends API.BaseDTO, Q> extends React.Component<
         />
         <ModalForm<T>
           formRef={this.formRef}
+          modalProps={{ forceRender: true }}
           onFinish={this.onFormFinish}
           onValuesChange={this.onFormValuesChange}
           onVisibleChange={(visible) => this.setState({ modalVisible: visible })}
@@ -257,7 +268,7 @@ class BaseSequencePage<T extends API.BaseDTO, Q> extends React.Component<
             searchConfig: { resetText: '取消', submitText: '提交' },
           }}
         >
-          <ProFormText disabled label="ID" name="id" width="lg" />
+          <ProFormText disabled hidden label="ID" name="id" width="lg" />
           {this.props.formItem}
         </ModalForm>
       </PageContainer>
@@ -271,8 +282,9 @@ class BaseSequencePage<T extends API.BaseDTO, Q> extends React.Component<
         oldIndex,
         newIndex,
       ).filter((el) => !!el);
-      this.state.dataSource.data = newData;
-      this.setState({ useLocalData: true });
+      const dataSource = this.state.dataSource;
+      dataSource.data = newData;
+      this.setState({ useLocalData: true, dataSource: dataSource });
     }
   };
 

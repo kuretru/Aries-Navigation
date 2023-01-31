@@ -1,10 +1,10 @@
 import React from 'react';
-import type { ProColumns } from '@ant-design/pro-table';
 import { ProFormSelect, ProFormText } from '@ant-design/pro-form';
+import type { ProColumns } from '@ant-design/pro-table';
 import type { RequestOptionsType } from '@ant-design/pro-utils';
-import WebCategoryService from '@/services/aries-navigation/web/web-category';
 import BaseSequencePage from '@/components/BaseSequencePage';
 import WebTagService from '@/services/aries-navigation/web/web-tag';
+import WebCategoryService from '@/services/aries-navigation/web/web-category';
 
 class WebCategory extends React.Component {
   webTagService = new WebTagService();
@@ -19,13 +19,6 @@ class WebCategory extends React.Component {
   };
 
   columns: ProColumns<API.Web.WebCategoryDTO>[] = [
-    {
-      align: 'center',
-      key: 'index',
-      title: '序号',
-      valueType: 'indexBorder',
-      width: 60,
-    },
     {
       align: 'center',
       copyable: true,
