@@ -4,7 +4,7 @@ import type { ActionType, ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import { Button, message, Modal } from 'antd';
 import { DeleteOutlined, QuestionCircleOutlined } from '@ant-design/icons';
-import type BaseService from '@/services/gemini-oauth2/base-service';
+import type BaseService from '@/services/aries-navigation/base-service';
 
 const { confirm } = Modal;
 

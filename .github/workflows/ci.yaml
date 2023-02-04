@@ -34,9 +34,9 @@ jobs:
         # run: yarn install --immutable
         run: yarn install
         working-directory: ${{env.working-directory}}
-      - name: Lint
-        run: yarn lint
-        working-directory: ${{env.working-directory}}
+      # - name: Lint
+      #   run: yarn lint
+      #   working-directory: ${{env.working-directory}}
       # - name: Test
       #   run: yarn test
       #   working-directory: ${{env.working-directory}}

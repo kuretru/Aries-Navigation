@@ -41,7 +41,9 @@ const Callback: React.FC = () => {
         redirect: string;
       };
       if (redirect) {
-        delete query.redirect;
+        if (query) {
+          delete query.redirect;
+        }
         history.push({
           pathname: redirect,
           query: query,

@@ -6,15 +6,12 @@ import type { MenuInfo } from 'rc-menu/lib/interface';
 import { getRecords } from '@/services/aries-navigation';
 import WebTagView from './WebTag';
 import styles from './index.less';
-import Footer from '@/components/Footer';
-
-interface IWebIndexProps {}
 interface IWebIndexState {
   tags: API.Web.WebTagVO[];
   currentIndex: number;
 }
-class WebIndex extends React.Component<IWebIndexProps, IWebIndexState> {
-  constructor(props: IWebIndexProps) {
+class WebIndex extends React.Component<Record<string, never>, IWebIndexState> {
+  constructor(props: Record<string, never>) {
     super(props);
     this.state = {
       tags: [],
