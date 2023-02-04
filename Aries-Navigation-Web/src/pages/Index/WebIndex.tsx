@@ -1,8 +1,12 @@
 import React from 'react';
+import { GridContent } from '@ant-design/pro-layout';
+import ProCard from '@ant-design/pro-card';
 import { Menu } from 'antd';
 import type { MenuInfo } from 'rc-menu/lib/interface';
 import { getRecords } from '@/services/aries-navigation';
 import WebTagView from './WebTag';
+import styles from './index.less';
+import Footer from '@/components/Footer';
 
 interface IWebIndexProps {}
 interface IWebIndexState {
@@ -35,14 +39,20 @@ class WebIndex extends React.Component<IWebIndexProps, IWebIndexState> {
   };
 
   render = () => (
-    <>
-      <Menu mode="horizontal" onClick={this.onMenuClick}>
-        {this.state.tags.map((item) => {
-          return <Menu.Item key={item.id}>{item.name}</Menu.Item>;
-        })}
-      </Menu>
-      {this.state.tags.length > 0 && <WebTagView tag={this.state.tags[this.state.currentIndex]} />}
-    </>
+    <GridContent>
+      <div className={styles.container}>
+        <ProCard className={styles.content}>
+          <Menu mode="horizontal" onClick={this.onMenuClick}>
+            {this.state.tags.map((item) => {
+              return <Menu.Item key={item.id}>{item.name}</Menu.Item>;
+            })}
+          </Menu>
+          {this.state.tags.length > 0 && (
+            <WebTagView tag={this.state.tags[this.state.currentIndex]} />
+          )}
+        </ProCard>
+      </div>
+    </GridContent>
   );
 }
 
