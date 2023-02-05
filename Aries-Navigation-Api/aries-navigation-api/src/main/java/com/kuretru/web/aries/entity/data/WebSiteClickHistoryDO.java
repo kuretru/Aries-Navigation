@@ -15,8 +15,8 @@ import lombok.ToString;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-@TableName("web_click_history")
-public class WebClickHistoryDO extends BaseHistoryDO {
+@TableName("web_site_click_history")
+public class WebSiteClickHistoryDO extends BaseHistoryDO {
 
     /** 站点ID */
     private String siteId;

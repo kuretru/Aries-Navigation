@@ -1,7 +1,7 @@
 package com.kuretru.web.aries.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.kuretru.web.aries.entity.data.WebClickHistoryDO;
+import com.kuretru.web.aries.entity.data.WebSiteClickHistoryDO;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -10,6 +10,6 @@ import org.springframework.stereotype.Repository;
  */
 @Mapper
 @Repository
-public interface WebClickHistoryMapper extends BaseMapper<WebClickHistoryDO> {
+public interface WebSiteClickHistoryMapper extends BaseMapper<WebSiteClickHistoryDO> {
 
 }
