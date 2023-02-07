@@ -1,6 +1,5 @@
 package com.kuretru.web.aries.controller;
 
-import com.kuretru.microservices.authentication.annotaion.RequireAuthorization;
 import com.kuretru.microservices.web.constant.code.UserErrorCodes;
 import com.kuretru.microservices.web.controller.BaseController;
 import com.kuretru.microservices.web.entity.ApiResponse;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/sites/history")
-@RequireAuthorization
 public class WebSiteClickHistoryController extends BaseController {
 
     private final WebSiteClickHistoryService service;
