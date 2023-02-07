@@ -3,7 +3,7 @@ export default [
     path: '/users',
     routes: [
       { component: './User/Login', layout: false, name: '登录', path: '/users/login' },
-      { component: './User/Callback', name: '回调', path: '/users/login/callback' },
+      { component: './User/Callback', layout: false, name: '回调', path: '/users/login/callback' },
     ],
   },
   { component: './Welcome', icon: 'smile', name: '欢迎', path: '/welcome' },
