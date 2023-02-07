@@ -1,10 +1,10 @@
 import type { RequestConfig, RunTimeLayoutConfig } from 'umi';
 import { history } from 'umi';
-import { PageLoading, SettingDrawer } from '@ant-design/pro-layout';
-import type { Settings as LayoutSettings } from '@ant-design/pro-layout';
-import RightContent from '@/components/RightContent';
-import Footer from '@/components/Footer';
+import type { Settings as LayoutSettings } from '@ant-design/pro-components';
+import { PageLoading, SettingDrawer } from '@ant-design/pro-components';
 import { LinkOutlined } from '@ant-design/icons';
+import Footer from '@/components/Footer';
+import RightContent from '@/components/RightContent';
 import defaultSettings from '../config/defaultSettings';
 import { fetchUserInfo, requestConfig } from '@/utils/app-utils';
 
@@ -14,7 +14,9 @@ const loginPath = '/users/login';
 const callbackPath = '/users/login/callback';
 const nonLoginPaths = [indexPath, loginPath, callbackPath];
 
-/** 获取用户信息比较慢的时候会展示一个 loading */
+/**
+ * 获取用户信息比较慢的时候会展示一个Loading
+ */
 export const initialStateConfig = {
   loading: <PageLoading />,
 };
@@ -70,19 +72,17 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
         });
       }
     },
-    links: isDev
-      ? [
-          <a
-            key="github"
-            target="_blank"
-            href="https://github.com/kuretru/Aries-Navigation/"
-            rel="noreferrer"
-          >
-            <LinkOutlined />
-            <span>GitHub</span>
-          </a>,
-        ]
-      : [],
+    links: [
+      <a
+        key="github"
+        target="_blank"
+        href="https://github.com/kuretru/Aries-Navigation/"
+        rel="noreferrer"
+      >
+        <LinkOutlined />
+        <span>GitHub</span>
+      </a>,
+    ],
     menuHeaderRender: undefined,
     // 自定义 403 页面
     // unAccessible: <div>unAccessible</div>,
@@ -92,8 +92,9 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
       return (
         <>
           {children}
-          {!props.location?.pathname?.includes('/login') && (
+          {!props.location?.pathname?.includes('/login') && isDev && (
             <SettingDrawer
+              disableUrlParams
               enableDarkTheme
               settings={initialState?.settings}
               onSettingChange={(settings) => {
