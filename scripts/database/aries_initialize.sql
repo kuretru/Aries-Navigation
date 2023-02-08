@@ -11,7 +11,7 @@
  Target Server Version : 80032 (8.0.32-0ubuntu0.22.04.2)
  File Encoding         : 65001
 
- Date: 07/02/2023 18:47:20
+ Date: 08/02/2023 14:41:33
 */
 
 SET NAMES utf8mb4;
@@ -49,9 +49,9 @@ CREATE TABLE `web_category`  (
   `sequence` int UNSIGNED NOT NULL COMMENT '排序依据',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `uk_uuid`(`uuid` ASC) USING BTREE,
-  UNIQUE INDEX `uk_name`(`name` ASC) USING BTREE,
-  INDEX `idx_tag_id`(`tag_id` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '站点分类表' ROW_FORMAT = Dynamic;
+  INDEX `idx_tag_id`(`tag_id` ASC) USING BTREE,
+  INDEX `idx_name`(`name` ASC) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '站点分类表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for web_site

@@ -72,11 +72,22 @@ public class WebCategoryServiceImpl extends BaseSequenceServiceImpl<WebCategoryM
             throw new ServiceException(UserErrorCodes.REQUEST_PARAMETER_ERROR, "指定标签ID不存在，无法设置分类到此标签下");
         }
 
+        // 业务逻辑：
+        // 1. 同个Tag(一级分类下)不能有相同名字的二级分类，不同的Tag下可以有相同名字的二级分类
+        // 2. 新增的时候遇到同名直接拒绝
+        // 3. 更新的时候判断是否为自己
         QueryWrapper<WebCategoryDO> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("tag_id", record.getTagId().toString());
         queryWrapper.eq("name", record.getName());
         WebCategoryDO webCategoryDO = mapper.selectOne(queryWrapper);
-        if (webCategoryDO != null && !webCategoryDO.getUuid().equals(record.getId().toString())) {
-            throw new ServiceException(UserErrorCodes.REQUEST_PARAMETER_ERROR, "已存在指定名称的分类");
+        boolean existInCurrentTag = webCategoryDO != null;
+        if (existInCurrentTag) {
+            boolean notCreating = record.getId() == null;
+            boolean notUpdatingSelf = record.getId() != null
+                    && !record.getId().toString().equals(Objects.requireNonNull(webCategoryDO).getUuid());
+            if (notCreating || notUpdatingSelf) {
+                throw new ServiceException(UserErrorCodes.REQUEST_PARAMETER_ERROR, "已存在指定名称的分类");
+            }
         }
     }
 
