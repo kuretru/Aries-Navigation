@@ -6,9 +6,7 @@ declare namespace API {
     id?: string;
   };
 
-  type BaseHistoryDTO = {
-
-  };
+  type BaseHistoryDTO = {};
 
   type ApiResponse<T> = {
     code: number;
