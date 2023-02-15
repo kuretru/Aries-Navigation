@@ -2,12 +2,13 @@ import React from 'react';
 import { GridContent } from '@ant-design/pro-layout';
 import ProCard from '@ant-design/pro-card';
 import { Menu } from 'antd';
-import type { MenuInfo } from 'rc-menu/lib/interface';
+import type { ItemType, MenuInfo } from 'rc-menu/lib/interface';
 import { getRecords } from '@/services/aries-navigation';
 import WebTagView from './WebTag';
 import styles from './index.less';
 interface IWebIndexState {
   tags: API.Web.WebTagVO[];
+  menuItems: ItemType[];
   currentIndex: number;
 }
 class WebIndex extends React.Component<Record<string, never>, IWebIndexState> {
@@ -15,6 +16,7 @@ class WebIndex extends React.Component<Record<string, never>, IWebIndexState> {
     super(props);
     this.state = {
       tags: [],
+      menuItems: [],
       currentIndex: 0,
     };
     this.fetchData();
@@ -22,7 +24,11 @@ class WebIndex extends React.Component<Record<string, never>, IWebIndexState> {
 
   fetchData = () => {
     getRecords().then((response) => {
-      this.setState({ tags: response.data });
+      const menuItems: ItemType[] = [];
+      response.data.forEach((tag: API.Web.WebTagVO) =>
+        menuItems.push({ key: tag.id, label: tag.name }),
+      );
+      this.setState({ tags: response.data, menuItems: menuItems });
     });
   };
 
@@ -39,11 +45,7 @@ class WebIndex extends React.Component<Record<string, never>, IWebIndexState> {
     <GridContent>
       <div className={styles.container}>
         <ProCard className={styles.content}>
-          <Menu mode="horizontal" onClick={this.onMenuClick}>
-            {this.state.tags.map((item) => {
-              return <Menu.Item key={item.id}>{item.name}</Menu.Item>;
-            })}
-          </Menu>
+          <Menu items={this.state.menuItems} mode="horizontal" onClick={this.onMenuClick} />
           {this.state.tags.length > 0 && (
             <WebTagView tag={this.state.tags[this.state.currentIndex]} />
           )}
