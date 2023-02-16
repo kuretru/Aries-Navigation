@@ -15,14 +15,17 @@
   text-align: center;
 }
 
-.category_body .ant-pro-card-body-wrap {
-  padding: 0;
+.category_body {
+  :global {
+    .ant-pro-card-body-wrap {
+      padding: 0;
+    }
+  }
 }
 
 .site_link {
   overflow-y: auto;
-}
-
-.site_link::-webkit-scrollbar {
-  display: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
