@@ -24,7 +24,9 @@ const WebSiteView: React.FC<WebSiteProps> = ({ site }) => {
     // 若存在滚动条则启用滚动
     if (linkBodyRef.current!.scrollWidth > linkBodyRef.current!.offsetWidth) {
       setAnimationPaused(false);
-      setAnimationTranslateX(-(linkBodyRef.current!.scrollWidth - linkBodyRef.current!.offsetWidth));
+      setAnimationTranslateX(
+        -(linkBodyRef.current!.scrollWidth - linkBodyRef.current!.offsetWidth),
+      );
     }
   }, [site.id]);
 
@@ -42,7 +44,7 @@ const WebSiteView: React.FC<WebSiteProps> = ({ site }) => {
       </ProCard>
       <div className={styles.site_link}>
         <TweenOne animation={animation} paused={animationPaused} repeat={-1} yoyo>
-          <ProCard bodyStyle={{ padding: '12px 6px' }} ref={linkBodyRef} >
+          <ProCard bodyStyle={{ padding: '12px 6px' }} ref={linkBodyRef}>
             <Tooltip title={site.description} placement="bottomLeft">
               <Button onMouseDown={onMouseDown} href={site.siteUrl} target="_blank" type="link">
                 {site.name}
