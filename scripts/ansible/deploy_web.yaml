@@ -1,0 +1,37 @@
+---
+- hosts: aries
+  gather_facts: false
+  remote_user: root
+  vars:
+    root_path: /home/nginx/kuretru.com
+  tasks:
+  - name: packing content
+    local_action:
+      module: community.general.archive
+      path: ../../Aries-Navigation-Web/dist/
+      dest: ../../Aries-Navigation-Web/dist.tar.gz
+      format: gz
+      force_archive: true
+  - name: remove old content
+    file: 
+      path: "{{ root_path }}/public_bk"
+      state: absent
+  - name: backup old content
+    shell: 
+      chdir: "{{ root_path }}"
+      cmd: mv public/ public_bk/
+  - name: create content directory
+    file:
+      path: "{{ root_path }}/public"
+      state: directory
+  - name: extract content
+    unarchive: 
+      src: ../../Aries-Navigation-Web/dist.tar.gz
+      dest: "{{ root_path }}/public"
+  - name: change owner and mode
+    file: 
+      path: "{{ root_path }}/public"
+      owner: nginx
+      group: nginx
+      mode: 0755
+      recurse: yes
