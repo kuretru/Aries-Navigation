@@ -12,11 +12,18 @@ const Callback: React.FC = () => {
     const userInfo = await initialState?.fetchUserInfo?.();
 
     if (userInfo) {
-      await setInitialState((s: any) => ({ ...s, currentUser: userInfo }));
+      await setInitialState((state: any) => ({ ...state, currentUser: userInfo }));
     }
   };
 
   const login = async () => {
+    if (localStorage.getItem('alreadyLogin')) {
+      // setInitialState()后本页面会刷新一次，重走一遍所有的逻辑，
+      // 这里不得已而为之，等待更优雅的解决方法
+      localStorage.removeItem('alreadyLogin');
+      return;
+    }
+
     const requestParams = getRequestParams();
     const record: Galaxy.OAuth2.Client.OAuth2AuthorizeResponseDTO = {
       code: requestParams.code,
@@ -31,6 +38,7 @@ const Callback: React.FC = () => {
       localStorage.setItem('userId', response.data.userId);
       localStorage.setItem('accessTokenId', response.data.accessToken.id);
       localStorage.setItem('accessToken', response.data.accessToken.secret);
+      localStorage.setItem('alreadyLogin', 'true');
 
       await fetchUserInfo();
 
