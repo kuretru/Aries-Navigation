@@ -1,6 +1,9 @@
 import React from 'react';
 import { ProFormText } from '@ant-design/pro-form';
 import type { ProColumns } from '@ant-design/pro-table';
+import { Button } from 'antd';
+import { SettingOutlined } from '@ant-design/icons';
+import { history } from 'umi';
 import BaseSequencePage from '@/components/BaseSequencePage';
 import WebTagService from '@/services/aries-navigation/web/web-tag';
 
@@ -12,7 +15,33 @@ class WebTag extends React.Component {
       dataIndex: 'name',
       title: '标签名称',
     },
+    {
+      align: 'center',
+      key: 'manager',
+      title: '内容管理',
+      width: 120,
+      render: (_, record) => {
+        return [
+          <Button
+            icon={<SettingOutlined />}
+            key="manager"
+            onClick={() => this.onManagerButtonClick(record)}
+          >
+            管理
+          </Button>,
+        ]
+      }
+    },
   ];
+
+  onManagerButtonClick = (record: API.Web.WebTagDTO) => {
+    history.push({
+      pathname: '/admin/web/categories',
+      query: {
+        tagId: record.id
+      }
+    })
+  };
 
   formItem = () => {
     return (

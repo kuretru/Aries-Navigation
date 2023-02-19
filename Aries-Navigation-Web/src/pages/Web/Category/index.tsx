@@ -5,6 +5,7 @@ import type { RequestOptionsType } from '@ant-design/pro-utils';
 import BaseSequencePage from '@/components/BaseSequencePage';
 import WebTagService from '@/services/aries-navigation/web/web-tag';
 import WebCategoryService from '@/services/aries-navigation/web/web-category';
+import { getRequestParam } from '@/utils/request-utils';
 
 class WebCategory extends React.Component {
   webTagService = new WebTagService();
@@ -23,6 +24,7 @@ class WebCategory extends React.Component {
       align: 'center',
       copyable: true,
       dataIndex: 'tagId',
+      initialValue: getRequestParam('tagId'),
       title: '所属标签',
       request: this.fetchWebTags,
       valueType: 'select',
