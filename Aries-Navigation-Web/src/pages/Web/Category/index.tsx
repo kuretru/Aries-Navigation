@@ -1,6 +1,9 @@
 import React from 'react';
 import { ProFormSelect, ProFormText } from '@ant-design/pro-form';
 import type { ProColumns } from '@ant-design/pro-table';
+import { Button } from 'antd';
+import { SettingOutlined } from '@ant-design/icons';
+import { history } from 'umi';
 import type { RequestOptionsType } from '@ant-design/pro-utils';
 import BaseSequencePage from '@/components/BaseSequencePage';
 import WebTagService from '@/services/aries-navigation/web/web-tag';
@@ -36,7 +39,34 @@ class WebCategory extends React.Component {
       dataIndex: 'name',
       title: '分类名称',
     },
+    {
+      align: 'center',
+      key: 'manager',
+      title: '内容管理',
+      width: 120,
+      render: (_, record) => {
+        return [
+          <Button
+            icon={<SettingOutlined />}
+            key="manager"
+            onClick={() => this.onManagerButtonClick(record)}
+          >
+            管理
+          </Button>,
+        ]
+      }
+    },
   ];
+
+  onManagerButtonClick = (record: API.Web.WebCategoryDTO) => {
+    history.push({
+      pathname: '/admin/web/sites',
+      query: {
+        tagId: record.tagId,
+        categoryId: record.id,
+      }
+    })
+  };
 
   formItem = () => {
     return (

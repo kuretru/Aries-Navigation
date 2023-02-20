@@ -6,6 +6,7 @@ import { Image } from 'antd';
 import BaseSequencePage from '@/components/BaseSequencePage';
 import WebSiteService from '@/services/aries-navigation/web/web-site';
 import WebCategoryService from '@/services/aries-navigation/web/web-category';
+import { getRequestParam } from '@/utils/request-utils';
 
 class WebSite extends React.Component {
   webCategoryService = new WebCategoryService();
@@ -24,6 +25,7 @@ class WebSite extends React.Component {
       align: 'center',
       copyable: true,
       dataIndex: 'categoryId',
+      initialValue: getRequestParam('categoryId'),
       title: '所属分类',
       request: this.fetchWebCategories,
       valueType: 'select',
