@@ -75,8 +75,8 @@ class WebSite extends React.Component {
           label="站点名称"
           name="name"
           placeholder="请输入名称"
-          rules={[{ max: 16, required: true }]}
-          tooltip="最长16位"
+          rules={[{ max: 32, required: true }]}
+          tooltip="最长32位"
           width="lg"
         />
         <ProFormText

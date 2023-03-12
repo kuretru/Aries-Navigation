@@ -24,7 +24,7 @@ public class WebSiteDTO extends BaseDTO {
     private UUID categoryId;
 
     @NotNull
-    @Size(max = 16)
+    @Size(max = 32)
     @Schema(description = "站点名称")
     private String name;
 

@@ -18,7 +18,7 @@ public class WebSiteQuery {
     @Schema(description = "所属分类ID")
     private UUID categoryId;
 
-    @Size(max = 16)
+    @Size(max = 32)
     @Schema(description = "站点名称")
     private String name;
 
