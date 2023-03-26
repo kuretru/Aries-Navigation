@@ -1,22 +1,54 @@
 import React from 'react';
-import { ProFormSelect, ProFormText } from '@ant-design/pro-form';
+import { ProFormTreeSelect } from '@ant-design/pro-components';
+import { ProFormText } from '@ant-design/pro-form';
 import type { ProColumns } from '@ant-design/pro-table';
 import type { RequestOptionsType } from '@ant-design/pro-utils';
+import type { DefaultOptionType } from 'antd/lib/select';
 import { Image } from 'antd';
 import BaseSequencePage from '@/components/BaseSequencePage';
 import WebSiteService from '@/services/aries-navigation/web/web-site';
 import WebCategoryService from '@/services/aries-navigation/web/web-category';
+import WebTagService from '@/services/aries-navigation/web/web-tag';
 import { getRequestParam } from '@/utils/request-utils';
 
 class WebSite extends React.Component {
   webCategoryService = new WebCategoryService();
+  webTagService = new WebTagService();
+
+  fetchWebTagsName = async () => {
+    const response = await this.webTagService.list();
+    const result: Record<string, string> = {};
+    response.data.forEach((record) => {
+      result[record.id!] = record.name;
+    });
+    return result;
+  };
 
   fetchWebCategories = async () => {
+    const webTagsName = await this.fetchWebTagsName();
+
     const response = await this.webCategoryService.list();
-    const result: RequestOptionsType[] = [];
+    const tags: Record<string, Omit<DefaultOptionType, 'title'> & { title: string }> = {};
     response.data.forEach((record) => {
-      result.push({ label: record.name, value: record.id });
+      if (!(record.tagId in tags)) {
+        tags[record.tagId] = {
+          selectable: false,
+          label: webTagsName[record.tagId],
+          title: webTagsName[record.tagId],
+          value: record.tagId,
+          children: [],
+        };
+      }
+      tags[record.tagId].children!.push({
+        label: `${tags[record.tagId].title}->${record.name}`,
+        title: record.name,
+        value: record.id,
+      });
     });
+    const result: RequestOptionsType[] = [];
+    for (const key in tags) {
+      result.push(tags[key]);
+    }
     return result;
   };
 
@@ -28,8 +60,12 @@ class WebSite extends React.Component {
       initialValue: getRequestParam('categoryId'),
       title: '所属分类',
       request: this.fetchWebCategories,
-      valueType: 'select',
-      width: 160,
+      valueType: 'treeSelect',
+      width: 240,
+      fieldProps: {
+        treeDefaultExpandAll: true,
+        treeExpandAction: 'click',
+      },
     },
     {
       align: 'center',
@@ -61,14 +97,13 @@ class WebSite extends React.Component {
   ];
 
   onSubmit = (params: API.Web.WebSiteQuery) => {
-    console.log(params);
-    return { "categoryId": params.categoryId };
+    return { categoryId: params.categoryId };
   };
 
   formItem = () => {
     return (
       <>
-        <ProFormSelect
+        <ProFormTreeSelect
           label="所属分类"
           name="categoryId"
           placeholder="请选择所属标签"
@@ -76,6 +111,10 @@ class WebSite extends React.Component {
           request={this.fetchWebCategories}
           rules={[{ required: true }]}
           width="lg"
+          fieldProps={{
+            treeDefaultExpandAll: true,
+            treeExpandAction: 'click',
+          }}
         />
         <ProFormText
           label="站点名称"

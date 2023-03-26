@@ -31,7 +31,7 @@ class WebCategory extends React.Component {
       title: '所属标签',
       request: this.fetchWebTags,
       valueType: 'select',
-      width: 160,
+      width: 240,
     },
     {
       align: 'center',
@@ -54,8 +54,8 @@ class WebCategory extends React.Component {
           >
             管理
           </Button>,
-        ]
-      }
+        ];
+      },
     },
   ];
 
@@ -65,12 +65,12 @@ class WebCategory extends React.Component {
       query: {
         tagId: record.tagId,
         categoryId: record.id,
-      }
-    })
+      },
+    });
   };
 
   onSubmit = (params: API.Web.WebCategoryQuery) => {
-    return { "tagId": params.tagId };
+    return { tagId: params.tagId };
   };
 
   formItem = () => {

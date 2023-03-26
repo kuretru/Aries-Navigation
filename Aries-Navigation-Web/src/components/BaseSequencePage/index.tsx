@@ -109,7 +109,7 @@ class BaseSequencePage<
     };
     this.formRef = React.createRef<ProFormInstance>() as React.MutableRefObject<ProFormInstance>;
     this.tableRef = React.createRef<ActionType>();
-    this.defaultFormValue = {}
+    this.defaultFormValue = {};
   }
 
   fetchData = async (params: API.PaginationQuery) => {
@@ -215,11 +215,11 @@ class BaseSequencePage<
     if (this.props.onSubmit) {
       this.defaultFormValue = this.props.onSubmit(params);
     }
-  }
+  };
 
   onReset = () => {
-    this.defaultFormValue = {}
-  }
+    this.defaultFormValue = {};
+  };
 
   render() {
     return (

@@ -29,8 +29,8 @@ class WebTag extends React.Component {
           >
             管理
           </Button>,
-        ]
-      }
+        ];
+      },
     },
   ];
 
@@ -38,9 +38,9 @@ class WebTag extends React.Component {
     history.push({
       pathname: '/admin/web/categories',
       query: {
-        tagId: record.id
-      }
-    })
+        tagId: record.id,
+      },
+    });
   };
 
   formItem = () => {
