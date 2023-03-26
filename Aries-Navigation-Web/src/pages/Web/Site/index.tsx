@@ -60,6 +60,11 @@ class WebSite extends React.Component {
     },
   ];
 
+  onSubmit = (params: API.Web.WebSiteQuery) => {
+    console.log(params);
+    return { "categoryId": params.categoryId };
+  };
+
   formItem = () => {
     return (
       <>
@@ -67,6 +72,7 @@ class WebSite extends React.Component {
           label="所属分类"
           name="categoryId"
           placeholder="请选择所属标签"
+          initialValue={getRequestParam('categoryId')}
           request={this.fetchWebCategories}
           rules={[{ required: true }]}
           width="lg"
@@ -114,6 +120,7 @@ class WebSite extends React.Component {
         service={new WebSiteService()}
         columns={this.columns}
         formItem={this.formItem()}
+        onSubmit={this.onSubmit}
       />
     );
   }
