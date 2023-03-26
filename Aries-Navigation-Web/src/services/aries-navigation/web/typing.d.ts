@@ -22,6 +22,7 @@ declare namespace API.Web {
   };
 
   type WebCategoryQuery = API.PaginationQuery & {
+    tagId?: string;
     name?: string;
   };
 
@@ -40,6 +41,7 @@ declare namespace API.Web {
   };
 
   type WebSiteQuery = API.PaginationQuery & {
+    categoryId?: string;
     name?: string;
   };
 

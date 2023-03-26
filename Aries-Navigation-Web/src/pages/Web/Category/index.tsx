@@ -1,8 +1,8 @@
 import React from 'react';
 import { ProFormSelect, ProFormText } from '@ant-design/pro-form';
 import type { ProColumns } from '@ant-design/pro-table';
-import { Button } from 'antd';
 import { SettingOutlined } from '@ant-design/icons';
+import { Button } from 'antd';
 import { history } from 'umi';
 import type { RequestOptionsType } from '@ant-design/pro-utils';
 import BaseSequencePage from '@/components/BaseSequencePage';
@@ -43,6 +43,7 @@ class WebCategory extends React.Component {
       align: 'center',
       key: 'manager',
       title: '内容管理',
+      search: false,
       width: 120,
       render: (_, record) => {
         return [
@@ -68,6 +69,10 @@ class WebCategory extends React.Component {
     })
   };
 
+  onSubmit = (params: API.Web.WebCategoryQuery) => {
+    return { "tagId": params.tagId };
+  };
+
   formItem = () => {
     return (
       <>
@@ -75,6 +80,7 @@ class WebCategory extends React.Component {
           label="所属标签"
           name="tagId"
           placeholder="请选择所属标签"
+          initialValue={getRequestParam('tagId')}
           request={this.fetchWebTags}
           rules={[{ required: true }]}
           width="lg"
@@ -98,6 +104,7 @@ class WebCategory extends React.Component {
         service={new WebCategoryService()}
         columns={this.columns}
         formItem={this.formItem()}
+        onSubmit={this.onSubmit}
       />
     );
   }

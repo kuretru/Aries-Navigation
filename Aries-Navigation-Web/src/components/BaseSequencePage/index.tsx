@@ -34,6 +34,7 @@ interface IBaseSequencePageProps<T extends API.BaseDTO, Q extends API.Pagination
     values: T,
     formRef: React.MutableRefObject<FormInstance>,
   ) => void;
+  onSubmit?: (params: Q) => Q;
 }
 
 interface IBaseSequencePageState<T> {
@@ -96,6 +97,7 @@ class BaseSequencePage<
   ];
   formRef: React.MutableRefObject<ProFormInstance>;
   tableRef: React.RefObject<ActionType>;
+  defaultFormValue: Record<string, any>;
 
   constructor(props: IBaseSequencePageProps<T, Q>) {
     super(props);
@@ -107,6 +109,7 @@ class BaseSequencePage<
     };
     this.formRef = React.createRef<ProFormInstance>() as React.MutableRefObject<ProFormInstance>;
     this.tableRef = React.createRef<ActionType>();
+    this.defaultFormValue = {}
   }
 
   fetchData = async (params: API.PaginationQuery) => {
@@ -123,6 +126,7 @@ class BaseSequencePage<
 
   onAddButtonClick = () => {
     this.formRef.current?.resetFields();
+    this.formRef.current.setFieldsValue(this.defaultFormValue);
     this.setState({ modalVisible: true });
   };
 
@@ -171,12 +175,6 @@ class BaseSequencePage<
     this.tableRef.current?.reload();
   };
 
-  onFormValuesChange = (changedValues: any, values: T) => {
-    if (this.props.onFormValuesChange) {
-      this.props.onFormValuesChange(changedValues, values, this.formRef);
-    }
-  };
-
   onFormFinish = async (record: T) => {
     const messageKey = 'create';
     let result = false;
@@ -209,10 +207,24 @@ class BaseSequencePage<
     return result;
   };
 
+  onFormValuesChange = (changedValues: any, values: T) => {
+    this.props.onFormValuesChange?.(changedValues, values, this.formRef);
+  };
+
+  onSubmit = (params: Q) => {
+    if (this.props.onSubmit) {
+      this.defaultFormValue = this.props.onSubmit(params);
+    }
+  }
+
+  onReset = () => {
+    this.defaultFormValue = {}
+  }
+
   render() {
     return (
       <PageContainer>
-        <ProTable<T>
+        <ProTable<T, Q>
           actionRef={this.tableRef}
           bordered
           columns={this.columnsPrefix.concat(this.props.columns).concat(this.columnsSuffix)}
@@ -220,6 +232,8 @@ class BaseSequencePage<
           dataSource={this.state.dataSource.data}
           headerTitle={`${this.props.pageName}管理`}
           loading={this.state.tableLoading}
+          onSubmit={this.onSubmit}
+          onReset={this.onReset}
           options={{ fullScreen: true, setting: true }}
           pagination={{ defaultPageSize: 20 }}
           request={this.fetchData}
