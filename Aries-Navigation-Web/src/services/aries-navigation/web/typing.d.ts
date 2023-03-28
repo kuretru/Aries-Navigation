@@ -4,15 +4,18 @@
 declare namespace API.Web {
   type WebTagDTO = API.BaseDTO & {
     name: string;
+    hidden: boolean;
   };
 
   type WebTagQuery = API.PaginationQuery & {
     name?: string;
+    hidden?: boolean;
   };
 
   type WebTagVO = {
     id: string;
     name: string;
+    hidden: boolean;
     categories: WebCategoryVO[];
   };
 

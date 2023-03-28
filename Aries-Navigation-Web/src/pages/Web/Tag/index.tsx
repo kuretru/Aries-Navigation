@@ -1,4 +1,5 @@
 import React from 'react';
+import { ProFormSwitch } from '@ant-design/pro-components';
 import { ProFormText } from '@ant-design/pro-form';
 import type { ProColumns } from '@ant-design/pro-table';
 import { Button } from 'antd';
@@ -14,10 +15,23 @@ class WebTag extends React.Component {
       copyable: true,
       dataIndex: 'name',
       title: '标签名称',
+      width: 240,
+    },
+    {
+      align: 'center',
+      dataIndex: 'hidden',
+      title: '是否隐藏',
+      valueEnum: {
+        true: '隐藏',
+        false: '显示',
+      },
+      valueType: 'select',
+      render: (_, record) => (record.hidden ? '隐藏' : ''),
     },
     {
       align: 'center',
       key: 'manager',
+      search: false,
       title: '内容管理',
       width: 120,
       render: (_, record) => {
@@ -53,6 +67,16 @@ class WebTag extends React.Component {
           rules={[{ max: 16, required: true }]}
           tooltip="最长16位"
           width="lg"
+        />
+        <ProFormSwitch
+          fieldProps={{
+            checkedChildren: '隐藏',
+            unCheckedChildren: '显示',
+          }}
+          label="是否隐藏"
+          name="hidden"
+          placeholder="请设置是否隐藏"
+          rules={[{ required: true }]}
         />
       </>
     );
