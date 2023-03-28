@@ -22,12 +22,16 @@ public class WebTagVO {
     @Schema(description = "标签名称")
     private String name;
 
+    @Schema(description = "是否为隐藏标签")
+    private Boolean hidden;
+
     @Schema(description = "包含分类")
     private List<WebCategoryVO> categories;
 
-    public WebTagVO(UUID id, String name) {
+    public WebTagVO(UUID id, String name, Boolean hidden) {
         this.id = id;
         this.name = name;
+        this.hidden = hidden;
         this.categories = new ArrayList<>(0);
     }
 

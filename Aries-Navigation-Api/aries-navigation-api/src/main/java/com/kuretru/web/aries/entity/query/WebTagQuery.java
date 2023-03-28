@@ -16,4 +16,7 @@ public class WebTagQuery {
     @Schema(description = "标签名称")
     private String name;
 
+    @Schema(description = "是否为隐藏标签")
+    private Boolean hidden;
+
 }

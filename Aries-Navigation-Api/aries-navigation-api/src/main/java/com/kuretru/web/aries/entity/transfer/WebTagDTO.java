@@ -23,4 +23,8 @@ public class WebTagDTO extends BaseDTO {
     @Schema(description = "标签名称")
     private String name;
 
+    @NotNull
+    @Schema(description = "是否为隐藏标签")
+    private Boolean hidden;
+
 }

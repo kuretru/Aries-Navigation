@@ -40,7 +40,7 @@ public class WebTagServiceImpl extends BaseSequenceServiceImpl<WebTagMapper, Web
         List<WebTagDTO> records = list();
         List<WebTagVO> result = new ArrayList<>(records.size());
         for (WebTagDTO record : records) {
-            result.add(new WebTagVO(record.getId(), record.getName()));
+            result.add(new WebTagVO(record.getId(), record.getName(), record.getHidden()));
         }
         return result;
     }

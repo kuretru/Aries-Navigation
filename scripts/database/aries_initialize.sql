@@ -11,7 +11,7 @@
  Target Server Version : 80032 (8.0.32-0ubuntu0.22.04.2)
  File Encoding         : 65001
 
- Date: 12/03/2023 11:22:50
+ Date: 28/03/2023 16:02:59
 */
 
 SET NAMES utf8mb4;
@@ -96,6 +96,7 @@ CREATE TABLE `web_tag`  (
   `create_time` datetime NOT NULL COMMENT '记录主动创建的时刻',
   `update_time` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '记录上一次被动更新的时刻',
   `name` char(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '标签名称',
+  `is_hidden` bit(1) NOT NULL COMMENT '是否为隐藏标签',
   `sequence` int UNSIGNED NOT NULL COMMENT '排序依据',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `uk_uuid`(`uuid` ASC) USING BTREE,

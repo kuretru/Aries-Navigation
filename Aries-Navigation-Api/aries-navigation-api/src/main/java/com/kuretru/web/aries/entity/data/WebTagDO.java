@@ -1,5 +1,6 @@
 package com.kuretru.web.aries.entity.data;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.kuretru.microservices.web.entity.data.BaseSequenceDO;
 import lombok.Data;
@@ -20,5 +21,9 @@ public class WebTagDO extends BaseSequenceDO {
 
     /** 标签名称 */
     private String name;
+
+    /** 是否为隐藏标签 */
+    @TableField("is_hidden")
+    private Boolean hidden;
 
 }
