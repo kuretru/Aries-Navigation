@@ -59,7 +59,7 @@ public class WebTagServiceImpl extends BaseSequenceServiceImpl<WebTagMapper, Web
         QueryWrapper<WebTagDO> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("name", record.getName());
         WebTagDO webTagDO = mapper.selectOne(queryWrapper);
-        if (webTagDO != null) {
+        if (webTagDO != null && !webTagDO.getUuid().equals(record.getId().toString())) {
             throw new ServiceException(UserErrorCodes.REQUEST_PARAMETER_ERROR, "已存在指定名称的标签");
         }
     }
