@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.kuretru.microservices.web.constant.code.UserErrorCodes;
 import com.kuretru.microservices.web.exception.ServiceException;
 import com.kuretru.microservices.web.service.impl.BaseSequenceServiceImpl;
-import com.kuretru.microservices.web.service.impl.BaseServiceImpl;
 import com.kuretru.web.aries.entity.data.WebCategoryDO;
 import com.kuretru.web.aries.entity.query.WebCategoryQuery;
 import com.kuretru.web.aries.entity.transfer.WebCategoryDTO;
@@ -98,7 +97,7 @@ public class WebCategoryServiceImpl extends BaseSequenceServiceImpl<WebCategoryM
     }
 
     @Mapper(componentModel = "spring")
-    interface WebCategoryEntityMapper extends BaseServiceImpl.BaseEntityMapper<WebCategoryDO, WebCategoryDTO> {
+    interface WebCategoryEntityMapper extends BaseSequenceServiceImpl.BaseSequenceEntityMapper<WebCategoryDO, WebCategoryDTO> {
 
     }
 

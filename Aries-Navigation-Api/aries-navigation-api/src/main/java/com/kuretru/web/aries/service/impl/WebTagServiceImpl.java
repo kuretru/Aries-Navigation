@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.kuretru.microservices.web.constant.code.UserErrorCodes;
 import com.kuretru.microservices.web.exception.ServiceException;
 import com.kuretru.microservices.web.service.impl.BaseSequenceServiceImpl;
-import com.kuretru.microservices.web.service.impl.BaseServiceImpl;
 import com.kuretru.web.aries.entity.data.WebTagDO;
 import com.kuretru.web.aries.entity.query.WebTagQuery;
 import com.kuretru.web.aries.entity.transfer.WebTagDTO;
@@ -65,7 +64,7 @@ public class WebTagServiceImpl extends BaseSequenceServiceImpl<WebTagMapper, Web
     }
 
     @Mapper(componentModel = "spring")
-    interface WebTagEntityMapper extends BaseServiceImpl.BaseEntityMapper<WebTagDO, WebTagDTO> {
+    interface WebTagEntityMapper extends BaseSequenceServiceImpl.BaseSequenceEntityMapper<WebTagDO, WebTagDTO> {
 
     }
 
