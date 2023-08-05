@@ -5,13 +5,13 @@ import com.kuretru.microservices.web.constant.code.UserErrorCodes;
 import com.kuretru.microservices.web.exception.ServiceException;
 import com.kuretru.microservices.web.service.impl.BaseSequenceServiceImpl;
 import com.kuretru.web.aries.entity.data.WebTagDO;
+import com.kuretru.web.aries.entity.mapper.WebTagEntityMapper;
 import com.kuretru.web.aries.entity.query.WebTagQuery;
 import com.kuretru.web.aries.entity.transfer.WebTagDTO;
 import com.kuretru.web.aries.entity.view.WebTagVO;
 import com.kuretru.web.aries.mapper.WebTagMapper;
 import com.kuretru.web.aries.service.WebCategoryService;
 import com.kuretru.web.aries.service.WebTagService;
-import org.mapstruct.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -61,11 +61,6 @@ public class WebTagServiceImpl extends BaseSequenceServiceImpl<WebTagMapper, Web
         if (webTagDO != null && !webTagDO.getUuid().equals(record.getId().toString())) {
             throw new ServiceException(UserErrorCodes.REQUEST_PARAMETER_ERROR, "已存在指定名称的标签");
         }
-    }
-
-    @Mapper(componentModel = "spring")
-    interface WebTagEntityMapper extends BaseSequenceServiceImpl.BaseSequenceEntityMapper<WebTagDO, WebTagDTO> {
-
     }
 
 }

@@ -4,12 +4,12 @@ import com.kuretru.microservices.web.constant.code.UserErrorCodes;
 import com.kuretru.microservices.web.exception.ServiceException;
 import com.kuretru.microservices.web.service.impl.BaseHistoryServiceImpl;
 import com.kuretru.web.aries.entity.data.WebSiteClickHistoryDO;
+import com.kuretru.web.aries.entity.mapper.WebSiteClickHistoryEntityMapper;
 import com.kuretru.web.aries.entity.transfer.WebSiteClickHistoryDTO;
 import com.kuretru.web.aries.entity.transfer.WebSiteDTO;
 import com.kuretru.web.aries.mapper.WebSiteClickHistoryMapper;
 import com.kuretru.web.aries.service.WebSiteClickHistoryService;
 import com.kuretru.web.aries.service.WebSiteService;
-import org.mapstruct.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,11 +34,6 @@ public class WebSiteClickHistoryServiceImpl extends BaseHistoryServiceImpl<WebSi
         if (webSite == null) {
             throw new ServiceException(UserErrorCodes.REQUEST_PARAMETER_ERROR, "指定站点不存在");
         }
-    }
-
-    @Mapper(componentModel = "spring")
-    interface WebSiteClickHistoryEntityMapper extends BaseHistoryEntityMapper<WebSiteClickHistoryDO, WebSiteClickHistoryDTO> {
-
     }
 
 }

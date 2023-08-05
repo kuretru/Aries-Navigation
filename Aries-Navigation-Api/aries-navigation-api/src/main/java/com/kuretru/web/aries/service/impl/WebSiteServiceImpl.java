@@ -5,6 +5,7 @@ import com.kuretru.microservices.web.constant.code.UserErrorCodes;
 import com.kuretru.microservices.web.exception.ServiceException;
 import com.kuretru.microservices.web.service.impl.BaseSequenceServiceImpl;
 import com.kuretru.web.aries.entity.data.WebSiteDO;
+import com.kuretru.web.aries.entity.mapper.WebSiteEntityMapper;
 import com.kuretru.web.aries.entity.query.WebSiteQuery;
 import com.kuretru.web.aries.entity.transfer.WebCategoryDTO;
 import com.kuretru.web.aries.entity.transfer.WebSiteDTO;
@@ -12,7 +13,6 @@ import com.kuretru.web.aries.entity.view.WebSiteVO;
 import com.kuretru.web.aries.mapper.WebSiteMapper;
 import com.kuretru.web.aries.service.WebCategoryService;
 import com.kuretru.web.aries.service.WebSiteService;
-import org.mapstruct.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -63,11 +63,6 @@ public class WebSiteServiceImpl extends BaseSequenceServiceImpl<WebSiteMapper, W
     protected void addDefaultOrderBy(QueryWrapper<WebSiteDO> queryWrapper) {
         queryWrapper.orderByAsc("category_id");
         super.addDefaultOrderBy(queryWrapper);
-    }
-
-    @Mapper(componentModel = "spring")
-    interface WebSiteEntityMapper extends BaseSequenceServiceImpl.BaseSequenceEntityMapper<WebSiteDO, WebSiteDTO> {
-
     }
 
 }
