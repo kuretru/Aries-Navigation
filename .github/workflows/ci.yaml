@@ -17,6 +17,11 @@ jobs:
       - name: Build Aries Navigation Parent
         run: mvn --batch-mode --update-snapshots install
         working-directory: Aries-Navigation-Api/
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: aries-navigation
+          path: Aries-Navigation-Api/aries-navigation-api/target/*.jar
   frontend:
     name: frontend
     runs-on: ubuntu-latest
@@ -43,3 +48,8 @@ jobs:
       - name: Build
         run: yarn build
         working-directory: ${{env.working-directory}}
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: frontend
+          path: Aries-Navigation-Web/dist/
