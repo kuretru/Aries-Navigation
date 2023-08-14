@@ -114,3 +114,18 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+  purge-images:
+    name: purge images
+    needs: docker
+    runs-on: ubuntu-latest
+    steps:
+      - name: Purge untagged docker images
+        uses: Chizkiyahu/delete-untagged-ghcr-action@v2
+        with:
+          token: ${{ secrets.PAT_TOKEN }}
+          repository: ${{ github.repository }}
+          repository_owner: ${{ github.repository_owner }}
+          package_name: aries-navigation
+          untagged_only: true
+          except_untagged_multiplatform: false
+          owner_type: user
