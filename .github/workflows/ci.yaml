@@ -112,6 +112,7 @@ jobs:
           context: scripts/docker/
           platforms: linux/amd64,linux/arm64
           push: true
+          provenance: false
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
   purge-images:
@@ -127,5 +128,5 @@ jobs:
           repository_owner: ${{ github.repository_owner }}
           package_name: aries-navigation
           untagged_only: true
-          except_untagged_multiplatform: false
+          except_untagged_multiplatform: true
           owner_type: user
