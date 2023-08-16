@@ -1,0 +1,18 @@
+version: "3.8"
+services:
+  aries-navigation:
+    image: ghcr.io/kuretru/aries-navigation:main
+    container_name: aries-navigation
+    hostname: aries-navigation
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+    user: docker:docker
+    restart: always
+    env_file: environment
+    environment:
+      TZ: Asia/Shanghai
+    volumes:
+      - /home/nginx/kuretru.com/public:/web
+    network_mode: host
